@@ -13,8 +13,7 @@ class CreateProductListItemDetail extends StatefulWidget {
 }
 
 class _CreateProductListItemDetailState
-    extends State<CreateProductListItemDetail>
-    with TickerProviderStateMixin {
+    extends State<CreateProductListItemDetail> with TickerProviderStateMixin {
   final GlobalKey _draggableKey = GlobalKey();
 
   void _itemDroppedOnCustomerCart({
@@ -178,19 +177,14 @@ class CustomerCart extends StatelessWidget {
     required this.customer,
     this.highlighted = false,
     this.hasItems = false,
-
-
   });
 
   final Customer customer;
   final bool highlighted;
   final bool hasItems;
-
 //// gesmat payin afrad ra namayesh midahad
   @override
   Widget build(BuildContext context) {
-
-
     final textColor = highlighted ? Colors.white : Colors.black;
 
     return Transform.scale(
@@ -205,65 +199,61 @@ class CustomerCart extends StatelessWidget {
             vertical: 24.0,
           ),
           child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                test2(),
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              /*  ClipOval(
+                child: SizedBox(
+                  width: 50,
+                  height: 100,
+                  child: Image(
+                    image: customer.imageProvider,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),*/
+              const SizedBox(height: 8.0),
+              /*Text(
+                customer.name,
+                style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                      color: textColor,
+                      fontWeight:
+                          hasItems ? FontWeight.normal : FontWeight.bold,
+                    ),
+              ),*/
+              Visibility(
+                visible: hasItems,
+                maintainState: true,
+                maintainAnimation: true,
+                maintainSize: true,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 4.0),
+                    Image.network(customer.foodImage,
+                      fit: BoxFit.cover,) ,
 
-          Visibility(
-            visible: hasItems,
-            maintainState: true,
-            maintainAnimation: true,
-            maintainSize: true,
-            child: Column(
-              children: [
-                const SizedBox(height: 4.0),
-                Image.network(customer.foodImage,
-                  fit: BoxFit.cover,),
-
-              ],
-            ),
-          )
-          ],
+                   /* Text(
+                      customer.formattedTotalItemPrice,
+                      style: Theme.of(context).textTheme.caption!.copyWith(
+                        color: textColor,
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4.0),
+                    Text(
+                      '${customer.items.length} item${customer.items.length != 1 ? 's' : ''}',
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                        color: textColor,
+                        fontSize: 12.0,
+                      ),
+                    ),*/
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
-    ),);
-  }
-
-  test2() {
-    final List<String> _products =
-    List.generate(100, (index) => "Product ${index.toString()}");
-    return ResponsiveWrapper(
-        child:ReorderableListView.builder(
-        itemCount: _products.length,
-        itemBuilder: (context, index) {
-      final String productName = _products[index];
-      return Card(
-        key: ValueKey(productName),
-        color: Colors.amberAccent,
-        elevation: 1,
-        margin: const EdgeInsets.all(10),
-        child: ListTile(
-          contentPadding: const EdgeInsets.all(25),
-          title: Text(
-            productName,
-            style: const TextStyle(fontSize: 18),
-          ),
-          trailing: const Icon(Icons.drag_handle),
-          onTap: () {/* Do something else */},
-        ),
-      );
-    },
-    // The reorder function
-    onReorder: (oldIndex, newIndex) {
-
-    if (newIndex > oldIndex) {
-    newIndex = newIndex - 1;
-    }
-    final element = _products.removeAt(oldIndex);
-    _products.insert(newIndex, element);
-
-    }
-    ),
     );
   }
 }
@@ -281,7 +271,6 @@ class MenuListItem extends StatelessWidget {
   final String price;
   final String photoProvider;
   final bool isDepressed;
-
 //// gesmat bala menu gazaha
   @override
   Widget build(BuildContext context) {
@@ -320,22 +309,14 @@ class MenuListItem extends StatelessWidget {
 
                   Text(
                     name,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .subtitle1
-                        ?.copyWith(
+                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
                       fontSize: 18.0,
                     ),
                   ),
                   const SizedBox(height: 10.0),
                   Text(
                     price,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .subtitle1
-                        ?.copyWith(
+                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 18.0,
                     ),
@@ -383,6 +364,7 @@ class DraggingListItem extends StatelessWidget {
         ),
       ),
     );
+
   }
 }
 
@@ -423,8 +405,8 @@ class Customer {
 
   String get foodImage {
     final imageprovider =
-    items.fold<String>(
-        '', (prev, item) => prev + item.imageProvider.toString());
+    items.fold<String>('', (prev, item) => prev + item.imageProvider.toString());
     return imageprovider;
+
   }
 }
