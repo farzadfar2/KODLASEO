@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 
 class ModulList {
   int id;
@@ -15,70 +16,61 @@ class ModulList {
   dynamic maximum;
   bool zorunlu;
 
-  ModulList({
-    required this.id,
-    required this.modulno,
-    required this.moduladi,
-    required this.modulaciklama,
-    required this.derinlik,
-    required this.genislik,
-    required  this.yukseklik,
-    this.agirlik,
-    this.kutudesi,
-    this.fiyat,
-    required this.resim,
-    this.seviye,
-    this.maximum,
-    required this.zorunlu,
-  });
-  ModulList.fromjson(Map json ,
-  this.id,
-   this.modulno,
-   this.moduladi,
-   this.modulaciklama,
-   this.derinlik,
-   this.genislik,
-    this.yukseklik,
-  this.agirlik,
-  this.kutudesi,
-  this.fiyat,
-   this.resim,
-  this.seviye,
-  this.maximum,
-   this.zorunlu) {
+  ModulList({ @required this.id = 0,
+    @required this.modulno = 0,
+    @required this.moduladi = '',
+    @required this.modulaciklama = '',
+    @required this.derinlik = 0,
+    @required this.genislik = 0,
+    @required this.yukseklik = 0,
+    @required this.agirlik = 0,
+    @required this.kutudesi,
+    @required this.fiyat,
+    @required this.resim = '',
+    @required this.seviye,
+    @required this.maximum,
+    @required this.zorunlu = false});
 
-    id = json['id'];
-    modulno =json['modulno'];
-    moduladi = json['moduladi'];
-    modulaciklama = json['modulaciklama'];
-    derinlik = json['derinlik'];
-    genislik = json['genislik'];
-    yukseklik = json['yukseklik'];
-    agirlik = json['agirlik'];
-    kutudesi =json['kutudesi'];
-    fiyat = json['fiyat'];
-    resim = json['resim'].toString();
-    seviye = json['seviye'];
-    maximum = json['maximum'];
-    zorunlu = json['zorunlu'];
+  factory ModulList.fromJSON(Map json) {
+    return ModulList(
+        id: json['id'] ?? "0" as int,
+        modulno: json['modulno'] ?? "0" as int,
+        moduladi: (json['moduladi'] ?? "") as String,
+        modulaciklama: (json['modulaciklama'] ?? "") as String,
+        derinlik: json['derinlik']?? "0" as int,
+        genislik: json['genislik'] ?? "" as String,
+        yukseklik: json['yukseklik']  ?? "0" as int,
+        agirlik: json['agirlik']  ?? "0" as dynamic,
+        kutudesi: json['kutudesi']  ?? "0" as dynamic,
+        fiyat: json['fiyat']  ?? "0" as dynamic,
+
+      resim: json['resim'] ?? "" as String,
+      seviye: json['seviye'] ?? "0" as dynamic,
+      maximum: json['maximum']  ?? "0" as dynamic,
+      zorunlu: json['zorunlu']  ?? "" as bool,
+
+    );
   }
-  Map toJson() {
-    return {
-    'id' :id,
-    'modulno' : modulno,
-    'moduladi' : moduladi,
-    'modulaciklama' : modulaciklama,
-    'derinlik' : derinlik,
-    'genislik' : genislik,
-    'yukseklik' : yukseklik,
-    'agirlik': agirlik,
-    'kutudesi': kutudesi,
-    'fiyat' : fiyat,
-    'resim' : resim,
-   'seviye':  seviye,
-   'maximum':  maximum,
-    'zorunlu': zorunlu,
-    };
+
+  Map<String, dynamic> toMap() {
+    var map = Map<String, dynamic>();
+    map["modulno"] = modulno;
+    map["moduladi"] = moduladi;
+    map["modulaciklama"] = modulaciklama;
+    map["derinlik"] = derinlik;
+    map["genislik"] = genislik;
+    map["yukseklik"] = yukseklik;
+    map["agirlik"] = agirlik;
+    map["kutudesi"] = kutudesi;
+    map["fiyat"] = fiyat;
+    map["resim"] = resim;
+    map["seviye"] = seviye;
+    map["maximum"] = maximum;
+    map["zorunlu"] = zorunlu;
+
+    if (id != null) {
+      map["id"] = id;
+    }
+    return map;
   }
 }
-

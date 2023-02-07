@@ -43,7 +43,7 @@ Widget _buildUi(double width) {
                 width: 50.0,
               ),
               Expanded(
-                  flex: ScreenHelper.isMobile(context) ? 0 :4,
+                 flex: ScreenHelper.isMobile(context) ? 0 :4,
                   child: CreateProductListItemDetail()
                    ),
               SizedBox(
