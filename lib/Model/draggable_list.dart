@@ -1,12 +1,9 @@
 class DraggableList {
-
-
   final String header;
   final List<DraggableListItem> items;
-
   const DraggableList({
-     required this.header,
-     required this.items,
+   required this.header,
+    required this.items,
   });
 }
 

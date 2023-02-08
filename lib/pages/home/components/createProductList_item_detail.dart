@@ -4,9 +4,9 @@ import '../../../AppData.dart';
 import '../../../Model/ModulList.dart';
 import '../../../data/api/Depth.dart';
 
-
 class CreateProductListItemDetail extends StatefulWidget {
   const CreateProductListItemDetail({super.key});
+
   @override
   _CreateProductListItemDetailState createState() =>
       _CreateProductListItemDetailState();
@@ -14,7 +14,7 @@ class CreateProductListItemDetail extends StatefulWidget {
 
 class _CreateProductListItemDetailState
     extends State<CreateProductListItemDetail> with TickerProviderStateMixin {
- // bool _loading = false;
+  // bool _loading = false;
   List<ModulList> modulLists = [];
   List<ModulList> zorunluLists = [];
 
@@ -25,13 +25,13 @@ class _CreateProductListItemDetailState
     required Product product,
   }) {
     setState(() {
+
       product.items.add(item);
       AppData.Dragimageprovider = "";
       AppData.Dragimageprovider = product.ModulImage.toString();
       AppData.Zurunlu = product.ModulZerunlu.toString();
       AppData.namProductImagees.insert(0, AppData.Dragimageprovider);
-      AppData.modulLists= this.modulLists;
-
+      AppData.modulLists = this.modulLists;
     });
   }
 
@@ -40,7 +40,6 @@ class _CreateProductListItemDetailState
     getModulList();
     data();
   }
-
 
   List<Product> _Product = [
     Product(name: '', imageProvider: ''),
@@ -59,12 +58,12 @@ class _CreateProductListItemDetailState
         List data = jsonDecode(response.body);
         data.forEach((element) {
           Map obj = element;
-         // bool success = obj['success'];
+          // bool success = obj['success'];
           List value = obj['value'];
           print(value);
           List value1 = value;
           this.modulLists = value1.map((e) => ModulList.fromJSON(e)).toList();
-                  });
+        });
         modulLists.length > 0 ? modulLists : show_massaje();
       });
     });
@@ -91,7 +90,26 @@ class _CreateProductListItemDetailState
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
-                  child: _buildModulList(),
+                  child: Column(
+                    children: [
+                      _buildModulList(),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white, backgroundColor: Colors.orange.shade600, // foreground
+                          ),
+                          onPressed: () {
+                            AppData.Zorumualanfalse=[];
+                            AppData.Zorumualantrue=[];
+                            AppData.namProductImagees=[];
+
+
+                          },
+                          child: Text("Yeniden Tasarla",
+                              style:
+                              TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0)))
+                    ],
+                  ),
+
                 ),
               ),
             ),
@@ -106,9 +124,9 @@ class _CreateProductListItemDetailState
     AppData.Zorumualanfalse = Zorumualanfalse.toList();
 
     var Zorumualantrue = modulLists.where((item) => item.zorunlu == true);
-    AppData.Zorumualantrue= Zorumualantrue.toList();
+    AppData.Zorumualantrue = Zorumualantrue.toList();
 
-     dynamic getListMap(List<dynamic> items) {
+    dynamic getListMap(List<dynamic> items) {
       if (items == null) {
         return null;
       }
@@ -116,6 +134,7 @@ class _CreateProductListItemDetailState
       items.forEach((element) {
         list.add(element.toMap());
       });
+      print(list);
       return list;
     }
 
@@ -124,36 +143,33 @@ class _CreateProductListItemDetailState
     print(AppData.Zorumualantrue.length);
     print("Zorumualantrue");
 
-
-
     return ListView.separated(
       // scrollDirection: Axis.horizontal,
       shrinkWrap: true,
       padding: const EdgeInsets.all(16.0),
-      itemCount:  AppData.Zorumualanfalse.length,
+      itemCount: AppData.Zorumualanfalse.length,
       separatorBuilder: (context, index) {
         return const SizedBox(
           height: 12.0,
         );
       },
-
       itemBuilder: (context, index) {
-        final item =  AppData.Zorumualanfalse[index];
-        return  _buildModulItem(
+        final item = AppData.Zorumualanfalse[index];
+        return _buildModulItem(
           item: item,
         );
+
       },
     );
   }
 
-  Widget  _buildModulItem({
+  Widget _buildModulItem({
     required ModulList item,
   }) {
-   
     return LongPressDraggable<ModulList>(
         data: item,
-          dragAnchorStrategy: pointerDragAnchorStrategy,
-                feedback: DraggingListItem(
+        dragAnchorStrategy: pointerDragAnchorStrategy,
+        feedback: DraggingListItem(
           dragKey: _draggableKey,
           photoProvider: item.resim.toString(),
         ),
@@ -210,13 +226,13 @@ class _CreateProductListItemDetailState
   }
 
   void data() {
-
- /*  var Zorumualantrue = modulLists.where((item) => item.zorunlu == false);
+    /*  var Zorumualantrue = modulLists.where((item) => item.zorunlu == false);
     AppData.Zorumualantrue= Zorumualantrue.toList();
    print("Zorumualantrue");
    print(AppData.Zorumualantrue.length);
-   print("Zorumualantrue")*/;
-   /* Iterable result = AppData.Zorumualantrue.where((item) => item.resim);
+   print("Zorumualantrue")*/
+    ;
+    /* Iterable result = AppData.Zorumualantrue.where((item) => item.resim);
     //
     print("Zorumualantrue");
     print(result.length);
@@ -240,7 +256,6 @@ class ModulCart extends StatelessWidget {
 //// gesmat payin afrad ra namayesh midahad
   @override
   Widget build(BuildContext context) {
-
     return Transform.scale(
       scale: highlighted ? 1.075 : 1.0,
       child: Material(
@@ -255,7 +270,7 @@ class ModulCart extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-               //test2(),
+              //test2(),
 
               Visibility(
                 visible: hasItems,
@@ -273,12 +288,12 @@ class ModulCart extends StatelessWidget {
                             itemBuilder: (BuildContext context, int index) {
                               // final String productName = AppData.namProductImagees[index];
                               return Card(
-                               elevation: 0,
+                                elevation: 0,
                                 key: ValueKey(index),
-                             //   color: Colors.grey.shade50,
-                               // margin: const EdgeInsets.all(0),
+                                //   color: Colors.grey.shade50,
+                                // margin: const EdgeInsets.all(0),
                                 child: ListTile(
-                                  title:  Image.network(
+                                  title: Image.network(
                                       AppData.namProductImagees[index],
                                       scale: 1),
                                   /* Do something else */
@@ -296,26 +311,20 @@ class ModulCart extends StatelessWidget {
                                   .insert(newIndex, element);
                             }),
                       ),
-
                     ),
-
-
                   ],
                 ),
               ),
-              Image.network("http://sistemonline.com.tr/seowood/28-68-1.png", width: 276,),
-
+              Image.network(
+                "http://sistemonline.com.tr/seowood/28-68-1.png",
+                width: 276,
+              ),
             ],
-
           ),
-
         ),
       ),
-
     );
   }
-
-
 }
 
 class ModulListItem extends StatelessWidget {

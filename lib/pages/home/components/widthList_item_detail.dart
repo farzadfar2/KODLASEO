@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../AppData.dart';
 import '../../../Model/WidthList.dart';
 import '../../../data/api/Depth.dart';
-import '../../../storage/storageUtil.dart';
+
 
 class WidthListItemDetail extends StatefulWidget {
   const WidthListItemDetail({
@@ -17,7 +17,7 @@ class WidthListItemDetail extends StatefulWidget {
 }
 
 class _WidthListItemDetailState extends State<WidthListItemDetail> {
-  bool _validate = false;
+ // bool _validate = false;
   bool _loading = false;
   List<WidthList> widthlists = [];
   var formKey = GlobalKey<FormState>();
@@ -29,6 +29,9 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
     SharedPreferences.getInstance().then((sf) {
       mySharedPrefences = sf;
     });
+    AppData.Zorumualanfalse=[];
+    AppData.Zorumualantrue=[];
+    AppData.namProductImagees=[];
   }
 
   void _onLoading() {
@@ -56,6 +59,9 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
               child: InkWell(
                 onTap: () {
                   setState(() {
+                    AppData.Zorumualanfalse=[];
+                    AppData.Zorumualantrue=[];
+                    AppData.namProductImagees=[];
                     AppData.withhhdata = widthlists[index].genislik;
                     Navigator.pushNamed(context, "/CreateProductSceen");
                   });
@@ -98,7 +104,7 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
         List data = jsonDecode(response.body);
         data.forEach((element) {
           Map obj = element;
-          bool success = obj['success'];
+         // bool success = obj['success'];
           List value = obj['value'];
           print(value);
           List value1 = value;

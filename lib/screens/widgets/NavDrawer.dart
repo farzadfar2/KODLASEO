@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-
 
 
 class NavDrawer extends StatefulWidget {
   const NavDrawer({
     super.key,
-
   });
 
   @override
@@ -15,9 +12,9 @@ class NavDrawer extends StatefulWidget {
 }
 
 class _NavDrawerState extends State<NavDrawer> {
-   late SharedPreferences sharedPreferences;
+  late SharedPreferences sharedPreferences;
   TextEditingController _controller1 = TextEditingController();
-  TextEditingController _controller2 = TextEditingController();
+
 
   var formKey = GlobalKey<FormState>();
   var mySharedPrefences;
@@ -25,12 +22,11 @@ class _NavDrawerState extends State<NavDrawer> {
   bool switchState1 = false;
   late bool switchStateme2;
   bool switchState2 = false;
+
   @override
   void initState() {
     // checkbuttonStatus();
-    setState(() {
-
-    });
+    setState(() {});
     super.initState();
     SharedPreferences.getInstance().then((sf) {
       mySharedPrefences = sf;
@@ -44,8 +40,8 @@ class _NavDrawerState extends State<NavDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-   // checkbuttonStatus2();
+  //  double height = MediaQuery.of(context).size.height;
+    // checkbuttonStatus2();
     return Drawer(
       key: formKey,
       child: Container(
@@ -53,7 +49,6 @@ class _NavDrawerState extends State<NavDrawer> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-
               child: Text(
                 ' menu',
                 style: TextStyle(color: Colors.white, fontSize: 25),
@@ -68,7 +63,7 @@ class _NavDrawerState extends State<NavDrawer> {
               leading: Icon(Icons.text_format),
               title: Text('Create New Notpad',
                   style: TextStyle(
-                    color:  Colors.white,
+                    color: Colors.white,
                     fontSize: 15,
                   )),
               onTap: () {
@@ -76,14 +71,14 @@ class _NavDrawerState extends State<NavDrawer> {
               },
               //onTap: () => {},
             ),
-
             ListTile(
               leading: Icon(Icons.search),
-              title: Text('Search Notpad',style: TextStyle(
-                color: Colors.white  ,
-                fontSize: 15,
-              )),
-              onTap: ()  {
+              title: Text('Search Notpad',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                  )),
+              onTap: () {
                 Navigator.pushNamed(context, "/Siparis_satis_screen");
               },
               // onTap: () => {Navigator.of(context).pop()},
@@ -92,7 +87,7 @@ class _NavDrawerState extends State<NavDrawer> {
               leading: Icon(Icons.settings),
               title: Text('Ayarlar',
                   style: TextStyle(
-                    color:  Colors.white,
+                    color: Colors.white,
                     fontSize: 15,
                   )),
               onTap: () {
@@ -101,7 +96,7 @@ class _NavDrawerState extends State<NavDrawer> {
               //  onTap: () => {Navigator.of(context).pop()},
             ),
             Padding(
-              padding: const EdgeInsets.only(top:40),
+              padding: const EdgeInsets.only(top: 40),
               child: Divider(
                 height: 15.0,
                 thickness: 1.5,
@@ -119,7 +114,7 @@ class _NavDrawerState extends State<NavDrawer> {
                   setState(() {
                     // debugPrint("Anlasma onaylandı : $deger");
 
-                 //   Aliskontorol(deger);
+                    //   Aliskontorol(deger);
                     switchState1 = deger;
                   });
                 },
@@ -142,14 +137,9 @@ class _NavDrawerState extends State<NavDrawer> {
                 secondary: Icon(Icons.admin_panel_settings),
               ),
             ),
-
-
           ],
         ),
       ),
     );
   }
-
-
-
 }
