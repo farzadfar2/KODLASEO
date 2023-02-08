@@ -15,6 +15,8 @@ class ModulList {
   dynamic seviye;
   dynamic maximum;
   bool zorunlu;
+  String doviz;
+  dynamic fiyatusd;
 
   ModulList({ @required this.id = 0,
     @required this.modulno = 0,
@@ -29,7 +31,9 @@ class ModulList {
     @required this.resim = '',
     @required this.seviye,
     @required this.maximum,
-    @required this.zorunlu = false});
+    @required this.zorunlu = false,
+    @required this.doviz='',
+    @required this.fiyatusd});
 
   factory ModulList.fromJSON(Map json) {
     return ModulList(
@@ -48,6 +52,8 @@ class ModulList {
       seviye: json['seviye'] ?? "0" as dynamic,
       maximum: json['maximum']  ?? "0" as dynamic,
       zorunlu: json['zorunlu']  ?? "" as bool,
+      doviz: json['doviz'] ?? "" as String,
+      fiyatusd: json['fiyatusd']  ?? "0" as dynamic,
 
     );
   }
@@ -67,6 +73,8 @@ class ModulList {
     map["seviye"] = seviye;
     map["maximum"] = maximum;
     map["zorunlu"] = zorunlu;
+    map["doviz"] = doviz;
+    map["fiyatusd"] = fiyatusd;
 
     if (id != null) {
       map["id"] = id;

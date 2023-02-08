@@ -25,7 +25,6 @@ class _CreateProductListItemDetailState
     required Product product,
   }) {
     setState(() {
-
       product.items.add(item);
       AppData.Dragimageprovider = "";
       AppData.Dragimageprovider = product.ModulImage.toString();
@@ -95,21 +94,21 @@ class _CreateProductListItemDetailState
                       _buildModulList(),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white, backgroundColor: Colors.orange.shade600, // foreground
+                            foregroundColor: Colors.white,
+                            backgroundColor:
+                                Colors.orange.shade600, // foreground
                           ),
                           onPressed: () {
-                            AppData.Zorumualanfalse=[];
-                            AppData.Zorumualantrue=[];
-                            AppData.namProductImagees=[];
-
-
+                            AppData.Zorumualanfalse = [];
+                            AppData.Zorumualantrue = [];
+                            AppData.namProductImagees = [];
+                            initState();
                           },
                           child: Text("Yeniden Tasarla",
-                              style:
-                              TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0)))
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 16.0)))
                     ],
                   ),
-
                 ),
               ),
             ),
@@ -158,7 +157,6 @@ class _CreateProductListItemDetailState
         return _buildModulItem(
           item: item,
         );
-
       },
     );
   }
