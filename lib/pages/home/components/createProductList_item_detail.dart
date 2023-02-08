@@ -96,7 +96,7 @@ class _CreateProductListItemDetailState
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
                             backgroundColor:
-                                Colors.orange.shade600, // foreground
+                                Colors.orange.shade900, // foreground
                           ),
                           onPressed: () {
                             AppData.Zorumualanfalse = [];
@@ -104,7 +104,7 @@ class _CreateProductListItemDetailState
                             AppData.namProductImagees = [];
                             initState();
                           },
-                          child: Text("Yeniden Tasarla",
+                          child: Text(" Listeyi Boşalt ve Yeniden Tasarla    ",
                               style: TextStyle(
                                   fontWeight: FontWeight.w600, fontSize: 16.0)))
                     ],
