@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kodlaseoshop/pages/home/components/createProductList_item_detail.dart';
 import 'package:kodlaseoshop/pages/home/home.dart';
-import 'package:kodlaseoshop/screens/CreateProductScreen.dart';
 import 'package:kodlaseoshop/screens/DepthScreen.dart';
 import 'package:kodlaseoshop/screens/LanguageScreen.dart';
 import 'package:kodlaseoshop/screens/WidthScreen.dart';
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         '/LanguegeScreen': (context) => LanguegeScreen(),
         '/WidthScreen': (context) => WidthScreen(),
         '/DepthScreen': (context) => DepthScreen(),
-        '/CreateProductSceen': (context) => CreateProductSceen(),
+        '/CreateProductListItemDetail': (context) => CreateProductListItemDetail(),
 
       },
       builder: (context, widget) => ResponsiveWrapper.builder(

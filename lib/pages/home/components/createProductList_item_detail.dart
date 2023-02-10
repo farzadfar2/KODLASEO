@@ -1,8 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
 import '../../../AppData.dart';
 import '../../../Model/ModulList.dart';
 import '../../../data/api/Depth.dart';
+import '../../../utils/constants.dart';
+import '../../../utils/screen_helper.dart';
+import 'createModul_info_detail.dart';
 
 class CreateProductListItemDetail extends StatefulWidget {
   const CreateProductListItemDetail({super.key});
@@ -18,30 +22,50 @@ class _CreateProductListItemDetailState
   List<ModulList> modulLists = [];
   List<ModulList> zorunluLists = [];
 
+
   final GlobalKey _draggableKey = GlobalKey();
 
   void _itemDroppedOnCustomerCart({
     required ModulList item,
     required Product product,
   }) {
+
     setState(() {
       product.items.add(item);
       AppData.Dragimageprovider = "";
-      AppData.Dragimageprovider = product.ModulImage.toString();
-      AppData.Zurunlu = product.ModulZerunlu.toString();
+      AppData.Dragimageyukseklik = 0;
+      AppData.Dragimageyukseklik = product.formattedTotalItemheih;
+       AppData.Dragimageprovider = product.ModulImage.toString();
+      // AppData.Dragimageyukseklik = product.yukseklik;
+      //  AppData.yukseklik =int.tryParse(source) product.formattedTotalItemheih;
+      //  AppData.Zurunlu = product.ModulZerunlu.toString();
       AppData.namProductImagees.insert(0, AppData.Dragimageprovider);
+      AppData.TotalUrunMaxYukseklik.insert(0, AppData.Dragimageyukseklik);
+
       AppData.modulLists = this.modulLists;
-    });
+      GetTotalUrunMaxYukseklik();
+     /* setState(() {
+
+        AppData.TotalUrunMaxYukseklik =
+            AppData.yuksekliktotal +
+                AppData.yukseklikZorunluTrue;
+        CreateModulInfoDetail(
+            AppData.TotalUrunMaxYukseklik);
+      });*/
+       });
   }
 
   @override
   void initState() {
+
     getModulList();
-    data();
   }
 
   List<Product> _Product = [
-    Product(name: '', imageProvider: ''),
+    Product(
+      name: '',
+      imageProvider: '',
+    ),
   ];
 
   void getModulList() async {
@@ -68,26 +92,68 @@ class _CreateProductListItemDetailState
     });
   }
 
+  void gettest() async {
+    setState(() {
+
+      /*AppData.TotalUrunMaxYukseklik =
+          AppData.yuksekliktotal + AppData.yukseklikZorunluTrue;
+      print(AppData.TotalUrunMaxYukseklik);*/
+    });
+  }
+
+  void  GetTotalUrunMaxYukseklik() {
+    AppData.TotalUrunMaxYukseklik.forEach((element) {
+      print(element);
+    });
+   int sum = AppData.TotalUrunMaxYukseklik.fold(0, (previousValue, element) => previousValue + element);
+   AppData.yuksekliktotal = sum+AppData.yukseklikZorunluTrue;
+    print ("sum");
+    print (sum);
+
+
+  }
   @override
   Widget build(BuildContext context) {
+    return Container(
+      child: ScreenHelper(
+        desktop: _buildUi(kDesktopMaxWidth),
+        tablet: _buildUi(kTabletMaxWidth),
+        mobile: _buildUi(getMobileMaxWidth(context)),
+      ),
+    );
+  }
+
+  @override
+  Widget _buildUi(double width) {
     return Center(
-      child: SingleChildScrollView(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+        child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return ResponsiveWrapper(
+                maxWidth: width,
+                minWidth: width,
+                defaultScale: false,
+                child: Flex(
+                  direction: ScreenHelper.isMobile(context)
+                      ? Axis.vertical
+                      : Axis.horizontal,
+                  children: [
+                    Expanded(
+                      flex: ScreenHelper.isMobile(context) ? 0 : 2,
+                      child: CreateModulInfoDetail(  AppData.yuksekliktotal ),
+                    ),
             Expanded(
-              flex: 1,
+              flex: ScreenHelper.isMobile(context) ? 0 : 2,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(0.0),
                 child: SizedBox(
                   child: _buildModulRow(),
                 ),
               ),
             ),
             Expanded(
-              flex: 1,
+              flex: ScreenHelper.isMobile(context) ? 0 : 2,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(0.0),
                 child: SizedBox(
                   child: Column(
                     children: [
@@ -102,45 +168,39 @@ class _CreateProductListItemDetailState
                             AppData.Zorumualanfalse = [];
                             AppData.Zorumualantrue = [];
                             AppData.namProductImagees = [];
+                           // AppData.TotalUrunMaxYukseklik = [];
+                            AppData.Zorumualantrue = [];
+                            AppData.modulLists = [];
+                           // AppData.TotalUrunMaxYukseklik.length=0;
+                           // AppData.yukseklikZorunluTrue =0;
+                           // AppData.yuksekliktotal=0;
+                            // getMaxHeigh();
+
                             initState();
+
                           },
                           child: Text(" Listeyi Boşalt ve Yeniden Tasarla    ",
                               style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 16.0)))
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16.0))),
                     ],
                   ),
                 ),
               ),
             ),
+
           ],
         ),
-      ),
+              );
+            },
+        ),
     );
   }
+
 
   Widget _buildModulList() {
     var Zorumualanfalse = modulLists.where((item) => item.zorunlu == false);
     AppData.Zorumualanfalse = Zorumualanfalse.toList();
-
-    var Zorumualantrue = modulLists.where((item) => item.zorunlu == true);
-    AppData.Zorumualantrue = Zorumualantrue.toList();
-
-    dynamic getListMap(List<dynamic> items) {
-      if (items == null) {
-        return null;
-      }
-      List<Map<String, dynamic>> list = [];
-      items.forEach((element) {
-        list.add(element.toMap());
-      });
-      print(list);
-      return list;
-    }
-
-    print("Zorumualantrue");
-    print(getListMap);
-    print(AppData.Zorumualantrue.length);
-    print("Zorumualantrue");
 
     return ListView.separated(
       // scrollDirection: Axis.horizontal,
@@ -161,18 +221,21 @@ class _CreateProductListItemDetailState
     );
   }
 
+  //longpreess ro be drag tabdil kardam
+
   Widget _buildModulItem({
     required ModulList item,
   }) {
-    return LongPressDraggable<ModulList>(
+    return Draggable<ModulList>(
         data: item,
         dragAnchorStrategy: pointerDragAnchorStrategy,
         feedback: DraggingListItem(
-          dragKey: _draggableKey,
-          photoProvider: item.resim.toString(),
-        ),
+            dragKey: _draggableKey,
+            photoProvider: item.resim.toString(),
+            yukseklik: item.yukseklik),
         child: ModulListItem(
           name: item.moduladi,
+          yukseklik: item.yukseklik,
           //price: item.formattedTotalItemPrice,
           photoProvider: item.resim.toString(),
         ));
@@ -222,21 +285,6 @@ class _CreateProductListItemDetailState
       content: Text('Veri Bulunamadı'),
     ));
   }
-
-  void data() {
-    /*  var Zorumualantrue = modulLists.where((item) => item.zorunlu == false);
-    AppData.Zorumualantrue= Zorumualantrue.toList();
-   print("Zorumualantrue");
-   print(AppData.Zorumualantrue.length);
-   print("Zorumualantrue")*/
-    ;
-    /* Iterable result = AppData.Zorumualantrue.where((item) => item.resim);
-    //
-    print("Zorumualantrue");
-    print(result.length);
-    print("Zorumualantrue");
-*/
-  }
 }
 
 class ModulCart extends StatelessWidget {
@@ -262,14 +310,13 @@ class ModulCart extends StatelessWidget {
         color: highlighted ? const Color(0xFFF64209) : Colors.white,
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 12.0,
+            horizontal: 8.0,
             vertical: 24.0,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               //test2(),
-
               Visibility(
                 visible: hasItems,
                 maintainState: true,
@@ -284,9 +331,8 @@ class ModulCart extends StatelessWidget {
                             shrinkWrap: true,
                             itemCount: AppData.namProductImagees.length,
                             itemBuilder: (BuildContext context, int index) {
-                              // final String productName = AppData.namProductImagees[index];
-                              return Card(
-                                elevation: 0,
+
+                              return Container(
                                 key: ValueKey(index),
                                 //   color: Colors.grey.shade50,
                                 // margin: const EdgeInsets.all(0),
@@ -294,6 +340,7 @@ class ModulCart extends StatelessWidget {
                                   title: Image.network(
                                       AppData.namProductImagees[index],
                                       scale: 1),
+                                  //  leading: Text(product.formattedTotalItemheih.toString()),
                                   /* Do something else */
                                 ),
                               );
@@ -313,13 +360,33 @@ class ModulCart extends StatelessWidget {
                   ],
                 ),
               ),
-              Image.network(
+
+              _buildZorunluImage(),
+              /* Image.network(
                 "http://sistemonline.com.tr/seowood/28-68-1.png",
                 width: 276,
-              ),
+              ),*/
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildZorunluImage() {
+    var Zorumualantrue =
+        AppData.modulLists.where((item) => item.zorunlu == true);
+    AppData.Zorumualantrue = Zorumualantrue.toList();
+    return Center(
+      child: Column(
+        children: List.generate(AppData.Zorumualantrue.length, (index) {
+          AppData.yukseklikZorunluTrue =
+              AppData.Zorumualantrue[index].yukseklik;
+          return Image.network(
+            AppData.Zorumualantrue[index].resim.toString(),
+            width: 276,
+          );
+        }),
       ),
     );
   }
@@ -330,11 +397,13 @@ class ModulListItem extends StatelessWidget {
     super.key,
     this.name = '',
     required this.photoProvider,
+    required this.yukseklik,
     this.isDepressed = false,
   });
 
   final String name;
   final String photoProvider;
+  final int yukseklik;
   final bool isDepressed;
 
 //// gesmat bala menu gazaha
@@ -349,10 +418,10 @@ class ModulListItem extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10)),
+                topLeft: Radius.circular(5),
+                topRight: Radius.circular(5),
+                bottomLeft: Radius.circular(5),
+                bottomRight: Radius.circular(5)),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -365,7 +434,7 @@ class ModulListItem extends StatelessWidget {
                   height: 100,
                   child: Center(
                     child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 50),
+                        duration: const Duration(milliseconds: 0),
                         curve: Curves.easeInOut,
                         height: isDepressed ? 300 : 300,
                         width: isDepressed ? 300 : 300,
@@ -400,10 +469,12 @@ class DraggingListItem extends StatelessWidget {
     super.key,
     required this.dragKey,
     required this.photoProvider,
+    required this.yukseklik,
   });
 
   final GlobalKey dragKey;
   final String photoProvider;
+  final int yukseklik;
 
   ///// aksi ke drag mishavad ra namayesh midahad
 
@@ -425,6 +496,20 @@ class DraggingListItem extends StatelessWidget {
   }
 }
 
+class Item {
+  const Item({
+    required this.TotalItemheih,
+    required this.name,
+    required this.uid,
+    required this.imageProvider,
+  });
+
+  final int TotalItemheih;
+  final String name;
+  final String uid;
+  final String imageProvider;
+}
+
 class Product {
   Product({
     required this.name,
@@ -442,9 +527,9 @@ class Product {
     return imageprovider;
   }
 
-  String get ModulZerunlu {
-    final zorunlu =
-        items.fold<String>('', (prev, item) => item.zorunlu.toString());
-    return zorunlu;
+  int get formattedTotalItemheih {
+    final TotalItemheih =
+        items.fold<int>(0, (prev, item) =>  item.yukseklik);
+    return TotalItemheih;
   }
 }

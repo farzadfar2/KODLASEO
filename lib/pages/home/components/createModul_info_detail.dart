@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kodlaseoshop/AppData.dart';
 
+
+
 class CreateModulInfoDetail extends StatefulWidget {
-  const CreateModulInfoDetail({super.key});
+final yuksekliktotal;
+  const CreateModulInfoDetail(this.yuksekliktotal,  {super.key});
 
   @override
   _CreateModulInfoDetailState createState() => _CreateModulInfoDetailState();
@@ -10,11 +13,16 @@ class CreateModulInfoDetail extends StatefulWidget {
 
 class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
   var formKey = GlobalKey<FormState>();
-
-
+  TextEditingController _controller = TextEditingController();
 
   @override
-  void initState() {}
+  void initState() {
+    super.initState();
+        setState(() {
+
+
+    });
+  }
 
   void _onLoading() {
     setState(() {
@@ -26,8 +34,12 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
     setState(() {});
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
+
     return Center(
         child: Column(
       children: [
@@ -56,7 +68,8 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   height: 50,
                   fit: BoxFit.cover,
                 ),
-                title: Text("Genişlik : " + AppData.withhhdata.toString()),
+                title: Text("Genişlik : " + AppData.withhhdata.toString()
+                ),
                 subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
@@ -71,8 +84,23 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   height: 40,
                   fit: BoxFit.cover,
                 ),
-                title: Text("Yükseklik : "),
-                subtitle: Text("Derinlik : "),
+                title: Text("Maximum Yükseklik : " + AppData.maxyukseklik.toString()),
+
+                tileColor: Colors.grey.shade200,
+              )),
+        ),
+        Card(
+          child: Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: ListTile(
+                leading: Image.network(
+                  "assets/icon/yuksek.png",
+                  width: 40,
+                  height: 40,
+                  fit: BoxFit.cover,
+                ),
+                title: Text("ÜrÜn Yükseklik : " + widget.yuksekliktotal.toString()),
+                subtitle: Text("Derinlikhgh : "),
                 tileColor: Colors.grey.shade200,
               )),
         ),
@@ -101,7 +129,7 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   height: 50,
                   fit: BoxFit.cover,
                 ),
-                title: Text("Koli Ağırlığı : "),
+                title: Text("Koli Ağırlığı : " ),
                 subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
@@ -127,7 +155,12 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                 primary: Colors.grey.shade600, // background
                 onPrimary: Colors.white, // foreground
               ),
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+
+                });
+
+                },
               child: Text("ÜRÜNÜ TAMAMLA",
                   style:
                       TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0))),

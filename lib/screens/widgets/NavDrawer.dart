@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class NavDrawer extends StatefulWidget {
   const NavDrawer({
     super.key,
@@ -14,7 +13,6 @@ class NavDrawer extends StatefulWidget {
 class _NavDrawerState extends State<NavDrawer> {
   late SharedPreferences sharedPreferences;
   TextEditingController _controller1 = TextEditingController();
-
 
   var formKey = GlobalKey<FormState>();
   var mySharedPrefences;
@@ -40,7 +38,7 @@ class _NavDrawerState extends State<NavDrawer> {
 
   @override
   Widget build(BuildContext context) {
-  //  double height = MediaQuery.of(context).size.height;
+    //  double height = MediaQuery.of(context).size.height;
     // checkbuttonStatus2();
     return Drawer(
       key: formKey,

@@ -67,7 +67,7 @@ class _DepthListItemDetailState extends State<DepthListItemDetail> {
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: ListTile(
-                      trailing: Icon(Icons.keyboard_arrow_right),
+
                       title: (Image.network(
                         depthlists[index].resim.toString(),
                         height: 100,

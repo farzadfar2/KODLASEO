@@ -63,13 +63,17 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
                     AppData.Zorumualantrue=[];
                     AppData.namProductImagees=[];
                     AppData.withhhdata = widthlists[index].genislik;
-                    Navigator.pushNamed(context, "/CreateProductSceen");
+                    AppData.maxyukseklik = widthlists[index].maxyukseklik;
+                    print(AppData.maxyukseklik );
+                    AppData.Zorumualantrue = [];
+                    AppData.modulLists = [];
+                    Navigator.pushNamed(context, "/CreateProductListItemDetail");
                   });
                 },
                 child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: ListTile(
-                      trailing: Icon(Icons.keyboard_arrow_right),
+
                       title: Image.network(
                         widthlists[index].resim.toString(),
                         height: 100,

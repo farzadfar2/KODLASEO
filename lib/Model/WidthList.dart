@@ -7,12 +7,14 @@ class WidthList {
   final int genislik;
   final String? aciklama;
   final String? resim;
+  final dynamic maxyukseklik;
   WidthList(
       {@required this.id = 0,
         @required this.derinlik=0,
         @required this.genislik=0,
         @required this.aciklama,
         @required this.resim,
+        @required this.maxyukseklik,
       });
 
   factory WidthList.fromJSON(Map json) {
@@ -22,7 +24,8 @@ class WidthList {
         derinlik: json['derinlik']??"0" as int,
         genislik: json['genislik']??"0" as int,
         aciklama: (json['aciklama']??"") as String,
-        resim: (json['resim']??"") as String);
+        resim: (json['resim']??"") as String,
+      maxyukseklik: json['maxyukseklik']??"0" as int,);
 
   }
 
@@ -32,6 +35,7 @@ class WidthList {
     map["aciklama"] = aciklama;
     map["genislik"] = genislik;
     map["resim"] = resim;
+    map["maxyukseklik"] = maxyukseklik;
     if (id != null) {
       map["id"] = id;
     }
