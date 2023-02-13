@@ -18,14 +18,19 @@ class AppData{
  static  String ZorumualanfalseResim="";
  static  List Zorumualan=[];
  static List Zorumualantrue=[];
+ static List Zorumualantruetest=[];
  static List Zorumualantrue1=[];
  static List Zorumualanfalse=[];
  static List modulLists=[];
  static  int maxyukseklik=0;
  static  int yukseklik=0;
  static  int yukseklikZorunluTrue=0;
+ static bool enablewidget = false;
+ static String Zurunluresim = "false";
 // static  int TotalUrunMaxYukseklik=0;
 // static final TotalUrunMaxYukseklik = <int>[];
+
+
 }
 
 class AppKeys {

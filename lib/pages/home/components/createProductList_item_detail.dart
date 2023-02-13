@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import '../../../AppData.dart';
@@ -20,8 +21,9 @@ class _CreateProductListItemDetailState
     extends State<CreateProductListItemDetail> with TickerProviderStateMixin {
   // bool _loading = false;
   List<ModulList> modulLists = [];
+  List<ModulList> zorunluListsresim = [];
   List<ModulList> zorunluLists = [];
-
+  bool Enable = true;
 
   final GlobalKey _draggableKey = GlobalKey();
 
@@ -29,13 +31,12 @@ class _CreateProductListItemDetailState
     required ModulList item,
     required Product product,
   }) {
-
     setState(() {
       product.items.add(item);
       AppData.Dragimageprovider = "";
       AppData.Dragimageyukseklik = 0;
       AppData.Dragimageyukseklik = product.formattedTotalItemheih;
-       AppData.Dragimageprovider = product.ModulImage.toString();
+      AppData.Dragimageprovider = product.ModulImage.toString();
       // AppData.Dragimageyukseklik = product.yukseklik;
       //  AppData.yukseklik =int.tryParse(source) product.formattedTotalItemheih;
       //  AppData.Zurunlu = product.ModulZerunlu.toString();
@@ -44,7 +45,7 @@ class _CreateProductListItemDetailState
 
       AppData.modulLists = this.modulLists;
       GetTotalUrunMaxYukseklik();
-     /* setState(() {
+      /* setState(() {
 
         AppData.TotalUrunMaxYukseklik =
             AppData.yuksekliktotal +
@@ -52,13 +53,13 @@ class _CreateProductListItemDetailState
         CreateModulInfoDetail(
             AppData.TotalUrunMaxYukseklik);
       });*/
-       });
+    });
   }
 
   @override
   void initState() {
-
     getModulList();
+    test22();
   }
 
   List<Product> _Product = [
@@ -94,31 +95,44 @@ class _CreateProductListItemDetailState
 
   void gettest() async {
     setState(() {
-
       /*AppData.TotalUrunMaxYukseklik =
           AppData.yuksekliktotal + AppData.yukseklikZorunluTrue;
       print(AppData.TotalUrunMaxYukseklik);*/
     });
   }
 
-  void  GetTotalUrunMaxYukseklik() {
+  void GetTotalUrunMaxYukseklik() {
     AppData.TotalUrunMaxYukseklik.forEach((element) {
       print(element);
     });
-   int sum = AppData.TotalUrunMaxYukseklik.fold(0, (previousValue, element) => previousValue + element);
-   AppData.yuksekliktotal = sum+AppData.yukseklikZorunluTrue;
-    print ("sum");
-    print (sum);
+    int sum = AppData.TotalUrunMaxYukseklik.fold(
+        0, (previousValue, element) => previousValue + element);
+    AppData.yuksekliktotal = sum + AppData.yukseklikZorunluTrue;
 
-
+    if (AppData.yuksekliktotal > AppData.maxyukseklik) {
+      AppData.enablewidget = true;
+    } else if (AppData.yuksekliktotal > AppData.maxyukseklik) {
+      AppData.enablewidget = false;
+    }
+    print("sum");
+    print(sum);
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: ScreenHelper(
-        desktop: _buildUi(kDesktopMaxWidth),
-        tablet: _buildUi(kTabletMaxWidth),
-        mobile: _buildUi(getMobileMaxWidth(context)),
+      child: ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(
+          dragDevices: {
+            PointerDeviceKind.touch,
+            PointerDeviceKind.mouse,
+          },
+        ),
+        child: ScreenHelper(
+          desktop: _buildUi(kDesktopMaxWidth),
+          tablet: _buildUi(kTabletMaxWidth),
+          mobile: _buildUi(getMobileMaxWidth(context)),
+        ),
       ),
     );
   }
@@ -126,98 +140,131 @@ class _CreateProductListItemDetailState
   @override
   Widget _buildUi(double width) {
     return Center(
-        child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              return ResponsiveWrapper(
-                maxWidth: width,
-                minWidth: width,
-                defaultScale: false,
-                child: Flex(
-                  direction: ScreenHelper.isMobile(context)
-                      ? Axis.vertical
-                      : Axis.horizontal,
-                  children: [
-                    Expanded(
-                      flex: ScreenHelper.isMobile(context) ? 0 : 2,
-                      child: CreateModulInfoDetail(  AppData.yuksekliktotal ),
-                    ),
-            Expanded(
-              flex: ScreenHelper.isMobile(context) ? 0 : 2,
-              child: Padding(
-                padding: const EdgeInsets.all(0.0),
-                child: SizedBox(
-                  child: _buildModulRow(),
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return ResponsiveWrapper(
+            maxWidth: width,
+            minWidth: width,
+            defaultScale: false,
+            child: Flex(
+              direction: ScreenHelper.isMobile(context)
+                  ? Axis.vertical
+                  : Axis.horizontal,
+              children: [
+                Expanded(
+                  flex: ScreenHelper.isMobile(context) ? 0 : 2,
+                  child: CreateModulInfoDetail(AppData.yuksekliktotal),
                 ),
-              ),
-            ),
-            Expanded(
-              flex: ScreenHelper.isMobile(context) ? 0 : 2,
-              child: Padding(
-                padding: const EdgeInsets.all(0.0),
-                child: SizedBox(
-                  child: Column(
-                    children: [
-                      _buildModulList(),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor:
-                                Colors.orange.shade900, // foreground
-                          ),
-                          onPressed: () {
-                            AppData.Zorumualanfalse = [];
-                            AppData.Zorumualantrue = [];
-                            AppData.namProductImagees = [];
-                           // AppData.TotalUrunMaxYukseklik = [];
-                            AppData.Zorumualantrue = [];
-                            AppData.modulLists = [];
-                           // AppData.TotalUrunMaxYukseklik.length=0;
-                           // AppData.yukseklikZorunluTrue =0;
-                           // AppData.yuksekliktotal=0;
-                            // getMaxHeigh();
-
-                            initState();
-
-                          },
-                          child: Text(" Listeyi Boşalt ve Yeniden Tasarla    ",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16.0))),
-                    ],
+                Expanded(
+                  flex: ScreenHelper.isMobile(context) ? 0 : 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: SizedBox(
+                      child: _buildModulRow(),
+                    ),
                   ),
                 ),
-              ),
-            ),
+                Expanded(
+                  flex: ScreenHelper.isMobile(context) ? 0 : 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: SizedBox(
+                      child: Column(
+                        children: [
+                          _buildModulList(),
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor:
+                                    Colors.orange.shade900, // foreground
+                              ),
+                              onPressed: () {
+                                AppData.Zorumualanfalse = [];
+                                AppData.Zorumualantrue = [];
+                                AppData.namProductImagees = [];
+                                AppData.TotalUrunMaxYukseklik = [];
+                                AppData.Zorumualantrue = [];
+                                AppData.modulLists = [];
+                                AppData.enablewidget = false;
+                                // AppData.TotalUrunMaxYukseklik.length=0;
+                                // AppData.yukseklikZorunluTrue =0;
+                                // AppData.yuksekliktotal=0;
+                                // getMaxHeigh();
 
-          ],
-        ),
-              );
-            },
-        ),
+                                initState();
+                              },
+                              child: Text(
+                                  " Listeyi Boşalt ve Yeniden Tasarla    ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16.0))),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
+  Widget _buildZorunluImage() {
+    var Zorumualantrue =
+        AppData.modulLists.where((item) => item.zorunlu == true);
+    AppData.Zorumualantrue = Zorumualantrue.toList();
+    return Container(
+      child: Visibility(
+        visible: true,
+        child: Column(
+          children: List.generate(AppData.Zorumualantrue.length, (index) {
+            AppData.yukseklikZorunluTrue =
+                AppData.Zorumualantrue[index].yukseklik;
+            AppData.Zurunluresim =
+                AppData.Zorumualantrue[index].resim.toString();
+            return Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0.0)),
+              elevation: 0,
+              child: ListTile(
+                title: Image.network(
+                  AppData.Zorumualantrue[index].resim.toString(),
+                  scale: 1,
+                ),
+              ),
+            );
+          }),
+        ),
+      ),
+    );
+  }
 
   Widget _buildModulList() {
     var Zorumualanfalse = modulLists.where((item) => item.zorunlu == false);
     AppData.Zorumualanfalse = Zorumualanfalse.toList();
 
-    return ListView.separated(
-      // scrollDirection: Axis.horizontal,
-      shrinkWrap: true,
-      padding: const EdgeInsets.all(16.0),
-      itemCount: AppData.Zorumualanfalse.length,
-      separatorBuilder: (context, index) {
-        return const SizedBox(
-          height: 12.0,
-        );
-      },
-      itemBuilder: (context, index) {
-        final item = AppData.Zorumualanfalse[index];
-        return _buildModulItem(
-          item: item,
-        );
-      },
+    return AbsorbPointer(
+      absorbing: AppData.enablewidget,
+      child: ListView.separated(
+        // scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(16.0),
+        itemCount: AppData.Zorumualanfalse.length,
+        separatorBuilder: (context, index) {
+          return const SizedBox(
+            height: 12.0,
+          );
+        },
+        itemBuilder: (context, index) {
+          final item = AppData.Zorumualanfalse[index];
+          return _buildModulItem(
+            item: item,
+          );
+        },
+      ),
     );
   }
 
@@ -285,9 +332,23 @@ class _CreateProductListItemDetailState
       content: Text('Veri Bulunamadı'),
     ));
   }
+
+  void test22() {
+    /*  var Zorumualantrue =
+    AppData.modulLists.where((item) => item.zorunlu == true);
+    AppData.Zorumualantrue = Zorumualantrue.toList();
+    print(element);    print(element);
+    AppData.Zorumualantrue .forEach((element) {
+      print('element');
+      print(element);
+      print('element');
+    });
+
+  }*/
+  }
 }
 
-class ModulCart extends StatelessWidget {
+class ModulCart extends StatefulWidget {
   const ModulCart({
     super.key,
     required this.product,
@@ -299,74 +360,91 @@ class ModulCart extends StatelessWidget {
   final bool highlighted;
   final bool hasItems;
 
+  @override
+  State<ModulCart> createState() => _ModulCartState();
+}
+
+class _ModulCartState extends State<ModulCart> {
 //// gesmat payin afrad ra namayesh midahad
+
   @override
   Widget build(BuildContext context) {
-    return Transform.scale(
-      scale: highlighted ? 1.075 : 1.0,
-      child: Material(
-        elevation: highlighted ? 8.0 : 4.0,
-        borderRadius: BorderRadius.circular(19.0),
-        color: highlighted ? const Color(0xFFF64209) : Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 8.0,
-            vertical: 24.0,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              //test2(),
-              Visibility(
-                visible: hasItems,
-                maintainState: true,
-                maintainAnimation: true,
-                maintainSize: true,
-                child: Column(
-                  children: [
-                    Center(
-                      child: Expanded(
-                        child: ReorderableListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: AppData.namProductImagees.length,
-                            itemBuilder: (BuildContext context, int index) {
-
-                              return Container(
-                                key: ValueKey(index),
-                                //   color: Colors.grey.shade50,
-                                // margin: const EdgeInsets.all(0),
-                                child: ListTile(
-                                  title: Image.network(
-                                      AppData.namProductImagees[index],
-                                      scale: 1),
-                                  //  leading: Text(product.formattedTotalItemheih.toString()),
-                                  /* Do something else */
-                                ),
-                              );
-                            },
-                            // The reorder function
-                            onReorder: (oldIndex, newIndex) {
-                              if (newIndex > oldIndex) {
-                                newIndex = newIndex - 1;
-                              }
-                              final element =
-                                  AppData.namProductImagees.removeAt(oldIndex);
-                              AppData.namProductImagees
-                                  .insert(newIndex, element);
-                            }),
+    return Center(
+      child: Transform.scale(
+        scale: widget.highlighted ? 1.075 : 1.0,
+        child: Material(
+          elevation: widget.highlighted ? 8.0 : 4.0,
+          borderRadius: BorderRadius.circular(19.0),
+          color: widget.highlighted ? const Color(0xFFF64209) : Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 8.0,
+              vertical: 24.0,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                //
+                //
+                // _buildZorunluImage(),
+                Visibility(
+                  visible: widget.hasItems,
+                  maintainState: true,
+                  maintainAnimation: true,
+                  maintainSize: true,
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Expanded(
+                          child: AbsorbPointer(
+                            absorbing: false,
+                            child: ReorderableListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: AppData.namProductImagees.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Container(
+                                    key: ValueKey(index),
+                                    color: Colors.grey.shade50,
+                                    // margin: const EdgeInsets.all(0),
+                                    child: ListTile(
+                                      title: Image.network(
+                                          AppData.namProductImagees[index],
+                                          scale: 1),
+                                      trailing: IconButton(
+                                        icon: Icon(Icons.delete,
+                                            color: Colors.black),
+                                        onPressed: () => remove(index),
+                                      ),
+                                      //  leading: Text(product.formattedTotalItemheih.toString()),
+                                      /* Do something else */
+                                    ),
+                                  );
+                                },
+                                // The reorder function
+                                onReorder: (oldIndex, newIndex) {
+                                  if (newIndex > oldIndex) {
+                                    newIndex = newIndex - 1;
+                                  }
+                                  final element = AppData.namProductImagees
+                                      .removeAt(oldIndex);
+                                  AppData.namProductImagees
+                                      .insert(newIndex, element);
+                                }),
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
 
-              _buildZorunluImage(),
-              /* Image.network(
-                "http://sistemonline.com.tr/seowood/28-68-1.png",
-                width: 276,
-              ),*/
-            ],
+                //_buildZorunluImage(),
+                /*Image.network(
+                   AppData.Zurunluresim.toString(),
+                  width: 276,
+                ),*/
+              ],
+            ),
           ),
         ),
       ),
@@ -377,18 +455,51 @@ class ModulCart extends StatelessWidget {
     var Zorumualantrue =
         AppData.modulLists.where((item) => item.zorunlu == true);
     AppData.Zorumualantrue = Zorumualantrue.toList();
-    return Center(
-      child: Column(
-        children: List.generate(AppData.Zorumualantrue.length, (index) {
-          AppData.yukseklikZorunluTrue =
-              AppData.Zorumualantrue[index].yukseklik;
-          return Image.network(
-            AppData.Zorumualantrue[index].resim.toString(),
-            width: 276,
-          );
-        }),
+    return Container(
+      child: Visibility(
+        visible: false,
+        child: Column(
+          children: List.generate(AppData.Zorumualantrue.length, (index) {
+            AppData.yukseklikZorunluTrue =
+                AppData.Zorumualantrue[index].yukseklik;
+            AppData.Zurunluresim =
+                AppData.Zorumualantrue[index].resim.toString();
+            return Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0.0)),
+              elevation: 0,
+              child: ListTile(
+                title: Image.network(
+                  AppData.Zorumualantrue[index].resim.toString(),
+                  scale: 1,
+                ),
+              ),
+            );
+          }),
+        ),
       ),
     );
+  }
+
+  void remove(int index) {
+    setState(() {
+      AppData.namProductImagees.removeAt(index);
+      AppData.TotalUrunMaxYukseklik.removeAt(index);
+      AppData.TotalUrunMaxYukseklik.forEach((element) {
+        print(element);
+      });
+      int sum = AppData.TotalUrunMaxYukseklik.fold(
+          0, (previousValue, element) => previousValue + element);
+      AppData.yuksekliktotal = sum + AppData.yukseklikZorunluTrue;
+
+      if (AppData.yuksekliktotal > AppData.maxyukseklik) {
+        AppData.enablewidget = true;
+      } else if (AppData.yuksekliktotal > AppData.maxyukseklik) {
+        AppData.enablewidget = false;
+      }
+      print("sum");
+      print(sum);
+    });
   }
 }
 
@@ -528,8 +639,7 @@ class Product {
   }
 
   int get formattedTotalItemheih {
-    final TotalItemheih =
-        items.fold<int>(0, (prev, item) =>  item.yukseklik);
+    final TotalItemheih = items.fold<int>(0, (prev, item) => item.yukseklik);
     return TotalItemheih;
   }
 }
