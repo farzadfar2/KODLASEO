@@ -59,7 +59,8 @@ class _DepthListItemDetailState extends State<DepthListItemDetail> {
               child: InkWell(
                 onTap: () {
                   setState(() {
-                    AppData.depthhdata = depthlists[index].derinlik;
+                    //AppData.depthhdata = depthlists[index].derinlik;
+                    AppData.depthhdata = 28;
                     setDepth();
                     Navigator.pushNamed(context, "/WidthScreen");
                   });

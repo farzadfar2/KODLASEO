@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:kodlaseoshop/AppData.dart';
 
+import 'falseDataList_detail.dart';
+
 
 
 class CreateModulInfoDetail extends StatefulWidget {
-final yuksekliktotal;
-  const CreateModulInfoDetail(this.yuksekliktotal,  {super.key});
+  final yuksekliktotal;
+  const CreateModulInfoDetail(this.yuksekliktotal,   {super.key});
 
   @override
   _CreateModulInfoDetailState createState() => _CreateModulInfoDetailState();
@@ -19,23 +21,9 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
   void initState() {
     super.initState();
         setState(() {
-
-
+          GetTotalUrunMaxYukseklik();
     });
   }
-
-  void _onLoading() {
-    setState(() {
-      new Future.delayed(new Duration(seconds: 1), _login);
-    });
-  }
-
-  Future _login() async {
-    setState(() {});
-  }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +87,7 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   height: 40,
                   fit: BoxFit.cover,
                 ),
-                title: Text("ÜrÜn Yükseklik : " + widget.yuksekliktotal.toString()),
+                title: Text("ÜrÜn Yükseklik : " +  AppData.yuksekliktotal.toString()),
                 subtitle: Text("Derinlikhgh : "),
                 tileColor: Colors.grey.shade200,
               )),
@@ -157,7 +145,7 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
               ),
               onPressed: () {
                 setState(() {
-
+                  GetTotalUrunMaxYukseklik();
                 });
 
                 },
@@ -165,7 +153,20 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   style:
                       TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0))),
         ),
+
       ],
     ));
   }
+
+  void GetTotalUrunMaxYukseklik() {
+    AppData.TotalUrunMaxYukseklik.forEach((element) {
+      print(element);
+    });
+    int sum = AppData.TotalUrunMaxYukseklik.fold(
+        0, (previousValue, element) => previousValue + element);
+    AppData.yuksekliktotal = sum + AppData.yukseklikZorunluTrue;
+
+
+  }
+
 }

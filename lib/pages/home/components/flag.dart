@@ -11,7 +11,7 @@ final List<FlagItem> flagItems = [
   FlagItem(
     url: "images/t.png",
     title: "Türkçe",
-    page: "/DepthScreen",
+    page: "/WidthScreen",
     id: 1,
   ),
   FlagItem(

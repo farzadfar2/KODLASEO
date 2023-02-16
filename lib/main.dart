@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kodlaseoshop/pages/home/components/Modulcart.dart';
 import 'package:kodlaseoshop/pages/home/components/createProductList_item_detail.dart';
 import 'package:kodlaseoshop/pages/home/home.dart';
+import 'package:kodlaseoshop/provider/listProvider.dart';
 import 'package:kodlaseoshop/screens/DepthScreen.dart';
 import 'package:kodlaseoshop/screens/LanguageScreen.dart';
 import 'package:kodlaseoshop/screens/WidthScreen.dart';
 import 'package:kodlaseoshop/utils/constants.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 
@@ -16,7 +19,7 @@ void main() async{
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  runApp(const MyApp());
+  runApp(    const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -39,7 +42,8 @@ class MyApp extends StatelessWidget {
         '/LanguegeScreen': (context) => LanguegeScreen(),
         '/WidthScreen': (context) => WidthScreen(),
         '/DepthScreen': (context) => DepthScreen(),
-        '/CreateProductListItemDetail': (context) => CreateProductListItemDetail(),
+        '/CreateProductListItemDetail': (context) => ChangeNotifierProvider<MainModel>(
+            create: (context) => MainModel(), child:  CreateProductListItemDetail()),
 
       },
       builder: (context, widget) => ResponsiveWrapper.builder(

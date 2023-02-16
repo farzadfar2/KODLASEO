@@ -32,6 +32,7 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
     AppData.Zorumualanfalse=[];
     AppData.Zorumualantrue=[];
     AppData.namProductImagees=[];
+
   }
 
   void _onLoading() {
@@ -102,7 +103,8 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
   }
 
   void getWithList() async {
-    int derinlik = AppData.depthhdata;
+    //int derinlik = AppData.depthhdata;
+    int derinlik = 28;
     DepthApi.getWidthListWithLanguage(derinlik).then((response) {
       setState(() {
         List data = jsonDecode(response.body);

@@ -21,11 +21,11 @@ class _CreateProductListItemDetailState
     extends State<CreateProductListItemDetail> with TickerProviderStateMixin {
   // bool _loading = false;
   List<ModulList> modulLists = [];
-  List<ModulList> zorunluListsresim = [];
   List<ModulList> zorunluLists = [];
-  bool Enable = true;
+  bool Enable=true;
 
   final GlobalKey _draggableKey = GlobalKey();
+  static GlobalKey  fileListKey =  GlobalKey();
 
   void _itemDroppedOnCustomerCart({
     required ModulList item,
@@ -56,10 +56,14 @@ class _CreateProductListItemDetailState
     });
   }
 
+
+  refresh() {
+    setState(() {});
+  }
+
   @override
   void initState() {
     getModulList();
-    test22();
   }
 
   List<Product> _Product = [
@@ -111,7 +115,8 @@ class _CreateProductListItemDetailState
 
     if (AppData.yuksekliktotal > AppData.maxyukseklik) {
       AppData.enablewidget = true;
-    } else if (AppData.yuksekliktotal > AppData.maxyukseklik) {
+    }
+    else if(AppData.yuksekliktotal > AppData.maxyukseklik){
       AppData.enablewidget = false;
     }
     print("sum");
@@ -160,7 +165,12 @@ class _CreateProductListItemDetailState
                   child: Padding(
                     padding: const EdgeInsets.all(0.0),
                     child: SizedBox(
-                      child: _buildModulRow(),
+                      child: Column(
+                        children: [
+                          _buildModulRow(),
+                          _buildZorunluImage(),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -176,7 +186,7 @@ class _CreateProductListItemDetailState
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
                                 backgroundColor:
-                                    Colors.orange.shade900, // foreground
+                                Colors.orange.shade900, // foreground
                               ),
                               onPressed: () {
                                 AppData.Zorumualanfalse = [];
@@ -203,41 +213,10 @@ class _CreateProductListItemDetailState
                     ),
                   ),
                 ),
-
               ],
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildZorunluImage() {
-    var Zorumualantrue =
-        AppData.modulLists.where((item) => item.zorunlu == true);
-    AppData.Zorumualantrue = Zorumualantrue.toList();
-    return Container(
-      child: Visibility(
-        visible: true,
-        child: Column(
-          children: List.generate(AppData.Zorumualantrue.length, (index) {
-            AppData.yukseklikZorunluTrue =
-                AppData.Zorumualantrue[index].yukseklik;
-            AppData.Zurunluresim =
-                AppData.Zorumualantrue[index].resim.toString();
-            return Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0.0)),
-              elevation: 0,
-              child: ListTile(
-                title: Image.network(
-                  AppData.Zorumualantrue[index].resim.toString(),
-                  scale: 1,
-                ),
-              ),
-            );
-          }),
-        ),
       ),
     );
   }
@@ -314,6 +293,7 @@ class _CreateProductListItemDetailState
               hasItems: product.items.isNotEmpty,
               highlighted: candidateItems.isNotEmpty,
               product: product,
+              function: methodInParent,
             );
           },
           onAccept: (item) {
@@ -327,26 +307,45 @@ class _CreateProductListItemDetailState
     );
   }
 
+  methodInParent() {
+    setState(() {
+      initState();
+    });
+  }
   show_massaje() {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Veri Bulunamadı'),
     ));
   }
 
-  void test22() {
-    /*  var Zorumualantrue =
+  Widget _buildZorunluImage() {
+    var Zorumualantrue =
     AppData.modulLists.where((item) => item.zorunlu == true);
     AppData.Zorumualantrue = Zorumualantrue.toList();
-    print(element);    print(element);
-    AppData.Zorumualantrue .forEach((element) {
-      print('element');
-      print(element);
-      print('element');
-    });
-
-  }*/
+    return Container(
+      child: Column(
+        children: List.generate(AppData.Zorumualantrue.length, (index) {
+          AppData.yukseklikZorunluTrue =
+              AppData.Zorumualantrue[index].yukseklik;
+          return Visibility(
+            visible: false,
+            child: Card(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
+              elevation: 0,
+              child: ListTile(
+                title: Image.network(
+                  AppData.Zorumualantrue[index].resim.toString(),
+                  scale: 1,
+                ),
+              ),
+            ),
+          );
+        }),
+      ),
+    );
   }
 }
+
 
 class ModulCart extends StatefulWidget {
   const ModulCart({
@@ -354,11 +353,13 @@ class ModulCart extends StatefulWidget {
     required this.product,
     this.highlighted = false,
     this.hasItems = false,
+    required this.function,
   });
 
   final Product product;
   final bool highlighted;
   final bool hasItems;
+  final VoidCallback function;
 
   @override
   State<ModulCart> createState() => _ModulCartState();
@@ -366,11 +367,12 @@ class ModulCart extends StatefulWidget {
 
 class _ModulCartState extends State<ModulCart> {
 //// gesmat payin afrad ra namayesh midahad
-
   @override
   Widget build(BuildContext context) {
     return Center(
+
       child: Transform.scale(
+
         scale: widget.highlighted ? 1.075 : 1.0,
         child: Material(
           elevation: widget.highlighted ? 8.0 : 4.0,
@@ -384,9 +386,7 @@ class _ModulCartState extends State<ModulCart> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                //
-                //
-                // _buildZorunluImage(),
+                //test2(),
                 Visibility(
                   visible: widget.hasItems,
                   maintainState: true,
@@ -403,21 +403,67 @@ class _ModulCartState extends State<ModulCart> {
                                 shrinkWrap: true,
                                 itemCount: AppData.namProductImagees.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  return Container(
-                                    key: ValueKey(index),
-                                    color: Colors.grey.shade50,
-                                    // margin: const EdgeInsets.all(0),
-                                    child: ListTile(
-                                      title: Image.network(
-                                          AppData.namProductImagees[index],
-                                          scale: 1),
-                                      trailing: IconButton(
-                                        icon: Icon(Icons.delete,
-                                            color: Colors.black),
-                                        onPressed: () => remove(index),
+                                  final item = AppData.namProductImagees[index];
+                                  return Dismissible(
+                                    key: Key(item),
+                                    onDismissed: (direction) {
+                                      AppData.namProductImagees.removeAt(index);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(content: Text('$item dismissed')));
+                                    },
+                                    background: Container(color: Colors.red),
+                                    child: Container(
+                                      key: ValueKey(index),
+                                      color: Colors.grey.shade50,
+                                      // margin: const EdgeInsets.all(0),
+                                      child: ListTile(
+                                        title: Image.network(
+                                            AppData.namProductImagees[index],
+                                            scale: 1),
+                                        trailing: IconButton(
+                                          icon: Icon(
+                                              Icons.accessibility_new_outlined,
+                                              color: Colors.black),
+                                          onPressed: () {
+                                            setState(() {
+                                              AppData.namProductImagees
+                                                  .removeAt(index);
+                                              AppData.TotalUrunMaxYukseklik
+                                                  .removeAt(index);
+                                              int sum = AppData
+                                                  .TotalUrunMaxYukseklik
+                                                  .fold(
+                                                  0,
+                                                      (previousValue, element) =>
+                                                  previousValue +
+                                                      element);
+                                              AppData.yuksekliktotal = sum +
+                                                  AppData.yukseklikZorunluTrue;
+                                              print(AppData.yuksekliktotal);
+                                              print("AppData.yuksekliktotal");
+
+                                              if (AppData.yuksekliktotal <
+                                                  AppData.maxyukseklik) {
+                                                AppData.enablewidget = false;
+                                                // model.visible = false;
+                                                print(AppData.yuksekliktotal);
+                                                widget.function();
+                                                CreateModulInfoDetail;
+                                                CreateProductListItemDetail;
+                                                /* initState();
+                                                setState(() {
+                                                  CreateProductListItemDetail();
+                                                  CreateModulInfoDetail();
+                                                });*/
+
+                                              }
+                                            });
+                                          },
+                                        ),
+
+                                        //  leading: Text(product.formattedTotalItemheih.toString()),
+                                        /* Do something else */
                                       ),
-                                      //  leading: Text(product.formattedTotalItemheih.toString()),
-                                      /* Do something else */
                                     ),
                                   );
                                 },
@@ -426,8 +472,8 @@ class _ModulCartState extends State<ModulCart> {
                                   if (newIndex > oldIndex) {
                                     newIndex = newIndex - 1;
                                   }
-                                  final element = AppData.namProductImagees
-                                      .removeAt(oldIndex);
+                                  final element =
+                                  AppData.namProductImagees.removeAt(oldIndex);
                                   AppData.namProductImagees
                                       .insert(newIndex, element);
                                 }),
@@ -438,11 +484,19 @@ class _ModulCartState extends State<ModulCart> {
                   ),
                 ),
 
-                //_buildZorunluImage(),
-                /*Image.network(
-                   AppData.Zurunluresim.toString(),
-                  width: 276,
-                ),*/
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 50),
+                    child: ListTile(
+                      title: Image.network(
+                        AppData.Zurunluresim.toString() == ""
+                            ? "http://sistemonline.com.tr/seowood/28-68-1.png"
+                            : AppData.Zurunluresim.toString(),
+                        scale: 2,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -453,53 +507,26 @@ class _ModulCartState extends State<ModulCart> {
 
   Widget _buildZorunluImage() {
     var Zorumualantrue =
-        AppData.modulLists.where((item) => item.zorunlu == true);
+    AppData.modulLists.where((item) => item.zorunlu == true);
     AppData.Zorumualantrue = Zorumualantrue.toList();
     return Container(
-      child: Visibility(
-        visible: false,
-        child: Column(
-          children: List.generate(AppData.Zorumualantrue.length, (index) {
-            AppData.yukseklikZorunluTrue =
-                AppData.Zorumualantrue[index].yukseklik;
-            AppData.Zurunluresim =
-                AppData.Zorumualantrue[index].resim.toString();
-            return Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0.0)),
-              elevation: 0,
-              child: ListTile(
-                title: Image.network(
-                  AppData.Zorumualantrue[index].resim.toString(),
-                  scale: 1,
-                ),
+      child: Column(
+        children: List.generate(AppData.Zorumualantrue.length, (index) {
+          AppData.yukseklikZorunluTrue =
+              AppData.Zorumualantrue[index].yukseklik;
+          return Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
+            elevation: 0,
+            child: ListTile(
+              title: Image.network(
+                AppData.Zorumualantrue[index].resim.toString(),
+                scale: 1,
               ),
-            );
-          }),
-        ),
+            ),
+          );
+        }),
       ),
     );
-  }
-
-  void remove(int index) {
-    setState(() {
-      AppData.namProductImagees.removeAt(index);
-      AppData.TotalUrunMaxYukseklik.removeAt(index);
-      AppData.TotalUrunMaxYukseklik.forEach((element) {
-        print(element);
-      });
-      int sum = AppData.TotalUrunMaxYukseklik.fold(
-          0, (previousValue, element) => previousValue + element);
-      AppData.yuksekliktotal = sum + AppData.yukseklikZorunluTrue;
-
-      if (AppData.yuksekliktotal > AppData.maxyukseklik) {
-        AppData.enablewidget = true;
-      } else if (AppData.yuksekliktotal > AppData.maxyukseklik) {
-        AppData.enablewidget = false;
-      }
-      print("sum");
-      print(sum);
-    });
   }
 }
 
@@ -561,8 +588,8 @@ class ModulListItem extends StatelessWidget {
                     Text(
                       name,
                       style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            fontSize: 14.0,
-                          ),
+                        fontSize: 14.0,
+                      ),
                     ),
                   ],
                 ),
@@ -634,7 +661,7 @@ class Product {
 
   String get ModulImage {
     final imageprovider =
-        items.fold<String>('', (prev, item) => item.resim.toString());
+    items.fold<String>('', (prev, item) => item.resim.toString());
     return imageprovider;
   }
 

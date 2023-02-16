@@ -26,7 +26,7 @@ class AppData{
  static  int yukseklik=0;
  static  int yukseklikZorunluTrue=0;
  static bool enablewidget = false;
- static String Zurunluresim = "false";
+ static String Zurunluresim = "";
 // static  int TotalUrunMaxYukseklik=0;
 // static final TotalUrunMaxYukseklik = <int>[];
 

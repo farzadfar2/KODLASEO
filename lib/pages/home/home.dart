@@ -69,7 +69,7 @@ class Home extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-               //child: Header(),
+              // child: Header(),
               ),
               Carousel(),
 
