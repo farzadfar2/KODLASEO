@@ -25,7 +25,7 @@ class _CreateProductListItemDetailState
   bool Enable=true;
 
   final GlobalKey _draggableKey = GlobalKey();
-  static GlobalKey  fileListKey =  GlobalKey();
+
 
   void _itemDroppedOnCustomerCart({
     required ModulList item,
@@ -64,6 +64,8 @@ class _CreateProductListItemDetailState
   @override
   void initState() {
     getModulList();
+    GetTotalUrunMaxYukseklik();
+
   }
 
   List<Product> _Product = [
@@ -403,16 +405,8 @@ class _ModulCartState extends State<ModulCart> {
                                 shrinkWrap: true,
                                 itemCount: AppData.namProductImagees.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  final item = AppData.namProductImagees[index];
-                                  return Dismissible(
-                                    key: Key(item),
-                                    onDismissed: (direction) {
-                                      AppData.namProductImagees.removeAt(index);
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(content: Text('$item dismissed')));
-                                    },
-                                    background: Container(color: Colors.red),
-                                    child: Container(
+
+                                    return Container(
                                       key: ValueKey(index),
                                       color: Colors.grey.shade50,
                                       // margin: const EdgeInsets.all(0),
@@ -464,7 +458,7 @@ class _ModulCartState extends State<ModulCart> {
                                         //  leading: Text(product.formattedTotalItemheih.toString()),
                                         /* Do something else */
                                       ),
-                                    ),
+
                                   );
                                 },
                                 // The reorder function
