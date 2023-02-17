@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/foundation.dart';
 
 class ModulList {
@@ -8,8 +10,8 @@ class ModulList {
   int derinlik;
   int genislik;
   int yukseklik;
-  dynamic agirlik;
-  dynamic kutudesi;
+  int agirlik;
+  double kutudesi;
   dynamic fiyat;
   String resim;
   dynamic seviye;
@@ -19,6 +21,8 @@ class ModulList {
   dynamic fiyatusd;
   int get formattedTotalItemPrice =>
       yukseklik;
+  int get formattedTotalItemAgrlik =>
+      agirlik;
 
   ModulList(
       {@required this.id = 0,
@@ -29,7 +33,7 @@ class ModulList {
       @required this.genislik = 0,
       @required this.yukseklik = 0,
       @required this.agirlik = 0,
-      @required this.kutudesi,
+      @required this.kutudesi=0,
       @required this.fiyat,
       @required this.resim = '',
       @required this.seviye,
@@ -47,8 +51,8 @@ class ModulList {
       derinlik: json['derinlik'] ?? "0" as int,
       genislik: json['genislik'] ?? "" as String,
       yukseklik: json['yukseklik'] ?? "0" as int,
-      agirlik: json['agirlik'] ?? "0" as dynamic,
-      kutudesi: json['kutudesi'] ?? "0" as dynamic,
+      agirlik: json['agirlik'] ?? "0" as int,
+      kutudesi: json['kutudesi'] ?? "0" as double,
       fiyat: json['fiyat'] ?? "0" as dynamic,
       resim: json['resim'] ?? "" as String,
       seviye: json['seviye'] ?? "0" as dynamic,

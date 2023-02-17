@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:kodlaseoshop/AppData.dart';
 
+import '../../../data/api/Depth.dart';
 import 'falseDataList_detail.dart';
 
 
 
 class CreateModulInfoDetail extends StatefulWidget {
-  final yuksekliktotal;
-  const CreateModulInfoDetail(this.yuksekliktotal,   {super.key});
+
+  const CreateModulInfoDetail({super.key});
 
   @override
   _CreateModulInfoDetailState createState() => _CreateModulInfoDetailState();
@@ -22,7 +23,11 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
     super.initState();
         setState(() {
           GetTotalUrunMaxYukseklik();
-    });
+          GetTotalaWeigt();
+          GetTotalfiyat();
+          GetTotalDesi();
+          GetModulList();
+        });
   }
 
   @override
@@ -41,8 +46,9 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   height: 50,
                   fit: BoxFit.cover,
                 ),
-                title: Text("Derinlik : " + AppData.depthhdata.toString()),
-                subtitle: Text("Derinlik : "),
+              //  title: Text("Derinlik : " + AppData.depthhdata.toString()),
+                title: Text("Derinlik : " + "28"),
+              //  subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
         ),
@@ -58,7 +64,7 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                 ),
                 title: Text("Genişlik : " + AppData.withhhdata.toString()
                 ),
-                subtitle: Text("Derinlik : "),
+              //  subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
         ),
@@ -68,8 +74,8 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
               child: ListTile(
                 leading: Image.network(
                   "assets/icon/yuksek.png",
-                  width: 40,
-                  height: 40,
+                  width: 50,
+                  height: 50,
                   fit: BoxFit.cover,
                 ),
                 title: Text("Maximum Yükseklik : " + AppData.maxyukseklik.toString()),
@@ -83,12 +89,20 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
               child: ListTile(
                 leading: Image.network(
                   "assets/icon/yuksek.png",
-                  width: 40,
-                  height: 40,
+                  width: 50,
+                  height: 50,
                   fit: BoxFit.cover,
                 ),
                 title: Text("ÜrÜn Yükseklik : " +  AppData.yuksekliktotal.toString()),
-                subtitle: Text("Derinlikhgh : "),
+                subtitle: Text(AppData.yuksekliktotal > 200 ? " Ürün Yüksekliği Bu miktardan Fazla olamaz" :  " ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red.shade900
+                  ),
+
+
+                ),
+
                 tileColor: Colors.grey.shade200,
               )),
         ),
@@ -98,12 +112,12 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
               child: ListTile(
                 leading: Image.network(
                   "assets/icon/ebat.png",
-                  width: 60,
-                  height: 60,
+                  width: 50,
+                  height: 50,
                   fit: BoxFit.cover,
                 ),
-                title: Text("Koli Ebatı : "),
-                subtitle: Text("Derinlik : "),
+                title: Text("Koli Ebatı : " +  AppData.desitotal.toString() + " Desi" ),
+              //  subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
         ),
@@ -117,8 +131,8 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   height: 50,
                   fit: BoxFit.cover,
                 ),
-                title: Text("Koli Ağırlığı : " ),
-                subtitle: Text("Derinlik : "),
+                title: Text("Koli Ağırlığı : " +  AppData.agrlkiktotal.toString() +" Gram=" + (AppData.agrlkiktotal /1000).toString() + " Kg"),
+                //subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
         ),
@@ -128,12 +142,13 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
               child: ListTile(
                 leading: Image.network(
                   "assets/icon/fiyat.png",
-                  width: 60,
-                  height: 60,
+                  width: 50,
+                  height: 50,
                   fit: BoxFit.cover,
                 ),
-                title: Text("Fiyat : "),
-                subtitle: Text("Derinlik : "),
+                title: Text("Fiyat : " + AppData.fiyattotal.toStringAsFixed(2)
+                    .toString(),),
+               // subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
         ),
@@ -145,7 +160,8 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
               ),
               onPressed: () {
                 setState(() {
-                  GetTotalUrunMaxYukseklik();
+
+                  GetModulList();
                 });
 
                 },
@@ -168,5 +184,52 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
 
 
   }
+  void GetTotalaWeigt() {
+    AppData.TotalUrunagrlik.forEach((element) {
+      print(element);
+    });
+    int sum = AppData.TotalUrunagrlik.fold(
+        0, (previousValue, element) => previousValue + element);
+    AppData.agrlkiktotal = sum + AppData.AgrlikZorunluTrue;
+    AppData.agrlkiktotalshowkg= AppData.agrlkiktotal/1000;
 
-}
+
+  }
+  void GetTotalfiyat() {
+    AppData.TotalUrunfiyat.forEach((element) {
+      print(element);
+    });
+    double sum = AppData.TotalUrunfiyat.fold(
+        0, (previousValue, element) => previousValue + element);
+    AppData.fiyattotal = sum + AppData.fiyatZorunluTrue;
+  }
+
+  void GetTotalDesi() {
+    AppData.TotalUrunDesi.forEach((element) {
+      print(element);
+    });
+    double sum = AppData.TotalUrunDesi.fold(
+        0, (previousValue, element) => previousValue + element);
+    AppData.desitotal = sum + AppData.fiyatZorunluTrue;
+  }
+
+  void GetModulList() {
+    AppData.ModulListId.forEach((element) {
+      print("element");
+      print(element);
+    });
+    print( AppData.IdZorunluTrue);
+
+  }
+
+  PostModulList() async {
+     AppData.depthhdata = 28;
+      int derinlik=AppData.depthhdata;
+     int genislik= AppData.withhhdata;
+     int   miktar=1;
+    List moduller = [];
+   // DepthApi.PostModulList(28, 49,1,);
+    }
+  }
+
+
