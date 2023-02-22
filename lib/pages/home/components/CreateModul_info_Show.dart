@@ -18,12 +18,18 @@ class CreateModulInfoShow extends StatefulWidget {
 }
 
 class _CreateModulInfoShowState extends State<CreateModulInfoShow> {
-
-  List<ModelModulPostGiveValueModullistesi> modelModulPostGiveValueModullistesi = [];
-
+  var formKey = GlobalKey<FormState>();
+  List<Value> value = [];
+  List<Modullistesi> modullistesi = [];
 
   @override
-  void initState() {}
+  void initState() {
+    super.initState();
+
+    setState(() {
+      LoadData();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,17 +65,20 @@ class _CreateModulInfoShowState extends State<CreateModulInfoShow> {
                   : Axis.horizontal,
               children: [
                 Expanded(
-                  flex: ScreenHelper.isMobile(context) ? 0 : 2,
-                  child: CreateModulShowDetail1(),
-                ),
+                    flex: ScreenHelper.isMobile(context) ? 0 : 2,
+                    child: Column(
+                      children: [
+                        CreateModulShowDetail1(),
+                      ],
+                    )),
                 Expanded(
                   flex: ScreenHelper.isMobile(context) ? 0 : 2,
                   child: CreateModulShowDetail(),
                 ),
                 Expanded(
                   flex: ScreenHelper.isMobile(context) ? 0 : 2,
-                  child: Image.asset(
-                    "assets/person.png",
+                  child: Image.network(
+                    AppData.siparisresim,
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -84,201 +93,181 @@ class _CreateModulInfoShowState extends State<CreateModulInfoShow> {
   CreateModulShowDetail() {
     return Center(
         child: Column(
-          children: [
-            Card(
-              child: Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: ListTile(
-                    leading: Image.network(
-                      "assets/icon/derinlik.png",
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
-                    //  title: Text("Derinlik : " + AppData.depthhdata.toString()),
-                    title: Text("Derinlik : " + "28"),
-                    //  subtitle: Text("Derinlik : "),
-                    tileColor: Colors.grey.shade200,
-                  )),
-            ),
-            Card(
-              child: Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: ListTile(
-                    leading: Image.network(
-                      "assets/icon/genis.png",
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
-                    title: Text("Genişlik : " + AppData.withhhdata.toString()),
-                    //  subtitle: Text("Derinlik : "),
-                    tileColor: Colors.grey.shade200,
-                  )),
-            ),
-            Card(
-              child: Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: ListTile(
-                    leading: Image.network(
-                      "assets/icon/yuksek.png",
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
-                    title: Text(
-                        "ÜrÜn Yükseklik : " +
-                            AppData.yuksekliktotal.toString()),
-                    tileColor: Colors.grey.shade200,
-                  )),
-            ),
-            Card(
-              child: Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: ListTile(
-                    leading: Image.network(
-                      "assets/icon/ebat.png",
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
-                    title: Text(
-                        "Koli Ebatı : " + AppData.desitotal.toString() +
-                            " Desi"),
-                    //  subtitle: Text("Derinlik : "),
-                    tileColor: Colors.grey.shade200,
-                  )),
-            ),
-            Card(
-              child: Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: ListTile(
-                    leading: Image.network(
-                      "assets/icon/fiyat.png",
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
-                    title: Text(
-                      "Fiyat : " +
-                          AppData.fiyattotal.toStringAsFixed(2).toString(),
-                    ),
-                    // subtitle: Text("Derinlik : "),
-                    tileColor: Colors.grey.shade200,
-                  )),
-            ),
-          ],
-        ));
+      children: [
+        Card(
+          child: Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: ListTile(
+                leading: Image.network(
+                  "assets/icon/derinlik.png",
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
+                //  title: Text("Derinlik : " + AppData.depthhdata.toString()),
+                title: Text("Derinlik : " + AppData.siparisderinlik.toString()),
+                //  subtitle: Text("Derinlik : "),
+                tileColor: Colors.grey.shade200,
+              )),
+        ),
+        Card(
+          child: Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: ListTile(
+                leading: Image.network(
+                  "assets/icon/genis.png",
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
+                title: Text("Genişlik : " + AppData.siparisgenislik.toString()),
+                //  subtitle: Text("Derinlik : "),
+                tileColor: Colors.grey.shade200,
+              )),
+        ),
+        Card(
+          child: Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: ListTile(
+                leading: Image.network(
+                  "assets/icon/yuksek.png",
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
+                title: Text(
+                    "ÜrÜn Yükseklik : " + AppData.siparisyukseklik.toString()),
+                tileColor: Colors.grey.shade200,
+              )),
+        ),
+        Card(
+          child: Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: ListTile(
+                leading: Image.network(
+                  "assets/icon/ebat.png",
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
+                title: Text("Koli Ebatı : " + AppData.sipariskoliebat),
+                //  subtitle: Text("Derinlik : "),
+                tileColor: Colors.grey.shade200,
+              )),
+        ),
+        Card(
+          child: Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: ListTile(
+                leading: Image.network(
+                  "assets/icon/fiyat.png",
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
+                title: Text(
+                  "Fiyat : " + AppData.siparisfiyat.toString(),
+                ),
+                // subtitle: Text("Derinlik : "),
+                tileColor: Colors.grey.shade200,
+              )),
+        ),
+      ],
+    ));
   }
 
   CreateModulShowDetail1() {
     return Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-
-            Card(
-              child: Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: ListTile(
-                    leading: Image.network(
-                      "assets/icon/genis.png",
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
-                    title: Text("Seçilen Moduller"),
-                    //  subtitle: Text("Derinlik : "),
-                    tileColor: Colors.grey.shade200,
-                  )),
-            ),
-            Card(
-              child: Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: ListTile(
-                    leading: Image.network(
-                      "assets/icon/yuksek.png",
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
-                    title: Text(
-                        "Adet : " +
-                            AppData.yuksekliktotal.toString()),
-                    tileColor: Colors.grey.shade200,
-                  )),
-            ),
-            Card(
-              child: Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: ListTile(
-                    leading: Image.network(
-                      "assets/icon/ebat.png",
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
-                    title: Text(
-                        "Modul : " + AppData.desitotal.toString() +
-                            " Desi"),
-                    //  subtitle: Text("Derinlik : "),
-                    tileColor: Colors.grey.shade200,
-                  )),
-            ),
-            Card(
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.grey.shade600, // background
-                    onPrimary: Colors.white, // foreground
-                  ),
-                  onPressed: () {
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Card(
+          child: Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: ListTile(
+                leading: Image.network(
+                  "assets/icon/genis.png",
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
+                title: Text("Seçilen Moduller"),
+                //  subtitle: Text("Derinlik : "),
+                tileColor: Colors.grey.shade200,
+              )),
+        ),
+        Column(
+          children: List.generate(modullistesi.length, (index) {
+            return ResponsiveWrapper(
+              child: Card(
+                child: InkWell(
+                  onTap: () {
                     setState(() {
-                      LoadData();
-
-                    /*  print(  "AppData.moduldataresponse");
-                      print(  AppData.moduldataresponse);
-                      print(  "AppData.moduldataresponse");
-*/
-
-
-
-                 /*     List<String> data = jsonDecode(AppData.moduldataresponse);
-                      print("data");
-                      print(data);*/
-                 /*     data.forEach((element) {
-                        Map obj = element;
-                        List modullistesi = obj ['modullistesi'];
-                        print("modullistesi");
-                        print(modullistesi);
-                        setState(() {
-                        List Listbas = modullistesi;
-                        this.modelModulPostGiveValueModullistesi =
-                            Listbas.map((modelModulPostGiveValueModullistesi) =>  ModelModulPostGiveValueModullistesi.fromJson(modelModulPostGiveValueModullistesi)).toList();
-                        print("ModelModulPostGiveValueModullistesi.length");
-                        print(modelModulPostGiveValueModullistesi.length);
-
-                      });
-                      });*/
-
+                      //   Navigator.pushNamed(context, "/CreateProductListItemDetail");
                     });
                   },
-                  child: Text("Yazdır",
-                      style:
+                  child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: ListTile(
+                        title: Text(
+                          modullistesi[index].miktar.toString() + "Adet",
+                        ),
+                        subtitle: Text(modullistesi[index].moduladi.toString()),
+                      )),
+                ),
+              ),
+            );
+          }),
+        ),
+        Card(
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.grey.shade600, // background
+                onPrimary: Colors.white, // foreground
+              ),
+              onPressed: () {
+                setState(() {
+                  LoadData();
+                });
+              },
+              child: Text("Yazdır",
+                  style:
                       TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0))),
-            ),
-
-          ],
-        ));
+        ),
+      ],
+    ));
   }
 
-  Future LoadData()  async  {
-    print(  AppData.moduldataresponse);
-    print(  "AppData.moduldataresponse");
+  LoadData() {
+    //print(AppData.moduldataresponse);
+    //print(json.decode(AppData.moduldataresponse));
+    Iterable data = json.decode(AppData.moduldataresponse);
+    data.forEach((element) {
+      Map obj = element;
+      bool success = obj["success"];
 
-    List jsonResponse = json.decode(AppData.moduldataresponse);
-  print(jsonResponse);
+      Map value = obj['value'];
+      AppData.siparisresim = value['resim'];
+      AppData.siparisgenislik = value['genislik'];
+      AppData.siparisyukseklik = value['yukseklik'];
+      AppData.siparisderinlik = value['derinlik'];
+      AppData.sipariskoliebat = value['koliebati'];
+      AppData.siparisfiyat = value['fiyat'];
 
+      List modullistesi = value['modullistesi'];
 
+      print("value");
+
+      print(value);
+      print("success");
+      print(success);
+      setState(() {
+        List Listbas = modullistesi;
+        this.modullistesi =
+            Listbas.map((modullistesi) => Modullistesi.fromJson(modullistesi))
+                .toList();
+      });
+    });
   }
 }

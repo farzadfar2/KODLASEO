@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
-import '../pages/home/components/footer.dart';
-import '../pages/home/components/widthList_item_detail.dart';
+import '../pages/home/components/ShopDetailShowScreen.dart';
+import '../pages/home/components/ShopProductImageDetailShowScreen.dart';
+import '../pages/home/components/shopModulListDetailShow_item.dart';
 import '../utils/constants.dart';
 import '../utils/screen_helper.dart';
 
-class WidthScreen extends StatelessWidget {
+class ShopDetailShowScreeen extends StatefulWidget {
+  @override
+  State<ShopDetailShowScreeen> createState() => _ShopDetailShowScreeenState();
+}
 
+class _ShopDetailShowScreeenState extends State<ShopDetailShowScreeen> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,6 +23,7 @@ class WidthScreen extends StatelessWidget {
     );
   }
 }
+
 @override
 Widget _buildUi(double width) {
   return Center(
@@ -34,29 +40,23 @@ Widget _buildUi(double width) {
             children: [
               Expanded(
                   flex: ScreenHelper.isMobile(context) ? 0 : 2,
-                  child:
-                  WidthListItemDetail()
-
-              ),
+                  child: ShopModulListDetailShow()),
               SizedBox(
                 width: 50.0,
               ),
               Expanded(
-                flex: ScreenHelper.isMobile(context) ? 0 : 2,
-                child:
-                Image.asset(
-                  "assets/person.png",
-                  fit: BoxFit.contain,
-                ),
+                  flex: ScreenHelper.isMobile(context) ? 0 : 2,
+                  child: ShopDetailShow()),
+              SizedBox(
+                width: 50.0,
               ),
+              Expanded(
+                  flex: ScreenHelper.isMobile(context) ? 0 : 2,
+                  child: ShopProductImageDetailShow()),
             ],
           ),
         );
-
       },
-
     ),
-
   );
-
 }

@@ -85,8 +85,10 @@ class _CreateProductListItemDetailState
     int derinlik = depthhdata;
     int genislik = withhhdata;
     int dil = language;
-
-    DepthApi.getCreateModulList(genislik, derinlik, dil).then((response) {
+    String doviz=   AppData.doviz;
+    print ("doviz");
+    print (doviz);
+    DepthApi.getCreateModulList(genislik, derinlik, dil, doviz).then((response) {
       setState(() {
         List data = jsonDecode(response.body);
         data.forEach((element) {

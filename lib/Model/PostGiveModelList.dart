@@ -1,38 +1,50 @@
+class ModelModulPostGive {
+  bool? success;
+  int? hataKodu;
+  String? hataAciklamasi;
+  Value? value;
+  int? pageCount;
+  int? pageIndex;
 
-class ModelModulPostGiveValueModullistesi {
+  ModelModulPostGive(
+      {this.success,
+        this.hataKodu,
+        this.hataAciklamasi,
+        this.value,
+        this.pageCount,
+        this.pageIndex});
 
-
-  int? miktar;
-  String? moduladi;
-  String? boyut;
-
-  ModelModulPostGiveValueModullistesi({
-    this.miktar,
-    this.moduladi,
-    this.boyut,
-  });
-  ModelModulPostGiveValueModullistesi.fromJson(Map<String, dynamic> json) {
-    miktar = json['miktar']?.toInt();
-    moduladi = json['moduladi']?.toString();
-    boyut = json['boyut']?.toString();
+  ModelModulPostGive.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    hataKodu = json['hataKodu'];
+    hataAciklamasi = json['hataAciklamasi'];
+    value = json['value'] != null ? new Value.fromJson(json['value']) : null;
+    pageCount = json['pageCount'];
+    pageIndex = json['pageIndex'];
   }
+
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['miktar'] = miktar;
-    data['moduladi'] = moduladi;
-    data['boyut'] = boyut;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
+    data['hataKodu'] = this.hataKodu;
+    data['hataAciklamasi'] = this.hataAciklamasi;
+    if (this.value != null) {
+      data['value'] = this.value!.toJson();
+    }
+    data['pageCount'] = this.pageCount;
+    data['pageIndex'] = this.pageIndex;
     return data;
   }
 }
 
-class ModelModulPostGiveValue {
+class Value {
   int? id;
   int? sipid;
   int? userid;
-  String? sipkod;
-  String? sipstokkod;
+  Null? sipkod;
+  Null? sipstokkod;
   String? moduller;
-  List<ModelModulPostGiveValueModullistesi?>? modullistesi;
+  List<Modullistesi>? modullistesi;
   int? derinlik;
   int? genislik;
   int? yukseklik;
@@ -42,109 +54,87 @@ class ModelModulPostGiveValue {
   int? fiyat;
   String? resim;
 
-  ModelModulPostGiveValue({
-    this.id,
-    this.sipid,
-    this.userid,
-    this.sipkod,
-    this.sipstokkod,
-    this.moduller,
-    this.modullistesi,
-    this.derinlik,
-    this.genislik,
-    this.yukseklik,
-    this.kutudesi,
-    this.koliebati,
-    this.miktar,
-    this.fiyat,
-    this.resim,
-  });
-  ModelModulPostGiveValue.fromJson(Map<String, dynamic> json) {
-    id = json['id']?.toInt();
-    sipid = json['sipid']?.toInt();
-    userid = json['userid']?.toInt();
-    sipkod = json['sipkod']?.toString();
-    sipstokkod = json['sipstokkod']?.toString();
-    moduller = json['moduller']?.toString();
+  Value(
+      {this.id,
+        this.sipid,
+        this.userid,
+        this.sipkod,
+        this.sipstokkod,
+        this.moduller,
+        this.modullistesi,
+        this.derinlik,
+        this.genislik,
+        this.yukseklik,
+        this.kutudesi,
+        this.koliebati,
+        this.miktar,
+        this.fiyat,
+        this.resim});
+
+  Value.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    sipid = json['sipid'];
+    userid = json['userid'];
+    sipkod = json['sipkod'];
+    sipstokkod = json['sipstokkod'];
+    moduller = json['moduller'];
     if (json['modullistesi'] != null) {
-      final v = json['modullistesi'];
-      final arr0 = <ModelModulPostGiveValueModullistesi>[];
-      v.forEach((v) {
-        arr0.add(ModelModulPostGiveValueModullistesi.fromJson(v));
+      modullistesi = <Modullistesi>[];
+      json['modullistesi'].forEach((v) {
+        modullistesi!.add(new Modullistesi.fromJson(v));
       });
-      modullistesi = arr0;
     }
-    derinlik = json['derinlik']?.toInt();
-    genislik = json['genislik']?.toInt();
-    yukseklik = json['yukseklik']?.toInt();
-    kutudesi = json['kutudesi']?.toDouble();
-    koliebati = json['koliebati']?.toString();
-    miktar = json['miktar']?.toInt();
-    fiyat = json['fiyat']?.toInt();
-    resim = json['resim']?.toString();
+    derinlik = json['derinlik'];
+    genislik = json['genislik'];
+    yukseklik = json['yukseklik'];
+    kutudesi = json['kutudesi'];
+    koliebati = json['koliebati'];
+    miktar = json['miktar'];
+    fiyat = json['fiyat'];
+    resim = json['resim'];
   }
+
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['id'] = id;
-    data['sipid'] = sipid;
-    data['userid'] = userid;
-    data['sipkod'] = sipkod;
-    data['sipstokkod'] = sipstokkod;
-    data['moduller'] = moduller;
-    if (modullistesi != null) {
-      final v = modullistesi;
-      final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v!.toJson());
-      });
-      data['modullistesi'] = arr0;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['sipid'] = this.sipid;
+    data['userid'] = this.userid;
+    data['sipkod'] = this.sipkod;
+    data['sipstokkod'] = this.sipstokkod;
+    data['moduller'] = this.moduller;
+    if (this.modullistesi != null) {
+      data['modullistesi'] = this.modullistesi!.map((v) => v.toJson()).toList();
     }
-    data['derinlik'] = derinlik;
-    data['genislik'] = genislik;
-    data['yukseklik'] = yukseklik;
-    data['kutudesi'] = kutudesi;
-    data['koliebati'] = koliebati;
-    data['miktar'] = miktar;
-    data['fiyat'] = fiyat;
-    data['resim'] = resim;
+    data['derinlik'] = this.derinlik;
+    data['genislik'] = this.genislik;
+    data['yukseklik'] = this.yukseklik;
+    data['kutudesi'] = this.kutudesi;
+    data['koliebati'] = this.koliebati;
+    data['miktar'] = this.miktar;
+    data['fiyat'] = this.fiyat;
+    data['resim'] = this.resim;
     return data;
   }
 }
 
-class ModelModulPostGive {
-  bool? success;
-  int? hataKodu;
-  String? hataAciklamasi;
-  ModelModulPostGiveValue? value;
-  int? pageCount;
-  int? pageIndex;
+class Modullistesi {
+  int? miktar;
+  String? moduladi;
+  String? boyut;
 
-  ModelModulPostGive({
-    this.success,
-    this.hataKodu,
-    this.hataAciklamasi,
-    this.value,
-    this.pageCount,
-    this.pageIndex,
-  });
-  ModelModulPostGive.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
-    hataKodu = json['hataKodu']?.toInt();
-    hataAciklamasi = json['hataAciklamasi']?.toString();
-    value = (json['value'] != null) ? ModelModulPostGiveValue.fromJson(json['value']) : null;
-    pageCount = json['pageCount']?.toInt();
-    pageIndex = json['pageIndex']?.toInt();
+  Modullistesi({this.miktar, this.moduladi, this.boyut});
+
+  Modullistesi.fromJson(Map<String, dynamic> json) {
+    miktar = json['miktar'];
+    moduladi = json['moduladi'];
+    boyut = json['boyut'];
   }
+
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['success'] = success;
-    data['hataKodu'] = hataKodu;
-    data['hataAciklamasi'] = hataAciklamasi;
-    if (value != null) {
-      data['value'] = value!.toJson();
-    }
-    data['pageCount'] = pageCount;
-    data['pageIndex'] = pageIndex;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['miktar'] = this.miktar;
+    data['moduladi'] = this.moduladi;
+    data['boyut'] = this.boyut;
     return data;
   }
 }

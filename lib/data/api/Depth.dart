@@ -4,9 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:kodlaseoshop/AppData.dart';
 import '../../Model/PostModulList.dart';
 class DepthApi{
-  static Future getDepthListWithLanguage(int dil) async {
+  static Future getDepthListWithLanguage(int dil ) async {
     Map<String, String> map = {
       "dil": dil.toString(),
+
          };
     return http.get(Uri.parse( 'http://seowoodapi.kodlatech.com:8180/api/Derinlik'),
         headers: map);
@@ -19,12 +20,13 @@ class DepthApi{
         headers: map);
   }
 
-  static Future getCreateModulList(int genislik,int derinlik,int dil) async {
+  static Future getCreateModulList(int genislik,int derinlik,int dil , String doviz) async {
 
     Map<String, String> map = {
       "genislik": genislik.toString(),
       "derinlik": derinlik.toString(),
       "dil": dil.toString(),
+      "doviz": doviz.toString(),
     };
     return http.get(Uri.parse( 'http://seowoodapi.kodlatech.com:8180/api/Modul'),
         headers: map);
@@ -42,7 +44,7 @@ class DepthApi{
        body:jsonEncode(model.toMap())
          );
     if (response.statusCode == 200) {
-         AppData.moduldataresponse = json.decode(response.body);
+         AppData.moduldataresponse = response.body;
        //  print(  AppData.moduldataresponse['resim']);
       return response.body;
     } else {

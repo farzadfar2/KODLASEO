@@ -8,6 +8,7 @@ import 'package:kodlaseoshop/pages/home/home.dart';
 import 'package:kodlaseoshop/provider/listProvider.dart';
 import 'package:kodlaseoshop/screens/DepthScreen.dart';
 import 'package:kodlaseoshop/screens/LanguageScreen.dart';
+import 'package:kodlaseoshop/screens/ShopDetailShowScreeen.dart';
 import 'package:kodlaseoshop/screens/WidthScreen.dart';
 import 'package:kodlaseoshop/utils/constants.dart';
 import 'package:provider/provider.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         '/WidthScreen': (context) => WidthScreen(),
         '/DepthScreen': (context) => DepthScreen(),
         '/CreateModulInfoShow': (context) => CreateModulInfoShow(),
+        '/ShopDetailShowScreeen': (context) => ShopDetailShowScreeen(),
         '/CreateProductListItemDetail': (context) =>  CreateProductListItemDetail(),
 
       },

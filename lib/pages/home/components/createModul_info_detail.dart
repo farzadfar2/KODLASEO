@@ -161,7 +161,8 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
               onPressed: () {
                 setState(() {
                   GetModulList();
-                  Navigator.pushNamed(context, "/CreateModulInfoShow");
+                  //Navigator.pushNamed(context, "/CreateModulInfoShow");
+                  Navigator.pushNamed(context, "/ShopDetailShowScreeen");
                 });
               },
               child: Text("ÜRÜNÜ TAMAMLA",
@@ -211,11 +212,11 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
 }
 
 void GetModulList() {
-  AppData.ModulListId;
-  print(AppData.ModulListId);
+
   var zorunlu = AppData.IdZorunluTrue;
   List<ModelModulId> modelModulIdlist = [];
-  modelModulIdlist.add(new ModelModulId(modulid: zorunlu));
+
+  modelModulIdlist.add(new ModelModulId(modulid: zorunlu.toInt()));
   List liste = AppData.ModulListId.reversed.toList();
   liste.forEach((element) {
     modelModulIdlist.add(new ModelModulId(modulid: element));
@@ -223,5 +224,7 @@ void GetModulList() {
   ModelModul modelModul = new ModelModul(
       derinlik: 28, genislik: 68, miktar: 1, moduller: modelModulIdlist);
   DepthApi.PostModulList(modelModul);
+  print ("ModelModulId");
+print(modelModulIdlist.length);
 
 }

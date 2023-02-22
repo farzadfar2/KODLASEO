@@ -5,6 +5,7 @@ class AppData{
 
  static  String myState="";
  static  int depthhdata=0;
+ static  String doviz='';
  static  int withhhdata=0;
  static  int language=0;
  static  int itemCounts=1;
@@ -42,6 +43,22 @@ class AppData{
  static String Zurunluresim = "";
 
  static var moduldataresponse = null;
+ static dynamic ValuePostModulDetail = null;
+
+ static String siparisresim = "";
+ static int siparisgenislik = 0;
+ static int siparisyukseklik = 0;
+ static int siparisderinlik = 0;
+ static String sipariskoliebat = "";
+ static double siparisfiyat = 0;
+ static List siparismodullistesi = [];
+
+
+ static List siparismodullistesipassdata = [];
+
+
+
+
 
 
 

@@ -13,12 +13,14 @@ final List<FlagItem> flagItems = [
     title: "Türkçe",
     page: "/WidthScreen",
     id: 1,
+    doviz:'Tr',
   ),
   FlagItem(
     url: "images/uk.png",
     title: "İngilizce",
     page: "/DepthScreen",
     id: 2,
+    doviz:'En',
   )
 ];
 
@@ -69,6 +71,7 @@ Widget _buildUi(double width, BuildContext context) {
                                         child: InkWell(
                                       onTap: () {
                                         AppData.language = flagItems.id;
+                                        AppData.doviz = flagItems.doviz;
                                         Navigator.pushNamed(
                                             context, flagItems.page);
                                       },

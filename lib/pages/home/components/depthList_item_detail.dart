@@ -95,6 +95,7 @@ class _DepthListItemDetailState extends State<DepthListItemDetail> {
 
   void getDepthList() {
     int dil = AppData.language;
+
     DepthApi.getDepthListWithLanguage(dil).then((response) {
       setState(() {
         List data = jsonDecode(response.body);

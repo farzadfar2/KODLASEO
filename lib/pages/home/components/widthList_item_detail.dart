@@ -121,12 +121,6 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
     });
   }
 
-  vericek() {
-    _onLoading();
-    getWithList();
-  }
-
-  verihata() {}
 
   show_massaje() {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
