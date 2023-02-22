@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kodlaseoshop/pages/home/components/CreateModul_info_Show.dart';
 import 'package:kodlaseoshop/pages/home/components/Modulcart.dart';
 import 'package:kodlaseoshop/pages/home/components/createProductList_item_detail.dart';
 import 'package:kodlaseoshop/pages/home/home.dart';
@@ -42,8 +43,8 @@ class MyApp extends StatelessWidget {
         '/LanguegeScreen': (context) => LanguegeScreen(),
         '/WidthScreen': (context) => WidthScreen(),
         '/DepthScreen': (context) => DepthScreen(),
-        '/CreateProductListItemDetail': (context) => ChangeNotifierProvider<MainModel>(
-            create: (context) => MainModel(), child:  CreateProductListItemDetail()),
+        '/CreateModulInfoShow': (context) => CreateModulInfoShow(),
+        '/CreateProductListItemDetail': (context) =>  CreateProductListItemDetail(),
 
       },
       builder: (context, widget) => ResponsiveWrapper.builder(

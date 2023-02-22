@@ -1,10 +1,8 @@
 
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
-
-import '../../Model/ModulList.dart';
-
+import 'package:kodlaseoshop/AppData.dart';
+import '../../Model/PostModulList.dart';
 class DepthApi{
   static Future getDepthListWithLanguage(int dil) async {
     Map<String, String> map = {
@@ -33,25 +31,24 @@ class DepthApi{
   }
 
 
-  static Future PostModulList(int derinlik, int genislik ,int miktar, List moduller) async {
-    final response = await http.post(
-      Uri.parse(  'http://seowoodapi.kodlatech.com:8180/api/Modul'),
-      headers: <String, String>{
-      },
-      body: jsonEncode(<dynamic, dynamic>{
-        'derinlik': derinlik,
-        'genislik': genislik,
-        'miktar': miktar,
-        'moduller': moduller,
-      }),
-    );
-    if (response.statusCode == 201) {
-      return ModulList.fromJSON(jsonDecode(response.body));
 
+
+  static Future<String> PostModulList( ModelModul model) async {
+     final response = await http.post(
+      Uri.parse( 'http://seowoodapi.kodlatech.com:8180/api/siparis'),
+        headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        },
+       body:jsonEncode(model.toMap())
+         );
+    if (response.statusCode == 200) {
+         AppData.moduldataresponse = json.decode(response.body);
+       //  print(  AppData.moduldataresponse['resim']);
+      return response.body;
     } else {
-      //throw Exception('Failed to create album.');
+    throw Exception('Failed to create album.');
     }
   }
-
-
 }
+
+

@@ -40,8 +40,9 @@ class AppData{
  static  int IdZorunluTrue=0;
  static bool enablewidget = false;
  static String Zurunluresim = "";
-// static  int TotalUrunMaxYukseklik=0;
-// static final TotalUrunMaxYukseklik = <int>[];
+
+ static var moduldataresponse = null;
+
 
 
 }
