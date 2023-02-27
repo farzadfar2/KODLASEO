@@ -121,13 +121,15 @@ class Modullistesi {
   int? miktar;
   String? moduladi;
   String? boyut;
+  String? modulaciklama;
 
-  Modullistesi({this.miktar, this.moduladi, this.boyut});
+  Modullistesi({this.miktar, this.moduladi, this.boyut , this.modulaciklama});
 
   Modullistesi.fromJson(Map<String, dynamic> json) {
     miktar = json['miktar'];
     moduladi = json['moduladi'];
     boyut = json['boyut'];
+    modulaciklama = json['modulaciklama'];
   }
 
   Map<String, dynamic> toJson() {
@@ -135,6 +137,7 @@ class Modullistesi {
     data['miktar'] = this.miktar;
     data['moduladi'] = this.moduladi;
     data['boyut'] = this.boyut;
+    data['modulaciklama'] = this.modulaciklama;
     return data;
   }
 }

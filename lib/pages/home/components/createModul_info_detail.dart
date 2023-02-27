@@ -162,7 +162,7 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                 setState(() {
                   GetModulList();
                   //Navigator.pushNamed(context, "/CreateModulInfoShow");
-                  Navigator.pushNamed(context, "/ShopDetailShowScreeen");
+                  AppData.ModulListId != null ?   Navigator.pushNamed(context, "/ShopDetailShowScreeen") : "hata" ;
                 });
               },
               child: Text("ÜRÜNÜ TAMAMLA",

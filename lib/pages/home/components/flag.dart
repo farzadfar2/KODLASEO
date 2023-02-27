@@ -13,15 +13,16 @@ final List<FlagItem> flagItems = [
     title: "Türkçe",
     page: "/WidthScreen",
     id: 1,
-    doviz:'Tr',
+    doviz: 'Tr',
   ),
   FlagItem(
     url: "images/uk.png",
     title: "İngilizce",
-    page: "/DepthScreen",
+    page: "/WidthScreen",
     id: 2,
-    doviz:'En',
-  )
+    doviz: 'En',
+  ),
+
 ];
 
 class Flag extends StatelessWidget {
@@ -46,69 +47,91 @@ Widget _buildUi(double width, BuildContext context) {
       child: LayoutBuilder(
         builder: (context, constraints) {
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 20.0),
+                padding: EdgeInsets.symmetric(vertical: 10.0),
                 child: Wrap(
-                  spacing: 10.0,
-                  runSpacing: 10.0,
+                  //alignment: WrapAlignment.spaceBetween,
+                  spacing: 30.0,
+                  runSpacing: 30.0,
                   children: flagItems
                       .map(
-                        (flagItems) => Container(
-                          height: 120.0,
-                          width: ScreenHelper.isMobile(context)
-                              ? constraints.maxWidth / 2.0 - 20.0
-                              : constraints.maxWidth / 4.0 - 20.0,
-                          child: Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                        child: InkWell(
-                                      onTap: () {
-                                        AppData.language = flagItems.id;
-                                        AppData.doviz = flagItems.doviz;
-                                        Navigator.pushNamed(
-                                            context, flagItems.page);
-                                      },
-                                      child: Image.asset(
-                                        flagItems.url,
-                                        width: 55.0,
-                                      ),
-                                    ))
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                RichText(
-                                  textAlign: TextAlign.start,
-                                  text: TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: "${flagItems.title}\n",
-                                        recognizer: new TapGestureRecognizer()
-                                          ..onTap = () {
-                                            Navigator.pushNamed(
-                                                context, flagItems.page);
-                                          },
-                                        style: TextStyle(
-                                          color: kCaptionColor,
-                                          height: 1.8,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
+                        (flagItems) => ClipRRect(
+                      borderRadius: BorderRadius.circular(25.0),
+                      child: Container(
+                        // height: 130.0,
+                        width: ScreenHelper.isMobile(context)
+                            ? constraints.maxHeight / 2.0 - 70.0
+                            : constraints.maxWidth / 4.0 - 70.0,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.shade300,
+                              spreadRadius: 50,
+                              blurRadius: 50,
                             ),
+                          ],
+                          color: Colors.grey.shade50,
+                          border: Border.all(
+                            color: Colors.grey.shade50,
                           ),
                         ),
-                      )
+                        child: Column(
+                          //  crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 25),
+                              child: RichText(
+                                textAlign: TextAlign.center,
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "${flagItems.title}\n",
+                                      recognizer: new TapGestureRecognizer()
+                                        ..onTap = () {
+                                          Navigator.pushNamed(
+                                              context, flagItems.page);
+                                        },
+                                      style: TextStyle(
+                                        color: Colors.grey.shade600,
+                                        fontSize: 20,
+                                        height: 1.8,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 25),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                      child: InkWell(
+                                        onTap: () {
+                                          AppData.language = flagItems.id;
+                                          AppData.doviz = flagItems.doviz;
+                                          Navigator.pushNamed(
+                                              context, flagItems.page);
+                                        },
+                                        child: Image.asset(
+                                          flagItems.url,
+                                          // width: 55.0,
+                                        ),
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
                       .toList(),
                 ),
               ),

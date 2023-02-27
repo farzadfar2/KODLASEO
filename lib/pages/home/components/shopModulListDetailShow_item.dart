@@ -1,14 +1,16 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:kodlaseoshop/AppData.dart';
+import 'package:kodlaseoshop/utils/constants.dart';
 import '../../../Model/PostGiveModelList.dart';
-
+import '../../exportPdf/pdfexport/pdfpreview.dart';
 
 class ShopModulListDetailShow extends StatefulWidget {
   const ShopModulListDetailShow({super.key});
 
   @override
-  _ShopModulListDetailShowState createState() => _ShopModulListDetailShowState();
+  _ShopModulListDetailShowState createState() =>
+      _ShopModulListDetailShowState();
 }
 
 class _ShopModulListDetailShowState extends State<ShopModulListDetailShow> {
@@ -33,80 +35,77 @@ class _ShopModulListDetailShowState extends State<ShopModulListDetailShow> {
   }
 
   void _onLoading() {
-    setState(() {
-
-    });
+    setState(() {});
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Card(
-              child: Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: ListTile(
-                    leading: Image.network(
-                      "assets/icon/genis.png",
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Card(
+          child: Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: ListTile(
+                leading: Image.network(
+                  "assets/icon/genis.png",
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
+                title: Text(
+                  "Seçilen Moduller",
+                ),
+
+                //  subtitle: Text("Derinlik : "),
+                tileColor: Colors.grey.shade200,
+              )),
+        ),
+        Column(
+          children: List.generate(modullistesi.length, (index) {
+            return Card(
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    //   Navigator.pushNamed(context, "/CreateProductListItemDetail");
+                  });
+                },
+                child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: ListTile(
+                      title: Text(
+                        modullistesi[index].miktar.toString() + "Adet",
+                      ),
+                      subtitle: Text(modullistesi[index].moduladi.toString() +" - "+ modullistesi[index].modulaciklama.toString()),
+                    )),
+              ),
+            );
+          }),
+        ),
+        Card(
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.grey.shade600, // background
+                onPrimary: Colors.white, // foreground
+              ),
+              onPressed: () {
+                setState(() {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                     builder: (context) => PdfPreviewPage(siparismodullistesipassdata:  AppData.siparismodullistesipassdata,siparisresim: AppData.siparisresim,siparisgenislik: AppData.siparisgenislik, siparisyukseklik: AppData.siparisyukseklik, siparisderinlik: AppData.siparisderinlik, siparisfiyat: AppData.siparisfiyat),
+                   //   builder: (context) => PdfPreviewPage(),
                     ),
-                    title: Text("Seçilen Moduller"),
-                    //  subtitle: Text("Derinlik : "),
-                    tileColor: Colors.grey.shade200,
-                  )),
-            ),
-            Column(
-              children: List.generate(modullistesi.length, (index) {
-                return
-                  Card(
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          //   Navigator.pushNamed(context, "/CreateProductListItemDetail");
-                        });
-                      },
-                      child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: ListTile(
-
-                            title: Text(
-                              modullistesi[index].miktar.toString() + "Adet",
-
-                            ),
-                            subtitle: Text(
-                                modullistesi[index].moduladi.toString()
-                            ),
-                          )),
-                    ),
-
-                );
-              }),
-            ),
-
-            Card(
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.grey.shade600, // background
-                    onPrimary: Colors.white, // foreground
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      LoadData();
-                    });
-                  },
-                  child: Text("Yazdır",
-                      style:
+                  );
+                });
+              },
+              child: Text("Yazdır",
+                  style:
                       TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0))),
-            ),
-          ],
-        ));
+        ),
+      ],
+    ));
   }
 
   void LoadData() {
@@ -137,10 +136,8 @@ class _ShopModulListDetailShowState extends State<ShopModulListDetailShow> {
         this.modullistesi =
             Listbas.map((modullistesi) => Modullistesi.fromJson(modullistesi))
                 .toList();
+       AppData.siparismodullistesipassdata=  this.modullistesi;
       });
     });
   }
-  }
-
-
-
+}

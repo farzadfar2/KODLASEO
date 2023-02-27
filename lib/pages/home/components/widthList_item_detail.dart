@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../AppData.dart';
 import '../../../Model/WidthList.dart';
 import '../../../data/api/Depth.dart';
-
 
 class WidthListItemDetail extends StatefulWidget {
   const WidthListItemDetail({
@@ -17,7 +16,7 @@ class WidthListItemDetail extends StatefulWidget {
 }
 
 class _WidthListItemDetailState extends State<WidthListItemDetail> {
- // bool _validate = false;
+  // bool _validate = false;
   bool _loading = false;
   List<WidthList> widthlists = [];
   var formKey = GlobalKey<FormState>();
@@ -29,71 +28,102 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
     SharedPreferences.getInstance().then((sf) {
       mySharedPrefences = sf;
     });
-    AppData.Zorumualanfalse=[];
-    AppData.Zorumualantrue=[];
-    AppData.namProductImagees=[];
+    AppData.Zorumualanfalse = [];
+    AppData.Zorumualantrue = [];
+    AppData.namProductImagees = [];
+    AppData.Zorumualanfalse = [];
+    AppData.Zorumualantrue = [];
+    AppData.namProductImagees = [];
+    AppData.TotalUrunMaxYukseklik = [];
+    AppData.TotalUrunagrlik = [];
+    AppData.TotalUrunfiyat = [];
+    AppData.TotalUrunDesi = [];
+    AppData.ModulListId = [];
 
-  }
-
-  void _onLoading() {
-    setState(() {
-      getWithList();
-      _loading = true;
-      new Future.delayed(new Duration(seconds: 1), _login);
-    });
-  }
-
-  Future _login() async {
-    setState(() {
-      getWithList();
-      _loading = false;
-    });
+    AppData.Zorumualantrue = [];
+    AppData.modulLists = [];
+    AppData.enablewidget = false;
   }
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
+      child: GridView(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+        ),
         children: List.generate(widthlists.length, (index) {
-          return ResponsiveWrapper(
-            child: Card(
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    AppData.Zorumualanfalse=[];
-                    AppData.Zorumualantrue=[];
-                    AppData.namProductImagees=[];
-                    AppData.withhhdata = widthlists[index].genislik;
-                    AppData.maxyukseklik = widthlists[index].maxyukseklik;
-                    print(AppData.maxyukseklik );
-                    AppData.Zorumualantrue = [];
-                    AppData.modulLists = [];
-                    Navigator.pushNamed(context, "/CreateProductListItemDetail");
-                  });
-                },
-                child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: ListTile(
+          return Card(
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  AppData.Zorumualanfalse = [];
+                  AppData.Zorumualantrue = [];
+                  AppData.namProductImagees = [];
+                  AppData.withhhdata = widthlists[index].genislik;
+                  AppData.maxyukseklik = widthlists[index].maxyukseklik;
+                  print(AppData.maxyukseklik);
+                  AppData.Zorumualantrue = [];
+                  AppData.modulLists = [];
+                  AppData.Zorumualanfalse = [];
+                  AppData.Zorumualantrue = [];
+                  AppData.namProductImagees = [];
+                  AppData.TotalUrunMaxYukseklik = [];
+                  AppData.TotalUrunagrlik = [];
+                  AppData.TotalUrunfiyat = [];
+                  AppData.TotalUrunDesi = [];
+                  AppData.ModulListId = [];
 
-                      title: Image.network(
-                        widthlists[index].resim.toString(),
-                        height: 100,
-                        alignment: Alignment.center,
-                      ),
-                      subtitle: Text(
-                        "Derinlik : " +
-                            widthlists[index].derinlik.toString() +
-                            " cm " +
-                            " Genişlik : " +
-                            widthlists[index].genislik.toString() +
-                            " cm",
-                        style: TextStyle(
-                          fontSize: 25.0,
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
+                  AppData.Zorumualantrue = [];
+                  AppData.modulLists = [];
+                  AppData.enablewidget = false;
+                  Navigator.pushNamed(context, "/CreateProductListItemDetail");
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Container(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.network(
+                          widthlists[index].resim.toString(),
+                          height: 100,
+                          alignment: Alignment.center,
                         ),
-                      ),
-                    )),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Container(
+                            width: 150,
+                            decoration: BoxDecoration(
+                              color: Colors.green.shade700,
+                              border: Border.all(
+                                color: Colors.green.shade700,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Genişlik : " +
+                                    "" +
+                                    widthlists[index].genislik.toString() +
+                                    " cm",
+                                style: TextStyle(
+                                  //  fontSize: 20.0,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+
+                                  // letterSpacing: 1.0
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ]),
+                ),
               ),
             ),
           );
@@ -110,7 +140,7 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
         List data = jsonDecode(response.body);
         data.forEach((element) {
           Map obj = element;
-         // bool success = obj['success'];
+          // bool success = obj['success'];
           List value = obj['value'];
           print(value);
           List value1 = value;
@@ -121,53 +151,9 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
     });
   }
 
-
   show_massaje() {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Veri Bulunamadı'),
     ));
   }
 }
-
-var bodyProgress = new Container(
-  child: new Stack(
-    children: <Widget>[
-      new Container(
-        alignment: AlignmentDirectional.center,
-        decoration: new BoxDecoration(
-          color: Colors.white70,
-        ),
-        child: new Container(
-          decoration:
-              new BoxDecoration(borderRadius: new BorderRadius.circular(10.0)),
-          alignment: AlignmentDirectional.center,
-          child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Center(
-                child: new SizedBox(
-                  height: 50.0,
-                  width: 50.0,
-                  child: new CircularProgressIndicator(
-                    value: null,
-                    strokeWidth: 7.0,
-                  ),
-                ),
-              ),
-              new Container(
-                margin: const EdgeInsets.only(top: 25.0),
-                child: new Center(
-                  child: new Text(
-                    "Lütfen Bekleyin...",
-                    style: new TextStyle(color: Colors.blue),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ],
-  ),
-);

@@ -8,17 +8,14 @@ import '../../../utils/screen_helper.dart';
 
 
 List<HeaderItem> headerItems = [
+  //HeaderItem(title: "HOME",onTap: () {},),
+  //HeaderItem(title: "MY INTRO", onTap: () {}),
+  //HeaderItem(title: "SERVICES", onTap: () {}),
+ // HeaderItem(title: "PORTFOLIO", onTap: () {}),
+  //HeaderItem(title: "TESTIMONIALS", onTap: () {}),
+ // HeaderItem(title: "BLOGS", onTap: () {}),
   HeaderItem(
-    title: "HOME",
-    onTap: () {},
-  ),
-  HeaderItem(title: "MY INTRO", onTap: () {}),
-  HeaderItem(title: "SERVICES", onTap: () {}),
-  HeaderItem(title: "PORTFOLIO", onTap: () {}),
-  HeaderItem(title: "TESTIMONIALS", onTap: () {}),
-  HeaderItem(title: "BLOGS", onTap: () {}),
-  HeaderItem(
-    title: "HIRE ME",
+    title: "SEO",
     onTap: () {},
     isButton: true,
   ),
@@ -81,7 +78,7 @@ class HeaderRow extends StatelessWidget {
                           child: Text(
                             item.title,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black87,
                               fontSize: 13.0,
                               fontWeight: FontWeight.bold,
                             ),

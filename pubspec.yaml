@@ -51,7 +51,7 @@ dependencies:
   path_provider: any
   open_file: ^3.1.0
   pdf: ^3.1.0
-  printing:
+  printing: ^5.7.2
   flutter_staggered_grid_view: any
   steps: ^1.0.1
   scroll_to_index:
@@ -61,7 +61,7 @@ dependencies:
   animations: ^2.0.2
   loading_gifs: ^0.3.0
   image: ^3.2.2
-  flutter_icons: any
+
   smooth_page_indicator: ^0.2.0
   bloc_pattern:
   rxdart:

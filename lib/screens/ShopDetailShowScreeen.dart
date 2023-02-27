@@ -22,41 +22,47 @@ class _ShopDetailShowScreeenState extends State<ShopDetailShowScreeen> {
       ),
     );
   }
-}
 
-@override
-Widget _buildUi(double width) {
-  return Center(
-    child: LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        return ResponsiveWrapper(
-          maxWidth: width,
-          minWidth: width,
-          defaultScale: false,
-          child: Flex(
-            direction: ScreenHelper.isMobile(context)
-                ? Axis.vertical
-                : Axis.horizontal,
-            children: [
-              Expanded(
-                  flex: ScreenHelper.isMobile(context) ? 0 : 2,
-                  child: ShopModulListDetailShow()),
-              SizedBox(
-                width: 50.0,
+  Widget _buildUi(double width) {
+    return Center(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return ResponsiveWrapper(
+            maxWidth: width,
+            minWidth: width,
+            defaultScale: false,
+            child: Container(
+              child: Flex(
+                direction: constraints.maxWidth > 720
+                    ? Axis.horizontal
+                    : Axis.vertical,
+                children: [
+                  // Disable expanded on smaller screen to avoid Render errors by setting flex to 0
+                  Expanded(
+                      flex: constraints.maxWidth > 720.0 ? 1 : 0,
+                    child: ShopModulListDetailShow()
+                  ),
+                  SizedBox(
+                    width: 25.0,
+                  ),
+                  Expanded(
+                      flex: constraints.maxWidth > 720.0 ? 1 : 0,
+                    child:  ShopDetailShow()
+                  ),
+                  SizedBox(
+                    width: 25.0,
+                  ),
+                  Expanded(
+                      flex: constraints.maxWidth > 720.0 ? 1 : 0,
+                      child:  ShopProductImageDetailShow()
+                  ),
+
+                ],
               ),
-              Expanded(
-                  flex: ScreenHelper.isMobile(context) ? 0 : 2,
-                  child: ShopDetailShow()),
-              SizedBox(
-                width: 50.0,
-              ),
-              Expanded(
-                  flex: ScreenHelper.isMobile(context) ? 0 : 2,
-                  child: ShopProductImageDetailShow()),
-            ],
-          ),
-        );
-      },
-    ),
-  );
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
