@@ -111,7 +111,7 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   fit: BoxFit.cover,
                 ),
                 title: Text(
-                    "Koli Ebatı : " + AppData.desitotal.toString() + " Desi"),
+                    "Koli Ebatı : " + AppData.desitotal.toStringAsFixed(4) + " Desi"),
                 //  subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
