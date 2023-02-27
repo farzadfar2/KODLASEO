@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../AppData.dart';
@@ -64,6 +65,7 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
                   AppData.namProductImagees = [];
                   AppData.withhhdata = widthlists[index].genislik;
                   AppData.maxyukseklik = widthlists[index].maxyukseklik;
+                  AppData.Genislikrenk = widthlists[index].renk.toString();
                   print(AppData.maxyukseklik);
                   AppData.Zorumualantrue = [];
                   AppData.modulLists = [];
@@ -100,9 +102,12 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
                           child: Container(
                             width: 150,
                             decoration: BoxDecoration(
-                              color: Colors.green.shade700,
+                            //  color: Color(0xFF6ae792),
+
+                              color: HexColor( widthlists[index].renk.toString()),
+
                               border: Border.all(
-                                color: Colors.green.shade700,
+                               color:HexColor( widthlists[index].renk.toString()),
                               ),
                             ),
                             child: Center(

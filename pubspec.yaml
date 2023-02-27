@@ -61,7 +61,7 @@ dependencies:
   animations: ^2.0.2
   loading_gifs: ^0.3.0
   image: ^3.2.2
-
+  hexcolor: ^3.0.1
   smooth_page_indicator: ^0.2.0
   bloc_pattern:
   rxdart:

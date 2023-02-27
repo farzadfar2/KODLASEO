@@ -7,6 +7,7 @@ class WidthList {
   final int genislik;
   final String? aciklama;
   final String? resim;
+  final String? renk;
   final dynamic maxyukseklik;
   WidthList(
       {@required this.id = 0,
@@ -14,6 +15,7 @@ class WidthList {
         @required this.genislik=0,
         @required this.aciklama,
         @required this.resim,
+        @required this.renk,
         @required this.maxyukseklik,
       });
 
@@ -25,6 +27,7 @@ class WidthList {
         genislik: json['genislik']??"0" as int,
         aciklama: (json['aciklama']??"") as String,
         resim: (json['resim']??"") as String,
+      renk: (json['renk']??"") as String,
       maxyukseklik: json['maxyukseklik']??"0" as int,);
 
   }
@@ -35,6 +38,7 @@ class WidthList {
     map["aciklama"] = aciklama;
     map["genislik"] = genislik;
     map["resim"] = resim;
+    map["renk"] = renk;
     map["maxyukseklik"] = maxyukseklik;
     if (id != null) {
       map["id"] = id;

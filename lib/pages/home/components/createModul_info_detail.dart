@@ -160,9 +160,18 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
               ),
               onPressed: () {
                 setState(() {
-                  GetModulList();
+
+
+                  if ( AppData.ModulListId != null) {
+                    GetModulList();
+                    Navigator.pushNamed(context, "/ShopDetailShowScreeen");
+                  }
+                  else{
+                    print("hata");
+                  }
+
                   //Navigator.pushNamed(context, "/CreateModulInfoShow");
-                  AppData.ModulListId != null ?   Navigator.pushNamed(context, "/ShopDetailShowScreeen") : "hata" ;
+                 // AppData.ModulListId != "NULL" ?   Navigator.pushNamed(context, "/ShopDetailShowScreeen") : "hata" ;
                 });
               },
               child: Text("ÜRÜNÜ TAMAMLA",

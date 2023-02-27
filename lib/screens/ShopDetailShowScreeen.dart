@@ -39,21 +39,21 @@ class _ShopDetailShowScreeenState extends State<ShopDetailShowScreeen> {
                 children: [
                   // Disable expanded on smaller screen to avoid Render errors by setting flex to 0
                   Expanded(
-                      flex: constraints.maxWidth > 720.0 ? 1 : 0,
+                      flex: constraints.maxWidth > 720.0 ? 3 : 0,
                     child: ShopModulListDetailShow()
                   ),
                   SizedBox(
                     width: 25.0,
                   ),
                   Expanded(
-                      flex: constraints.maxWidth > 720.0 ? 1 : 0,
+                      flex: constraints.maxWidth > 720.0 ? 3 : 0,
                     child:  ShopDetailShow()
                   ),
                   SizedBox(
                     width: 25.0,
                   ),
                   Expanded(
-                      flex: constraints.maxWidth > 720.0 ? 1 : 0,
+                      flex: constraints.maxWidth > 720.0 ? 3 : 0,
                       child:  ShopProductImageDetailShow()
                   ),
 

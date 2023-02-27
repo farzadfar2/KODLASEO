@@ -41,6 +41,7 @@ class AppData{
  static  int IdZorunluTrue=0;
  static bool enablewidget = false;
  static String Zurunluresim = "";
+ static String Genislikrenk = "";
  static String modulaciklama = "";
 
  static var moduldataresponse = null;

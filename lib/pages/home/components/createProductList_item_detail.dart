@@ -69,6 +69,7 @@ class _CreateProductListItemDetailState
     GetTotalaWeigt();
     GetTotalfiyat();
     GetTotalDesi();
+    GetResimZurunli();
   }
 
   List<Product> _Product = [
@@ -152,6 +153,11 @@ class _CreateProductListItemDetailState
     }
   }
 
+  void GetResimZurunli() {
+
+
+
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -373,7 +379,7 @@ class _CreateProductListItemDetailState
           AppData.desiZorunluTrue = AppData.Zorumualantrue[index].fiyat;
           AppData.IdZorunluTrue = AppData.Zorumualantrue[index].id;
           AppData.modulaciklama = AppData.Zorumualantrue[index].modulaciklama;
-
+          AppData.Zurunluresim   = AppData.Zorumualantrue[index].resim;
           return Visibility(
             visible: false,
             child: Card(
@@ -394,6 +400,8 @@ class _CreateProductListItemDetailState
       ),
     );
   }
+
+
 }
 
 class ModulCart extends StatefulWidget {
@@ -463,6 +471,7 @@ class _ModulCartState extends State<ModulCart> {
                                       child: ListTile(
                                         title: Image.network(
                                             AppData.namProductImagees[index],
+
                                             scale: 1),
                                         trailing: IconButton(
                                           icon: Icon(
