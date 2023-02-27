@@ -20,7 +20,7 @@ class WidthScreen extends StatelessWidget {
   Widget _buildUi(double width) {
     return Center(
       child: Material(
-          type: MaterialType.transparency,
+        type: MaterialType.transparency,
         child: LayoutBuilder(
           builder: (context, constraints) {
             return ResponsiveWrapper(
@@ -45,7 +45,7 @@ class WidthScreen extends StatelessWidget {
                             style: GoogleFonts.almarai(
                               color: Colors.grey.shade700,
                               fontWeight: FontWeight.bold,
-                            fontSize: 30.0,
+                              fontSize: 30.0,
                             ),
                           ),
                           SizedBox(
@@ -60,17 +60,12 @@ class WidthScreen extends StatelessWidget {
                               height: 1.1,
                             ),
                           ),
-                            SizedBox(
+                          SizedBox(
                             height: 25.0,
                           ),
                           Column(
                             children: [
-
-                               Container(
-
-                                  child: WidthListItemDetail()
-                                ),
-
+                              Container(child: WidthListItemDetail()),
                             ],
                           ),
                           SizedBox(

@@ -475,7 +475,7 @@ class _ModulCartState extends State<ModulCart> {
                                             scale: 1),
                                         trailing: IconButton(
                                           icon: Icon(
-                                              Icons.accessibility_new_outlined,
+                                              Icons.restore_from_trash_sharp,
                                               color: Colors.black),
                                           onPressed: () {
                                             setState(() {
@@ -630,15 +630,17 @@ class ModulListItem extends StatelessWidget {
                 bottomRight: Radius.circular(5)),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.max,
             children: [
               Center(
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
+
                     child: Container(
-                      width: 200,
+                      alignment: Alignment.centerLeft,
+                     // width: 200,
                       decoration: BoxDecoration(
                         color: Colors.orange.shade700,
                         border: Border.all(
@@ -647,6 +649,7 @@ class ModulListItem extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
+
                           name,
                           style:
                               Theme.of(context).textTheme.subtitle1?.copyWith(

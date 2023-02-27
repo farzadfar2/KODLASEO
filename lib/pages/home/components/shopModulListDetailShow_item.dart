@@ -68,15 +68,13 @@ class _ShopModulListDetailShowState extends State<ShopModulListDetailShow> {
             return Card(
               child: InkWell(
                 onTap: () {
-                  setState(() {
-                    //   Navigator.pushNamed(context, "/CreateProductListItemDetail");
-                  });
+
                 },
                 child: Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: ListTile(
                       title: Text(
-                        modullistesi[index].miktar.toString() + "Adet",
+                        modullistesi[index].miktar.toString() + " Adet",
                       ),
                       subtitle: Text(modullistesi[index].moduladi.toString() +" - "+ modullistesi[index].modulaciklama.toString()),
                     )),
