@@ -11,7 +11,7 @@ Future<Uint8List> makePdf( List siparismodullistesipassdata, String  siparisresi
 
   final pdf = Document();
   final imageLogo = MemoryImage((await rootBundle.load('images/logo.png')).buffer.asUint8List());
-  final netImage = await  networkImage('http://seowoodapi2.kodlatech.com:8180/api/siparis/resimyeni/2356.png');
+  final netImage = await  networkImage(siparisresim);
 
 
 
