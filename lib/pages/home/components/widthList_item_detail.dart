@@ -49,12 +49,11 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: GridView(
+      child: GridView.extent(
+        maxCrossAxisExtent: 200,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-        ),
+
         children: List.generate(widthlists.length, (index) {
           return Card(
             child: InkWell(
@@ -66,20 +65,14 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
                   AppData.withhhdata = widthlists[index].genislik;
                   AppData.maxyukseklik = widthlists[index].maxyukseklik;
                   AppData.Genislikrenk = widthlists[index].renk.toString();
-                  print(AppData.maxyukseklik);
-                  AppData.Zorumualantrue = [];
                   AppData.modulLists = [];
-                  AppData.Zorumualanfalse = [];
-                  AppData.Zorumualantrue = [];
-                  AppData.namProductImagees = [];
+
                   AppData.TotalUrunMaxYukseklik = [];
                   AppData.TotalUrunagrlik = [];
                   AppData.TotalUrunfiyat = [];
                   AppData.TotalUrunDesi = [];
                   AppData.ModulListId = [];
 
-                  AppData.Zorumualantrue = [];
-                  AppData.modulLists = [];
                   AppData.enablewidget = false;
                   Navigator.pushNamed(context, "/CreateProductListItemDetail");
                 });
@@ -102,12 +95,14 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
                           child: Container(
                             width: 150,
                             decoration: BoxDecoration(
-                            //  color: Color(0xFF6ae792),
+                              //  color: Color(0xFF6ae792),
 
-                              color: HexColor( widthlists[index].renk.toString()),
+                              color:
+                                  HexColor(widthlists[index].renk.toString()),
 
                               border: Border.all(
-                               color:HexColor( widthlists[index].renk.toString()),
+                                color:
+                                    HexColor(widthlists[index].renk.toString()),
                               ),
                             ),
                             child: Center(
@@ -147,7 +142,7 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
           Map obj = element;
           // bool success = obj['success'];
           List value = obj['value'];
-          print(value);
+
           List value1 = value;
           this.widthlists = value1.map((e) => WidthList.fromJSON(e)).toList();
         });

@@ -1,6 +1,8 @@
 
 import 'package:flutter/cupertino.dart';
 
+import 'Model/PostGiveModelList.dart';
+
 class AppData{
 
  static  String myState="";
@@ -44,7 +46,7 @@ class AppData{
  static String Genislikrenk = "";
  static String modulaciklama = "";
 
- static var moduldataresponse = null;
+
  static dynamic ValuePostModulDetail = null;
 
  static String siparisresim = "";
@@ -53,7 +55,10 @@ class AppData{
  static int siparisderinlik = 0;
  static String sipariskoliebat = "";
  static double siparisfiyat = 0;
+ static String Date = "";
  static List siparismodullistesi = [];
+
+
 
 
  static List siparismodullistesipassdata = [];

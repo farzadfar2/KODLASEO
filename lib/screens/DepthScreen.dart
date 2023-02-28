@@ -37,7 +37,7 @@ Widget _buildUi(double width) {
             children: [
 
               Expanded(
-                flex: ScreenHelper.isMobile(context) ? 0 : 2,
+                flex: ScreenHelper.isMobile(context) ? 0 : 3,
                 child:
                 DepthListItemDetail()
 

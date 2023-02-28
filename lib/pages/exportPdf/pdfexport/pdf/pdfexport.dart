@@ -5,7 +5,9 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:printing/printing.dart';
 
-Future<Uint8List> makePdf( List siparismodullistesipassdata, String  siparisresim,  siparisgenislik, siparisyukseklik,  siparisderinlik,  siparisfiyat) async {
+import '../../../../AppData.dart';
+
+Future<Uint8List> makePdf( List siparismodullistesipassdata, String  siparisresim,  siparisgenislik, siparisyukseklik,  siparisderinlik,  siparisfiyat ,siparistarih) async {
 
   final pdf = Document();
   final imageLogo = MemoryImage((await rootBundle.load('images/logo.png')).buffer.asUint8List());
@@ -24,7 +26,7 @@ Future<Uint8List> makePdf( List siparismodullistesipassdata, String  siparisresi
                   Column(
                     children: [
                       //  Text("Attention to: ${invoice.customer}"),
-                      Text("Tarih : "),
+                      Text("Tarih : " + siparistarih),
                     ],
                     crossAxisAlignment: CrossAxisAlignment.start,
                   ),

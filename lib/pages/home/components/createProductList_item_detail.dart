@@ -5,6 +5,7 @@ import 'package:responsive_framework/responsive_wrapper.dart';
 import '../../../AppData.dart';
 import '../../../Model/ModulList.dart';
 import '../../../data/api/Depth.dart';
+import '../../../screens/WidthScreen.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/screen_helper.dart';
 import 'createModul_info_detail.dart';
@@ -25,7 +26,7 @@ class _CreateProductListItemDetailState
   bool Enable = true;
 
   final GlobalKey _draggableKey = GlobalKey();
-
+  final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
   void _itemDroppedOnCustomerCart({
     required ModulList item,
     required Product product,
@@ -64,12 +65,14 @@ class _CreateProductListItemDetailState
 
   @override
   void initState() {
+
     getModulList();
     GetTotalUrunMaxYukseklik();
     GetTotalaWeigt();
     GetTotalfiyat();
     GetTotalDesi();
     GetResimZurunli();
+
   }
 
   List<Product> _Product = [
@@ -87,8 +90,8 @@ class _CreateProductListItemDetailState
     int genislik = withhhdata;
     int dil = language;
     String doviz = AppData.doviz;
-    print("doviz");
-    print(doviz);
+
+
     DepthApi.getCreateModulList(genislik, derinlik, dil, doviz)
         .then((response) {
       setState(() {
@@ -97,7 +100,7 @@ class _CreateProductListItemDetailState
           Map obj = element;
           // bool success = obj['success'];
           List value = obj['value'];
-          print(value);
+
           List value1 = value;
           this.modulLists = value1.map((e) => ModulList.fromJSON(e)).toList();
         });
@@ -112,7 +115,8 @@ class _CreateProductListItemDetailState
 
   void GetTotalDesi() {
     AppData.TotalUrunDesi.forEach((element) {
-      print(element);
+
+
     });
     double sum = AppData.TotalUrunDesi.fold(
         0, (previousValue, element) => previousValue + element);
@@ -121,7 +125,8 @@ class _CreateProductListItemDetailState
 
   void GetTotalfiyat() {
     AppData.TotalUrunfiyat.forEach((element) {
-      print(element);
+
+
     });
     double sum = AppData.TotalUrunfiyat.fold(
         0, (previousValue, element) => previousValue + element);
@@ -130,7 +135,8 @@ class _CreateProductListItemDetailState
 
   void GetTotalaWeigt() {
     AppData.TotalUrunagrlik.forEach((element) {
-      print(element);
+
+
     });
     int sum = AppData.TotalUrunagrlik.fold(
         0, (previousValue, element) => previousValue + element);
@@ -139,7 +145,7 @@ class _CreateProductListItemDetailState
 
   void GetTotalUrunMaxYukseklik() {
     AppData.TotalUrunMaxYukseklik.forEach((element) {
-      print(element);
+
     });
     int sum = AppData.TotalUrunMaxYukseklik.fold(
         0, (previousValue, element) => previousValue + element);
@@ -153,11 +159,8 @@ class _CreateProductListItemDetailState
     }
   }
 
-  void GetResimZurunli() {
+  void GetResimZurunli() {}
 
-
-
-  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -179,84 +182,122 @@ class _CreateProductListItemDetailState
 
   @override
   Widget _buildUi(double width) {
-    return Center(
-      child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          return ResponsiveWrapper(
-            maxWidth: width,
-            minWidth: width,
-            defaultScale: false,
-            child: Flex(
-              direction: ScreenHelper.isMobile(context)
-                  ? Axis.vertical
-                  : Axis.horizontal,
-              children: [
-                Expanded(
-                  flex: ScreenHelper.isMobile(context) ? 0 : 2,
-                  child: CreateModulInfoDetail(),
-                ),
-                Expanded(
-                  flex: ScreenHelper.isMobile(context) ? 0 : 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(0.0),
-                    child: SizedBox(
-                      child: Column(
-                        children: [
-                          _buildModulRow(),
-                          _buildZorunluImage(),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: ScreenHelper.isMobile(context) ? 0 : 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(0.0),
-                    child: SizedBox(
-                      child: Column(
-                        children: [
-                          _buildModulList(),
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.white,
-                                backgroundColor:
-                                  Colors.orange.shade700, // foreground
-                              ),
-                              onPressed: () {
-                                AppData.Zorumualanfalse = [];
-                                AppData.Zorumualantrue = [];
-                                AppData.namProductImagees = [];
-                                AppData.TotalUrunMaxYukseklik = [];
-                                AppData.TotalUrunagrlik = [];
-                                AppData.TotalUrunfiyat = [];
-                                AppData.TotalUrunDesi = [];
-                                AppData.ModulListId = [];
-
-                                AppData.Zorumualantrue = [];
-                                AppData.modulLists = [];
-                                AppData.enablewidget = false;
-                                getModulList();
-                                GetTotalUrunMaxYukseklik();
-                                GetTotalaWeigt();
-                                GetTotalfiyat();
-                                GetTotalDesi();
-                                initState();
-                              },
-                              child: Text(
-                                  " Listeyi Boşalt ve Yeniden Tasarla    ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16.0))),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+    return Scaffold(
+      appBar: AppBar(
+          title: Padding(
+            padding: const EdgeInsets.only(top: 10, left: 0),
+            child: Image.asset(
+              "images/logo.png",
+              width: 150,
             ),
-          );
-        },
+          ),
+          actions: [
+            Container(
+              child: InkWell(
+                onTap: () {
+                  Navigator.pop(context,
+                      MaterialPageRoute(builder: (context) => WidthScreen()));
+                },
+                child: Tooltip(
+                  key: tooltipkey,
+                  triggerMode: TooltipTriggerMode.manual,
+                  showDuration: const Duration(seconds: 1),
+                  message: 'Geri Git',
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Image.asset(
+                      "images/back.png",
+                      width: 150,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          elevation: 0),
+      body: Center(
+        child: SingleChildScrollView(
+          child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return ResponsiveWrapper(
+                maxWidth: width,
+                minWidth: width,
+                defaultScale: false,
+                child: Flex(
+                  direction: ScreenHelper.isMobile(context)
+                      ? Axis.vertical
+                      : Axis.horizontal,
+                  children: [
+                    Expanded(
+                      flex: ScreenHelper.isMobile(context) ? 0 : 2,
+                      child: CreateModulInfoDetail(),
+                    ),
+                    Expanded(
+                      flex: ScreenHelper.isMobile(context) ? 0 : 2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(0.0),
+                        child: SizedBox(
+                          child: Column(
+                            children: [
+                              _buildModulRow(),
+                              _buildZorunluImage(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: ScreenHelper.isMobile(context) ? 0 : 2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(0.0),
+                        child: SizedBox(
+                          child: Column(
+                            children: [
+                              _buildModulList(),
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    backgroundColor:
+                                    Colors.orange.shade700, // foreground
+                                  ),
+                                  onPressed: () {
+                                    AppData.Zorumualanfalse = [];
+                                    AppData.Zorumualantrue = [];
+                                    AppData.namProductImagees = [];
+                                    AppData.TotalUrunMaxYukseklik = [];
+                                    AppData.TotalUrunagrlik = [];
+                                    AppData.TotalUrunfiyat = [];
+                                    AppData.TotalUrunDesi = [];
+                                    AppData.ModulListId = [];
+
+
+                                    AppData.modulLists = [];
+                                    AppData.enablewidget = false;
+                                    getModulList();
+                                    GetTotalUrunMaxYukseklik();
+                                    GetTotalaWeigt();
+                                    GetTotalfiyat();
+                                    GetTotalDesi();
+                                    initState();
+                                  },
+                                  child: Text(
+                                      " Listeyi Boşalt ve Yeniden Tasarla    ",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 16.0))),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
@@ -315,15 +356,14 @@ class _CreateProductListItemDetailState
   }
 
   Widget _buildModulRow() {
-    return  Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 8.0,
-          vertical: 20.0,
-        ),
-        child: Row(
-          children: _Product.map(_buildModulWithDropZone).toList(),
-        ),
-
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8.0,
+        vertical: 20.0,
+      ),
+      child: Row(
+        children: _Product.map(_buildModulWithDropZone).toList(),
+      ),
     );
   }
 
@@ -367,7 +407,7 @@ class _CreateProductListItemDetailState
 
   Widget _buildZorunluImage() {
     var Zorumualantrue =
-        AppData.modulLists.where((item) => item.zorunlu == true);
+    AppData.modulLists.where((item) => item.zorunlu == true);
     AppData.Zorumualantrue = Zorumualantrue.toList();
     return Container(
       child: Column(
@@ -379,7 +419,7 @@ class _CreateProductListItemDetailState
           AppData.desiZorunluTrue = AppData.Zorumualantrue[index].fiyat;
           AppData.IdZorunluTrue = AppData.Zorumualantrue[index].id;
           AppData.modulaciklama = AppData.Zorumualantrue[index].modulaciklama;
-          AppData.Zurunluresim   = AppData.Zorumualantrue[index].resim;
+          AppData.Zurunluresim = AppData.Zorumualantrue[index].resim;
           return Visibility(
             visible: false,
             child: Card(
@@ -392,7 +432,7 @@ class _CreateProductListItemDetailState
                   scale: 1,
                 ),
                 subtitle:
-                    Text(AppData.Zorumualantrue[index].agirlik.toString()),
+                Text(AppData.Zorumualantrue[index].agirlik.toString()),
               ),
             ),
           );
@@ -400,8 +440,6 @@ class _CreateProductListItemDetailState
       ),
     );
   }
-
-
 }
 
 class ModulCart extends StatefulWidget {
@@ -420,50 +458,47 @@ class ModulCart extends StatefulWidget {
 
   @override
   State<ModulCart> createState() => _ModulCartState();
-
 }
 
 class _ModulCartState extends State<ModulCart> {
-
 //// gesmat payin afrad ra namayesh midahad
   @override
   Widget build(BuildContext context) {
-    return  Center(
+    return Center(
       child: Transform.scale(
-          scale: widget.highlighted ? 1.075 : 1.0,
-          child: Material(
-            elevation: widget.highlighted ? 8.0 : 4.0,
-            borderRadius: BorderRadius.circular(19.0),
-            color: widget.highlighted ? const Color(0xFFF64209) : Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8.0,
-                vertical: 24.0,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  //test2(),
-                  Visibility(
-                    visible: widget.hasItems,
-                    maintainState: true,
-                    maintainAnimation: true,
-                    maintainSize: true,
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 4.0),
-                        SingleChildScrollView(
-                        child:  AbsorbPointer(
-                            absorbing: false,
+        scale: widget.highlighted ? 1.075 : 1.0,
+        child: Material(
+          elevation: widget.highlighted ? 8.0 : 4.0,
+          borderRadius: BorderRadius.circular(19.0),
+          color: widget.highlighted ? const Color(0xFFF64209) : Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 8.0,
+              vertical: 24.0,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                //test2(),
+                Visibility(
+                  visible: widget.hasItems,
+                  maintainState: true,
+                  maintainAnimation: true,
+                  maintainSize: true,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 4.0),
+                      SingleChildScrollView(
+                        child: AbsorbPointer(
+                          absorbing: false,
                           child: Column(
                             children: [
-
-
                               ReorderableListView.builder(
                                   scrollDirection: Axis.vertical,
                                   shrinkWrap: true,
                                   itemCount: AppData.namProductImagees.length,
-                                  itemBuilder: (BuildContext context, int index) {
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
                                     return Container(
                                       key: ValueKey(index),
                                       color: Colors.grey.shade50,
@@ -471,7 +506,6 @@ class _ModulCartState extends State<ModulCart> {
                                       child: ListTile(
                                         title: Image.network(
                                             AppData.namProductImagees[index],
-
                                             scale: 1),
                                         trailing: IconButton(
                                           icon: Icon(
@@ -489,44 +523,49 @@ class _ModulCartState extends State<ModulCart> {
                                                   index);
                                               AppData.TotalUrunDesi.removeAt(
                                                   index);
-                                              AppData.ModulListId.removeAt(index);
+                                              AppData.ModulListId.removeAt(
+                                                  index);
 
                                               double sumdesi =
-                                                  AppData.TotalUrunDesi.fold(
-                                                      0,
-                                                      (previousValue, element) =>
-                                                          previousValue +
-                                                          element);
+                                              AppData.TotalUrunDesi.fold(
+                                                  0,
+                                                      (previousValue,
+                                                      element) =>
+                                                  previousValue +
+                                                      element);
                                               AppData.desitotal = sumdesi +
                                                   AppData.desiZorunluTrue;
 
                                               double sumfiyat =
-                                                  AppData.TotalUrunfiyat.fold(
-                                                      0,
-                                                      (previousValue, element) =>
-                                                          previousValue +
-                                                          element);
+                                              AppData.TotalUrunfiyat.fold(
+                                                  0,
+                                                      (previousValue,
+                                                      element) =>
+                                                  previousValue +
+                                                      element);
                                               AppData.fiyattotal = sumfiyat +
                                                   AppData.fiyatZorunluTrue;
 
                                               int sumagrlik =
-                                                  AppData.TotalUrunagrlik.fold(
-                                                      0,
-                                                      (previousValue, element) =>
-                                                          previousValue +
-                                                          element);
+                                              AppData.TotalUrunagrlik.fold(
+                                                  0,
+                                                      (previousValue,
+                                                      element) =>
+                                                  previousValue +
+                                                      element);
                                               AppData.agrlkiktotal = sumagrlik +
                                                   AppData.AgrlikZorunluTrue;
 
                                               AppData.agrlkiktotal = sumagrlik +
                                                   AppData.AgrlikZorunluTrue;
-                                              int sumyukseklik = AppData
-                                                      .TotalUrunMaxYukseklik
+                                              int sumyukseklik =
+                                              AppData.TotalUrunMaxYukseklik
                                                   .fold(
-                                                      0,
-                                                      (previousValue, element) =>
-                                                          previousValue +
-                                                          element);
+                                                  0,
+                                                      (previousValue,
+                                                      element) =>
+                                                  previousValue +
+                                                      element);
 
                                               AppData.yuksekliktotal =
                                                   sumyukseklik +
@@ -553,38 +592,37 @@ class _ModulCartState extends State<ModulCart> {
                                     final element = AppData.namProductImagees
                                         .removeAt(oldIndex);
                                     final element2 =
-                                        AppData.ModulListId.removeAt(oldIndex);
+                                    AppData.ModulListId.removeAt(oldIndex);
                                     AppData.namProductImagees
                                         .insert(newIndex, element);
                                     AppData.ModulListId.insert(
                                         newIndex, element2);
                                   }),
                             ],
-                            ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                ),
 
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 50),
-                      child: ListTile(
-                        title: Image.network(
-                          AppData.Zurunluresim.toString() == ""
-                              ? "http://sistemonline.com.tr/seowood/28-68-1.png"
-                              : AppData.Zurunluresim.toString(),
-                          scale: 2,
-                        ),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 50),
+                    child: ListTile(
+                      title: Image.network(
+                        AppData.Zurunluresim.toString() == ""
+                            ? "http://sistemonline.com.tr/seowood/28-68-1.png"
+                            : AppData.Zurunluresim.toString(),
+                        scale: 2,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-
+        ),
       ),
     );
   }
@@ -637,10 +675,9 @@ class ModulListItem extends StatelessWidget {
               Center(
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
-
                     child: Container(
                       alignment: Alignment.centerLeft,
-                     // width: 200,
+                      // width: 200,
                       decoration: BoxDecoration(
                         color: Colors.orange.shade700,
                         border: Border.all(
@@ -649,12 +686,11 @@ class ModulListItem extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-
                           name,
-                          style:
-                              Theme.of(context).textTheme.subtitle1?.copyWith(
-                                    fontSize: 14.0,color: Colors.white
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              ?.copyWith(fontSize: 14.0, color: Colors.white),
                         ),
                       ),
                     )),
@@ -748,7 +784,7 @@ class Product {
 
   String get ModulImage {
     final imageprovider =
-        items.fold<String>('', (prev, item) => item.resim.toString());
+    items.fold<String>('', (prev, item) => item.resim.toString());
     return imageprovider;
   }
 

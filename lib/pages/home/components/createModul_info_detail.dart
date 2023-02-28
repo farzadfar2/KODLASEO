@@ -110,8 +110,9 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   height: 50,
                   fit: BoxFit.cover,
                 ),
-                title: Text(
-                    "Koli Ebatı : " + AppData.desitotal.toStringAsFixed(2) + " Desi"),
+                title: Text("Koli Ebatı : " +
+                    AppData.desitotal.toStringAsFixed(2) +
+                    " Desi"),
                 //  subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
@@ -158,21 +159,17 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                 primary: Colors.grey.shade600, // background
                 onPrimary: Colors.white, // foreground
               ),
-              onPressed: () {
-                setState(() {
+              onPressed: ()  async {
+                if (AppData.ModulListId[0] != null) {
+                  await   PostModulList();
+                  setState(() {
 
-
-                  if ( AppData.ModulListId != null) {
-                    GetModulList();
+                    print("ok");
                     Navigator.pushNamed(context, "/ShopDetailShowScreeen");
-                  }
-                  else{
-                    print("hata");
-                  }
-
-                  //Navigator.pushNamed(context, "/CreateModulInfoShow");
-                 // AppData.ModulListId != "NULL" ?   Navigator.pushNamed(context, "/ShopDetailShowScreeen") : "hata" ;
-                });
+                  });
+                } else if (AppData.ModulListId[0] == null) {
+                  print("hata");
+                }
               },
               child: Text("ÜRÜNÜ TAMAMLA",
                   style:
@@ -183,18 +180,14 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
   }
 
   void GetTotalUrunMaxYukseklik() {
-    AppData.TotalUrunMaxYukseklik.forEach((element) {
-      print(element);
-    });
+    AppData.TotalUrunMaxYukseklik.forEach((element) {});
     int sum = AppData.TotalUrunMaxYukseklik.fold(
         0, (previousValue, element) => previousValue + element);
     AppData.yuksekliktotal = sum + AppData.yukseklikZorunluTrue;
   }
 
   void GetTotalaWeigt() {
-    AppData.TotalUrunagrlik.forEach((element) {
-      print(element);
-    });
+    AppData.TotalUrunagrlik.forEach((element) {});
     int sum = AppData.TotalUrunagrlik.fold(
         0, (previousValue, element) => previousValue + element);
     AppData.agrlkiktotal = sum + AppData.AgrlikZorunluTrue;
@@ -202,38 +195,33 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
   }
 
   void GetTotalfiyat() {
-    AppData.TotalUrunfiyat.forEach((element) {
-      print(element);
-    });
+    AppData.TotalUrunfiyat.forEach((element) {});
     double sum = AppData.TotalUrunfiyat.fold(
         0, (previousValue, element) => previousValue + element);
     AppData.fiyattotal = sum + AppData.fiyatZorunluTrue;
   }
 
   void GetTotalDesi() {
-    AppData.TotalUrunDesi.forEach((element) {
-      print(element);
-    });
+    AppData.TotalUrunDesi.forEach((element) {});
     double sum = AppData.TotalUrunDesi.fold(
         0, (previousValue, element) => previousValue + element);
     AppData.desitotal = sum + AppData.fiyatZorunluTrue;
   }
 }
 
-void GetModulList() {
-
+Future <void> PostModulList() async {
   var zorunlu = AppData.IdZorunluTrue;
   List<ModelModulId> modelModulIdlist = [];
-
   modelModulIdlist.add(new ModelModulId(modulid: zorunlu.toInt()));
   List liste = AppData.ModulListId.reversed.toList();
   liste.forEach((element) {
     modelModulIdlist.add(new ModelModulId(modulid: element));
   });
+
   ModelModul modelModul = new ModelModul(
       derinlik: 28, genislik: 68, miktar: 1, moduller: modelModulIdlist);
-  DepthApi.PostModulList(modelModul);
-  print ("ModelModulId");
-print(modelModulIdlist.length);
+
+ await DepthApi.PostModulList(modelModul);
+  print("7");
 
 }

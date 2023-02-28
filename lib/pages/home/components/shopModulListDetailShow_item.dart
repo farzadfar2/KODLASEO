@@ -1,8 +1,5 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:kodlaseoshop/AppData.dart';
-import 'package:kodlaseoshop/utils/constants.dart';
-import '../../../Model/PostGiveModelList.dart';
 import '../../exportPdf/pdfexport/pdfpreview.dart';
 
 class ShopModulListDetailShow extends StatefulWidget {
@@ -14,29 +11,27 @@ class ShopModulListDetailShow extends StatefulWidget {
 }
 
 class _ShopModulListDetailShowState extends State<ShopModulListDetailShow> {
-  List<Value> value = [];
-  List<Modullistesi> modullistesi = [];
+
+
 
   @override
   void initState() {
-    LoadData();
-    AppData.Zorumualanfalse = [];
-    AppData.Zorumualantrue = [];
-    AppData.namProductImagees = [];
-    AppData.TotalUrunMaxYukseklik = [];
-    AppData.TotalUrunagrlik = [];
-    AppData.TotalUrunfiyat = [];
-    AppData.TotalUrunDesi = [];
-    AppData.ModulListId = [];
+    setState(() {
+      AppData.Zorumualanfalse = [];
+      AppData.Zorumualantrue = [];
+      AppData.namProductImagees = [];
+      AppData.TotalUrunMaxYukseklik = [];
+      AppData.TotalUrunagrlik = [];
+      AppData.TotalUrunfiyat = [];
+      AppData.TotalUrunDesi = [];
+      AppData.ModulListId = [];
+      AppData.modulLists = [];
+      AppData.enablewidget = false;
+    });
 
-    AppData.Zorumualantrue = [];
-    AppData.modulLists = [];
-    AppData.enablewidget = false;
-  }
+      }
 
-  void _onLoading() {
-    setState(() {});
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +40,8 @@ class _ShopModulListDetailShowState extends State<ShopModulListDetailShow> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
+
+
         Card(
           child: Padding(
               padding: const EdgeInsets.all(0.0),
@@ -64,78 +61,94 @@ class _ShopModulListDetailShowState extends State<ShopModulListDetailShow> {
               )),
         ),
         Column(
-          children: List.generate(modullistesi.length, (index) {
+          children: List.generate(  AppData.siparismodullistesipassdata .length, (index) {
             return Card(
               child: InkWell(
-                onTap: () {
-
-                },
+                onTap: () {},
                 child: Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: ListTile(
                       title: Text(
-                        modullistesi[index].miktar.toString() + " Adet",
+                        AppData.siparismodullistesipassdata [index].miktar.toString() + " Adet",
                       ),
-                      subtitle: Text(modullistesi[index].moduladi.toString() +" - "+ modullistesi[index].modulaciklama.toString()),
+                      subtitle: Text(  AppData.siparismodullistesipassdata [index].moduladi.toString() +
+                          " - " +
+                          AppData.siparismodullistesipassdata [index].modulaciklama.toString()),
                     )),
               ),
             );
           }),
         ),
-        Card(
+        SizedBox(
+          height: 25.0,
+        ),
+        Container(
+          width: 400,
+          height: 40,
+          child: ElevatedButton(
+
+              style: ElevatedButton.styleFrom(
+                primary: Colors.orange.shade700, // background
+                onPrimary: Colors.white, // foreground
+              ),
+              onPressed: () {
+                setState(() {
+                  AppData.Zorumualanfalse = [];
+                  AppData.Zorumualantrue = [];
+                  AppData.namProductImagees = [];
+                  AppData.TotalUrunMaxYukseklik = [];
+                  AppData.TotalUrunagrlik = [];
+                  AppData.TotalUrunfiyat = [];
+                  AppData.TotalUrunDesi = [];
+                  AppData.ModulListId = [];
+
+
+                  AppData.modulLists = [];
+                  AppData.enablewidget = false;
+                });
+                Navigator.pushNamed(context, "/CreateProductListItemDetail");
+              },
+
+              child: Text("Yeniden Tasarla",
+                  style:
+                  TextStyle(fontWeight: FontWeight.w600, fontSize: 25.0))),
+        ),
+        SizedBox(
+          height: 25.0,
+        ),
+        Container(
+          width: 400,
+          height: 40,
           child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.grey.shade600, // background
+                primary: Colors.green.shade600, // background
                 onPrimary: Colors.white, // foreground
               ),
               onPressed: () {
                 setState(() {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                     builder: (context) => PdfPreviewPage(siparismodullistesipassdata:  AppData.siparismodullistesipassdata,siparisresim: AppData.siparisresim,siparisgenislik: AppData.siparisgenislik, siparisyukseklik: AppData.siparisyukseklik, siparisderinlik: AppData.siparisderinlik, siparisfiyat: AppData.siparisfiyat),
-                   //   builder: (context) => PdfPreviewPage(),
+                      builder: (context) => PdfPreviewPage(
+                          siparismodullistesipassdata:
+                              AppData.siparismodullistesipassdata,
+                          siparisresim: AppData.siparisresim,
+                          siparisgenislik: AppData.siparisgenislik,
+                          siparisyukseklik: AppData.siparisyukseklik,
+                          siparisderinlik: AppData.siparisderinlik,
+                          siparisfiyat: AppData.siparisfiyat,
+                          siparistarih: AppData.Date),
+                      //   builder: (context) => PdfPreviewPage(),
                     ),
                   );
                 });
               },
               child: Text("Yazdır",
                   style:
-                      TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0))),
+                      TextStyle(fontWeight: FontWeight.w600, fontSize: 25.0))),
         ),
       ],
     ));
   }
 
-  void LoadData() {
-    //print(AppData.moduldataresponse);
-    //print(json.decode(AppData.moduldataresponse));
-    Iterable data = json.decode(AppData.moduldataresponse);
-    data.forEach((element) {
-      Map obj = element;
-      bool success = obj["success"];
 
-      Map value = obj['value'];
-      AppData.siparisresim = value['resim'];
-      AppData.siparisgenislik = value['genislik'];
-      AppData.siparisyukseklik = value['yukseklik'];
-      AppData.siparisderinlik = value['derinlik'];
-      AppData.sipariskoliebat = value['koliebati'];
-      AppData.siparisfiyat = value['fiyat'];
-
-      List modullistesi = value['modullistesi'];
-
-      print("value");
-
-      print(value);
-      print("success");
-      print(success);
-      setState(() {
-        List Listbas = modullistesi;
-        this.modullistesi =
-            Listbas.map((modullistesi) => Modullistesi.fromJson(modullistesi))
-                .toList();
-       AppData.siparismodullistesipassdata=  this.modullistesi;
-      });
-    });
-  }
 }
