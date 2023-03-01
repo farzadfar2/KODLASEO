@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../AppData.dart';
 import '../../../Model/ModulList.dart';
 import '../../../data/api/Depth.dart';
@@ -24,7 +25,7 @@ class _CreateProductListItemDetailState
   List<ModulList> modulLists = [];
   List<ModulList> zorunluLists = [];
   bool Enable = true;
-
+  late SharedPreferences sharedPreferences;
   final GlobalKey _draggableKey = GlobalKey();
   final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
   void _itemDroppedOnCustomerCart({
@@ -84,13 +85,11 @@ class _CreateProductListItemDetailState
 
   void getModulList() async {
     var depthhdata = AppData.depthhdata;
-    var withhhdata = AppData.withhhdata;
-    var language = AppData.language;
+    sharedPreferences = await SharedPreferences.getInstance();
     int derinlik = depthhdata;
-    int genislik = withhhdata;
-    int dil = language;
-    String doviz = AppData.doviz;
-
+    int genislik =     sharedPreferences.getInt("withhhdata")!;
+    int dil =     sharedPreferences.getInt("language")!;
+    String doviz =     sharedPreferences.getString("doviz")!;
 
     DepthApi.getCreateModulList(genislik, derinlik, dil, doviz)
         .then((response) {
@@ -195,8 +194,9 @@ class _CreateProductListItemDetailState
             Container(
               child: InkWell(
                 onTap: () {
-                  Navigator.pop(context,
-                      MaterialPageRoute(builder: (context) => WidthScreen()));
+                //  Navigator.pop(context, MaterialPageRoute(builder: (context) => WidthScreen()));
+                Navigator.pushNamed(context, "/WidthScreen");
+                 // Navigator.pop(context);
                 },
                 child: Tooltip(
                   key: tooltipkey,
@@ -256,37 +256,39 @@ class _CreateProductListItemDetailState
                           child: Column(
                             children: [
                               _buildModulList(),
-                              ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.white,
-                                    backgroundColor:
-                                    Colors.orange.shade700, // foreground
-                                  ),
-                                  onPressed: () {
-                                    AppData.Zorumualanfalse = [];
-                                    AppData.Zorumualantrue = [];
-                                    AppData.namProductImagees = [];
-                                    AppData.TotalUrunMaxYukseklik = [];
-                                    AppData.TotalUrunagrlik = [];
-                                    AppData.TotalUrunfiyat = [];
-                                    AppData.TotalUrunDesi = [];
-                                    AppData.ModulListId = [];
+                              Container(
+                                width: 350,
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      foregroundColor: Colors.white,
+                                      backgroundColor:
+                                      Colors.red.shade700, // foreground
+                                    ),
+                                    onPressed: () {
+                                      AppData.Zorumualanfalse = [];
+                                      AppData.Zorumualantrue = [];
+                                      AppData.namProductImagees = [];
+                                      AppData.TotalUrunMaxYukseklik = [];
+                                      AppData.TotalUrunagrlik = [];
+                                      AppData.TotalUrunfiyat = [];
+                                      AppData.TotalUrunDesi = [];
+                                      AppData.ModulListId = [];
 
 
-                                    AppData.modulLists = [];
-                                    AppData.enablewidget = false;
-                                    getModulList();
-                                    GetTotalUrunMaxYukseklik();
-                                    GetTotalaWeigt();
-                                    GetTotalfiyat();
-                                    GetTotalDesi();
-                                    initState();
-                                  },
-                                  child: Text(
-                                      " Listeyi Boşalt ve Yeniden Tasarla    ",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16.0))),
+                                      AppData.modulLists = [];
+                                      AppData.enablewidget = false;
+                                      getModulList();
+                                      GetTotalUrunMaxYukseklik();
+                                      GetTotalaWeigt();
+                                      GetTotalfiyat();
+                                      GetTotalDesi();
+                                      initState();
+                                    },
+                                    child: Text(  AppData.language ==1 ?"LİSTEYİ BOŞALT VE YENİDEN TASARLA":"EMPTY AND REDESIGN LIST" ,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 16.0))),
+                              ),
                             ],
                           ),
                         ),
@@ -401,7 +403,7 @@ class _CreateProductListItemDetailState
 
   show_massaje() {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Veri Bulunamadı'),
+      content: Text('MAXIMUM YÜKSEKLIK '),
     ));
   }
 

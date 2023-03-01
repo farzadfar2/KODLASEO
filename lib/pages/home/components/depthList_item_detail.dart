@@ -93,8 +93,12 @@ class _DepthListItemDetailState extends State<DepthListItemDetail> {
     );
   }
 
-  void getDepthList() {
-    int dil = AppData.language;
+  void getDepthList() async {
+
+    final prefs = await SharedPreferences.getInstance();
+   // int dil = AppData.c.get("language");
+    final int? language = await prefs.getInt('language');
+    int dil = language!;
 
     DepthApi.getDepthListWithLanguage(dil).then((response) {
       setState(() {

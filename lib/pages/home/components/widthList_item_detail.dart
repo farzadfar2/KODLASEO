@@ -26,9 +26,7 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
   @override
   void initState() {
     getWithList();
-    SharedPreferences.getInstance().then((sf) {
-      mySharedPrefences = sf;
-    });
+
     AppData.Zorumualanfalse = [];
     AppData.Zorumualantrue = [];
     AppData.namProductImagees = [];
@@ -57,13 +55,20 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
         children: List.generate(widthlists.length, (index) {
           return Card(
             child: InkWell(
-              onTap: () {
+              onTap: () async {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.setInt('withhhdata', widthlists[index].genislik);
                 setState(() {
                   AppData.Zorumualanfalse = [];
                   AppData.Zorumualantrue = [];
                   AppData.namProductImagees = [];
-                  AppData.withhhdata = widthlists[index].genislik;
+                //  AppData.withhhdata = widthlists[index].genislik;
+                 // AppData.c.set("withhhdata", widthlists[index].genislik);
+
+
+
                   AppData.maxyukseklik = widthlists[index].maxyukseklik;
+                 print(widthlists[index].maxyukseklik);
                   AppData.Genislikrenk = widthlists[index].renk.toString();
                   AppData.modulLists = [];
 
@@ -106,11 +111,7 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
                               ),
                             ),
                             child: Center(
-                              child: Text(
-                                "Genişlik : " +
-                                    "" +
-                                    widthlists[index].genislik.toString() +
-                                    " cm",
+                              child: Text(   AppData.language ==1 ? "Genişlik : " +  "" +  widthlists[index].genislik.toString() + " cm" :"Width : " +  "" +  widthlists[index].genislik.toString() + " cm" ,
                                 style: TextStyle(
                                   //  fontSize: 20.0,
                                   color: Colors.white,

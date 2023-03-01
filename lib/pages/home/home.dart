@@ -62,18 +62,20 @@ class Home extends StatelessWidget {
           ),
         ),
       ),
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-             child: Header(),
-              ),
-              Carousel(),
+      body: Center(
+        child: Container(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+               child: Header(),
+                ),
+                Carousel(),
 
-             Footer(),
-            ],
+               Footer(),
+              ],
+            ),
           ),
         ),
       ),

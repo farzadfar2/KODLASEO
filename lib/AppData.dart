@@ -1,9 +1,16 @@
 
+
+import 'package:dcache/dcache.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'Model/PostGiveModelList.dart';
+
+
+
 
 class AppData{
+
+ //static  Cache c = new SimpleCache(storage: new InMemoryStorage(20));
+
 
  static  String myState="";
  static  int depthhdata=0;

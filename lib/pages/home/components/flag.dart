@@ -1,8 +1,10 @@
+import 'package:dcache/dcache.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:kodlaseoshop/AppData.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Model/FlagList.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/screen_helper.dart';
@@ -113,7 +115,13 @@ Widget _buildUi(double width, BuildContext context) {
                                 children: [
                                   Container(
                                       child: InkWell(
-                                        onTap: () {
+                                        onTap: () async{
+                                         // AppData.c.set("language", flagItems.id);
+                                         // AppData.c.set("doviz", flagItems.doviz);
+                                          final prefs = await SharedPreferences.getInstance();
+                                          await prefs.setInt('language', flagItems.id);
+                                          await prefs.setString('doviz', flagItems.doviz);
+
                                           AppData.language = flagItems.id;
                                           AppData.doviz = flagItems.doviz;
                                           Navigator.pushNamed(

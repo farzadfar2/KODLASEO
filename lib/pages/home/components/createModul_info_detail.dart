@@ -2,6 +2,7 @@ import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:kodlaseoshop/AppData.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Model/PostModulList.dart';
 import '../../../data/api/Depth.dart';
 
@@ -14,18 +15,23 @@ class CreateModulInfoDetail extends StatefulWidget {
 
 class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
   var formKey = GlobalKey<FormState>();
+  late SharedPreferences sharedPreferences;
   TextEditingController _controller = TextEditingController();
 
   @override
-  void initState() {
+  void initState()  {
+
+
     super.initState();
     setState(() {
+      loaddata();
       GetTotalUrunMaxYukseklik();
       GetTotalaWeigt();
       GetTotalfiyat();
       GetTotalDesi();
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +49,7 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   fit: BoxFit.cover,
                 ),
                 //  title: Text("Derinlik : " + AppData.depthhdata.toString()),
-                title: Text("Derinlik : " + "28"),
+                title: Text(   AppData.language ==1 ?"Derinlik : " + "28 cm" :"Depth : " + "28 cm"),
                 //  subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
@@ -58,11 +64,13 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   height: 50,
                   fit: BoxFit.cover,
                 ),
-                title: Text("Genişlik : " + AppData.withhhdata.toString()),
+                //  title: Text("Genişlik : " + AppData.withhhdata.toString()),
+                title: Text(   AppData.language ==1 ?"Genişlik : " + AppData.withhhdata.toString()+" cm": "Width : " + AppData.withhhdata.toString()+ "cm"),
                 //  subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
         ),
+
         Card(
           child: Padding(
               padding: const EdgeInsets.all(0.0),
@@ -73,27 +81,8 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   height: 50,
                   fit: BoxFit.cover,
                 ),
-                title: Text(
-                    "Maximum Yükseklik : " + AppData.maxyukseklik.toString()),
-                tileColor: Colors.grey.shade200,
-              )),
-        ),
-        Card(
-          child: Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: ListTile(
-                leading: Image.network(
-                  "assets/icon/yuksek.png",
-                  width: 50,
-                  height: 50,
-                  fit: BoxFit.cover,
-                ),
-                title: Text(
-                    "ÜrÜn Yükseklik : " + AppData.yuksekliktotal.toString()),
-                subtitle: Text(
-                  AppData.yuksekliktotal > 200
-                      ? " Ürün Yüksekliği Bu miktardan Fazla olamaz"
-                      : " ",
+                title: Text(  AppData.language ==1 ? "Yükseklik : " + AppData.yuksekliktotal.toString()+ "cm": "Height : " + AppData.yuksekliktotal.toString()+ "cm"),
+                subtitle: Text(   AppData.language ==1 ? AppData.yuksekliktotal > AppData.maxyukseklik ? " Ürün Yüksekliği Bu miktardan Fazla olamaz" : " " :AppData.yuksekliktotal > AppData.maxyukseklik ? " Product Height cannot be more than this amount" : " "  ,
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.red.shade900),
                 ),
@@ -110,9 +99,7 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   height: 50,
                   fit: BoxFit.cover,
                 ),
-                title: Text("Koli Ebatı : " +
-                    AppData.desitotal.toStringAsFixed(2) +
-                    " Desi"),
+                title: Text(   AppData.language ==1 ? "Koli Ebatı : " + AppData.desitotal.toStringAsFixed(2) + " Desi" :"Box Size : " + AppData.desitotal.toStringAsFixed(2) + " Desi"),
                 //  subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
@@ -127,11 +114,7 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   height: 50,
                   fit: BoxFit.cover,
                 ),
-                title: Text("Koli Ağırlığı : " +
-                    AppData.agrlkiktotal.toString() +
-                    " Gram=" +
-                    (AppData.agrlkiktotal / 1000).toString() +
-                    " Kg"),
+                title: Text(AppData.language ==1 ?"Koli Ağırlığı : " + AppData.agrlkiktotal.toString() + " Gram=" + (AppData.agrlkiktotal / 1000).toString() + " Kg":"Weight Of Box : " + AppData.agrlkiktotal.toString() + " Gram=" + (AppData.agrlkiktotal / 1000).toString() + " Kg"),
                 //subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
@@ -146,34 +129,36 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   height: 50,
                   fit: BoxFit.cover,
                 ),
-                title: Text(
-                  "Fiyat : " + AppData.fiyattotal.toStringAsFixed(2).toString(),
-                ),
+                title: Text(   AppData.language ==1? "Fiyat : " + AppData.fiyattotal.toStringAsFixed(2).toString() + " TL" :"Price  : " + AppData.fiyattotal.toStringAsFixed(2).toString() + " USD"),
                 // subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
         ),
-        Card(
-          child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.grey.shade600, // background
-                onPrimary: Colors.white, // foreground
-              ),
-              onPressed: ()  async {
-                if (AppData.ModulListId[0] != null) {
-                  await   PostModulList();
-                  setState(() {
 
-                    print("ok");
-                    Navigator.pushNamed(context, "/ShopDetailShowScreeen");
-                  });
-                } else if (AppData.ModulListId[0] == null) {
-                  print("hata");
-                }
-              },
-              child: Text("ÜRÜNÜ TAMAMLA",
-                  style:
-                      TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0))),
+        Padding(
+          padding: const EdgeInsets.only(top: 25),
+          child: Container(
+            width: 400,
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.grey.shade600, // background
+                  onPrimary: Colors.white, // foreground
+                ),
+                onPressed: () async {
+                  if (AppData.ModulListId[0] != null) {
+                    await PostModulList();
+                    setState(() {
+                      print("ok");
+                      Navigator.pushNamed(context, "/ShopDetailShowScreeen");
+                    });
+                  } else if (AppData.ModulListId[0] == null) {
+                    print("hata");
+                  }
+                },
+                child: Text(   AppData.language ==1 ? "ÜRÜNÜ TAMAMLA" :"COMPLETE PRODUCT",
+                    style:
+                        TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0))),
+          ),
         ),
       ],
     ));
@@ -207,9 +192,15 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
         0, (previousValue, element) => previousValue + element);
     AppData.desitotal = sum + AppData.fiyatZorunluTrue;
   }
+
+  void loaddata() async{
+    sharedPreferences = await SharedPreferences.getInstance();
+    AppData.withhhdata = sharedPreferences.getInt("withhhdata")!;
+
+  }
 }
 
-Future <void> PostModulList() async {
+Future<void> PostModulList() async {
   var zorunlu = AppData.IdZorunluTrue;
   List<ModelModulId> modelModulIdlist = [];
   modelModulIdlist.add(new ModelModulId(modulid: zorunlu.toInt()));
@@ -221,7 +212,6 @@ Future <void> PostModulList() async {
   ModelModul modelModul = new ModelModul(
       derinlik: 28, genislik: 68, miktar: 1, moduller: modelModulIdlist);
 
- await DepthApi.PostModulList(modelModul);
+  await DepthApi.PostModulList(modelModul);
   print("7");
-
 }

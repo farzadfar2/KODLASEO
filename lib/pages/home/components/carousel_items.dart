@@ -26,7 +26,7 @@ List<CarouselItemModel> carouselItems = List.generate(
           ClipRRect(
             borderRadius: BorderRadius.circular(5.0),
             child: Container(
-              height: 40,
+              height: 80,
               width: 400,
               decoration: BoxDecoration(
                 color: Colors.black87,
@@ -37,12 +37,13 @@ List<CarouselItemModel> carouselItems = List.generate(
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  "LÜTFEN DİL SEÇİNİZ",
+                  "         LÜTFEN DİL SEÇİNİZ\nPLEASE SELECT LANGUAGE ",
                   style: GoogleFonts.almarai(
                     color: Colors.white,
                     fontSize: 25.0,
                     height: 1.1,
                   ),
+
                 ),
               ),
             ),

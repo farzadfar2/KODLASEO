@@ -52,8 +52,7 @@ class _ShopModulListDetailShowState extends State<ShopModulListDetailShow> {
                   height: 50,
                   fit: BoxFit.cover,
                 ),
-                title: Text(
-                  "Seçilen Moduller",
+                title: Text(  AppData.language ==1 ?   "Seçilen Moduller" : "Selected Modules",
                 ),
 
                 //  subtitle: Text("Derinlik : "),
@@ -68,8 +67,7 @@ class _ShopModulListDetailShowState extends State<ShopModulListDetailShow> {
                 child: Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: ListTile(
-                      title: Text(
-                        AppData.siparismodullistesipassdata [index].miktar.toString() + " Adet",
+                      title: Text( AppData.language ==1 ? AppData.siparismodullistesipassdata [index].miktar.toString() + " Miktar" : AppData.siparismodullistesipassdata [index].miktar.toString() + " Quantity",
                       ),
                       subtitle: Text(  AppData.siparismodullistesipassdata [index].moduladi.toString() +
                           " - " +
@@ -109,7 +107,7 @@ class _ShopModulListDetailShowState extends State<ShopModulListDetailShow> {
                 Navigator.pushNamed(context, "/CreateProductListItemDetail");
               },
 
-              child: Text("Yeniden Tasarla",
+              child: Text(   AppData.language ==1 ?   "YENİDEN TASARLA" :  "REDESİGN",
                   style:
                   TextStyle(fontWeight: FontWeight.w600, fontSize: 25.0))),
         ),
@@ -142,7 +140,7 @@ class _ShopModulListDetailShowState extends State<ShopModulListDetailShow> {
                   );
                 });
               },
-              child: Text("Yazdır",
+              child: Text(AppData.language ==1 ?   "YAZDIR" : "PRINT",
                   style:
                       TextStyle(fontWeight: FontWeight.w600, fontSize: 25.0))),
         ),

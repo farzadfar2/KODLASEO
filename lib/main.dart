@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kodlaseoshop/pages/home/components/carousel.dart';
 import 'package:kodlaseoshop/pages/home/components/createProductList_item_detail.dart';
 import 'package:kodlaseoshop/pages/home/home.dart';
 import 'package:kodlaseoshop/screens/DepthScreen.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/LanguegeScreen': (context) => LanguegeScreen(),
+        '/Carousel': (context) => Carousel(),
         '/WidthScreen': (context) => WidthScreen(),
         '/DepthScreen': (context) => DepthScreen(),
         '/ShopDetailShowScreeen': (context) => ShopDetailShowScreeen(),

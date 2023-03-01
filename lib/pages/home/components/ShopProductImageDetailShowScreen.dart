@@ -39,7 +39,8 @@ class _ShopProductImageDetailShowState
     return Center(
       child: Image.network(
         AppData.siparisresim,
-        fit: BoxFit.contain,
+        fit: BoxFit.cover,
+       // height: 400,
       ),
     );
   }

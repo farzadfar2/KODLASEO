@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:kodlaseoshop/pages/exportPdf/pdfexport/pdf/pdfexportEn.dart';
 
 import 'package:printing/printing.dart';
+import '../../../AppData.dart';
 import 'pdf/pdfexport.dart';
 
 class PdfPreviewPage extends StatelessWidget {
@@ -30,16 +32,27 @@ class PdfPreviewPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('PDF Preview'),
       ),
-      body: PdfPreview(
-        build: (context) => makePdf(
+      body:  PdfPreview(
+        build: (context) =>
+        AppData.language ==1 ?
+        makePdf(
             siparismodullistesipassdata,
             siparisresim,
             siparisgenislik,
             siparisyukseklik,
             siparisderinlik,
             siparisfiyat,
-            siparistarih),
-      ),
-    );
+            siparistarih)
+            :makePdfEN(
+            siparismodullistesipassdata,
+            siparisresim,
+            siparisgenislik,
+            siparisyukseklik,
+            siparisderinlik,
+            siparisfiyat,
+            siparistarih)
+      )  ,
+      ) ;
+
   }
 }
