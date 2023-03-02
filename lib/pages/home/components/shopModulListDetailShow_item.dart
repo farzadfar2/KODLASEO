@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kodlaseoshop/AppData.dart';
 import '../../exportPdf/pdfexport/pdfpreview.dart';
 
@@ -41,6 +42,16 @@ class _ShopModulListDetailShowState extends State<ShopModulListDetailShow> {
       mainAxisSize: MainAxisSize.min,
       children: [
 
+        Text( AppData.language ==1 ? "Olüştür": "Create",
+          style: GoogleFonts.alata(
+            color: Colors.grey.shade700,
+            fontWeight: FontWeight.bold,
+            fontSize: 40.0,
+          ),
+        ),
+        SizedBox(
+          height: 15.0,
+        ),
 
         Card(
           child: Padding(
@@ -67,7 +78,7 @@ class _ShopModulListDetailShowState extends State<ShopModulListDetailShow> {
                 child: Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: ListTile(
-                      title: Text( AppData.language ==1 ? AppData.siparismodullistesipassdata [index].miktar.toString() + " Miktar" : AppData.siparismodullistesipassdata [index].miktar.toString() + " Quantity",
+                      title: Text( AppData.language ==1 ? AppData.siparismodullistesipassdata [index].miktar.toString() + " Adet" : AppData.siparismodullistesipassdata [index].miktar.toString() + " Piece",
                       ),
                       subtitle: Text(  AppData.siparismodullistesipassdata [index].moduladi.toString() +
                           " - " +
@@ -99,15 +110,13 @@ class _ShopModulListDetailShowState extends State<ShopModulListDetailShow> {
                   AppData.TotalUrunfiyat = [];
                   AppData.TotalUrunDesi = [];
                   AppData.ModulListId = [];
-
-
                   AppData.modulLists = [];
                   AppData.enablewidget = false;
                 });
-                Navigator.pushNamed(context, "/CreateProductListItemDetail");
+                Navigator.pushNamed(context, "/WidthScreen");
               },
 
-              child: Text(   AppData.language ==1 ?   "YENİDEN TASARLA" :  "REDESİGN",
+              child: Text(   AppData.language ==1 ?   "YENİDEN TASARLA" :  "REDESIGN",
                   style:
                   TextStyle(fontWeight: FontWeight.w600, fontSize: 25.0))),
         ),

@@ -11,7 +11,8 @@ class AppData{
 
  //static  Cache c = new SimpleCache(storage: new InMemoryStorage(20));
 
-
+ //static String  api="http://seowoodapi2.kodlatech.com:8180/";
+ static String  api="https://api.seofree.com.tr:8180";
  static  String myState="";
  static  int depthhdata=0;
  static  String doviz='';
@@ -23,12 +24,14 @@ class AppData{
  static List<int> TotalUrunMaxYukseklik = <int>[];
  static List<int> TotalUrunagrlik = <int>[];
  static List<double> TotalUrunfiyat = <double>[];
+ static List<double> TotalUrunfiyatusd = <double>[];
  static List<double> TotalUrunDesi = <double>[];
  static List<int> ModulListId = <int>[];
  static int yuksekliktotal = 0;
  static int agrlkiktotal = 0;
  static int modulId = 0;
  static double fiyattotal = 0;
+ static double fiyattotalusd = 0;
  static double desitotal = 0;
  static double agrlkiktotalshowkg = 0;
  static  String Dragimageprovider="";
@@ -46,6 +49,7 @@ class AppData{
  static  int yukseklikZorunluTrue=0;
  static  int AgrlikZorunluTrue=0;
  static  double fiyatZorunluTrue=0;
+ static  double fiyatZorunluTrueusd=0;
  static  double desiZorunluTrue=0;
  static  int IdZorunluTrue=0;
  static bool enablewidget = false;
@@ -60,6 +64,7 @@ class AppData{
  static int siparisgenislik = 0;
  static int siparisyukseklik = 0;
  static int siparisderinlik = 0;
+ static double siparisdesi = 0;
  static String sipariskoliebat = "";
  static double siparisfiyat = 0;
  static String Date = "";
@@ -70,6 +75,8 @@ class AppData{
 
  static List siparismodullistesipassdata = [];
 
+
+ static String Test="";
 
 
 

@@ -27,11 +27,9 @@ class HeaderLogo extends StatelessWidget {
     return Container(
       child: Image.asset(
                   "images/logo.png",
-                  width: 150,
+                  width: 250,
                 ),
-
             );
-
     }
 }
 

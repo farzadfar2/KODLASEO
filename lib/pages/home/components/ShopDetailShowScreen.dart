@@ -98,7 +98,7 @@ class _ShopDetailShowState extends State<ShopDetailShow> {
                       height: 50,
                       fit: BoxFit.cover,
                     ),
-                    title: Text( AppData.language ==1 ?   "Koli Ebatı : " + AppData.sipariskoliebat : "Box Size : " + AppData.sipariskoliebat),
+                    title: Text( AppData.language ==1 ?   "Koli Desi: " +  AppData.siparisdesi.toString() + " Desi" : "CBM : " +  AppData.siparisdesi.toString() ),
                     //  subtitle: Text("Derinlik : "),
                     tileColor: Colors.grey.shade200,
                   )),

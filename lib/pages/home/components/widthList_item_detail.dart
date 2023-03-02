@@ -146,6 +146,7 @@ class _WidthListItemDetailState extends State<WidthListItemDetail> {
 
           List value1 = value;
           this.widthlists = value1.map((e) => WidthList.fromJSON(e)).toList();
+
         });
         widthlists.length > 0 ? widthlists : show_massaje();
       });

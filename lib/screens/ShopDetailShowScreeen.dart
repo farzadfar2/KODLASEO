@@ -53,7 +53,7 @@ class _ShopDetailShowScreeenState extends State<ShopDetailShowScreeen> {
             title: Padding(
               padding: const EdgeInsets.only(top: 10, left: 0),
               child: Image.asset(
-                "images/logo.png",
+                AppData.language ==1 ? "images/logo.png" :"images/seofree-en.png" ,
                 width: 150,
               ),
             ),

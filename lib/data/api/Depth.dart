@@ -10,16 +10,17 @@ class DepthApi{
       "dil": dil.toString(),
 
          };
-   // return http.get(Uri.parse( 'http://api.seofree.com.tr:8180/api/Derinlik'), headers: map);
-    return http.get(Uri.parse( 'http://seowoodapi2.kodlatech.com:8180/api/Derinlik'), headers: map);
+
+    return http.get(Uri.parse( AppData.api + '/api/Derinlik' ), headers: map);
   }
   static Future getWidthListWithLanguage(int derinlik) async {
     Map<String, String> map = {
       "derinlik": derinlik.toString(),
     };
-    //return http.get(Uri.parse( 'http://api.seofree.com.tr:8180/api/Genislik'), headers: map);
-    return http.get(Uri.parse( 'http://seowoodapi2.kodlatech.com:8180/api/Genislik'), headers: map);
+    return http.get(Uri.parse(  AppData.api +'/api/Genislik'), headers: map);
+
   }
+
 
   static Future getCreateModulList(int genislik,int derinlik,int dil , String doviz) async {
 
@@ -29,18 +30,18 @@ class DepthApi{
       "dil": dil.toString(),
       "doviz": doviz.toString(),
     };
-   // return http.get(Uri.parse( 'http://api.seofree.com.tr:8180/api/Modul'), headers: map);
-    return http.get(Uri.parse( 'http://seowoodapi2.kodlatech.com:8180/api/Modul'), headers: map);
+    return http.get(Uri.parse( AppData.api +'/api/Modul'),
+        headers: map);
   }
+
 
 
 
 
   static Future<String> PostModulList( ModelModul model) async {
      final response = await http.post(
-    //  Uri.parse( 'http://api.seofree.com.tr:8180/api/siparis'),
-      Uri.parse( 'http://seowoodapi2.kodlatech.com:8180/api/siparis'),
-        headers: <String, String>{
+      Uri.parse(  AppData.api +'/api/siparis'),
+          headers: <String, String>{
         "dil":  AppData.language.toString(),
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -63,6 +64,7 @@ class DepthApi{
          AppData.siparisyukseklik = value['yukseklik'];
          AppData.siparisderinlik = value['derinlik'];
          AppData.sipariskoliebat = value['koliebati'];
+         AppData.siparisdesi = value['kutudesi'];
          AppData.siparisfiyat = value['fiyat'];
          AppData.Date = value['kaytar'];
          List modullistesi = value['modullistesi'];

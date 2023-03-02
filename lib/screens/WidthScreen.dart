@@ -36,8 +36,9 @@ class _WidthScreenState extends State<WidthScreen> {
               title: Padding(
                 padding: const EdgeInsets.only(top: 10, left: 0),
                 child: Image.asset(
-                  "images/logo.png",
+                  AppData.language ==1 ? "images/logo.png" :"images/seofree-en.png" ,
                   width: 150,
+                //  height: 80,
                 ),
               ),
               actions: [
@@ -46,7 +47,7 @@ class _WidthScreenState extends State<WidthScreen> {
                     onTap: () {
                     //   Navigator.pop(context);
                      // Navigator.pushNamed(context, "/Carousel");
-                      Navigator.pop(context, MaterialPageRoute(builder: (context) =>  Carousel()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) =>  Carousel()));
                     },
                     child: Tooltip(
                       key: tooltipkey,
@@ -67,27 +68,7 @@ class _WidthScreenState extends State<WidthScreen> {
               automaticallyImplyLeading: false,
               backgroundColor: Colors.white,
               elevation: 0),
-          bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: ImageIcon(
-                  AssetImage(
-                    "images/back.png",
-                  ),
-                ),
-                label: 'Geri',
-                backgroundColor: Colors.white,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.add),
-                label: 'KODLA TEKNOLOJI',
-                backgroundColor: Colors.white,
-              ),
-            ],
-            currentIndex: 0,
-            selectedItemColor: Colors.green[800],
-            // onTap: _onItemTapped,
-          ),
+
           body: Center(
             child: SingleChildScrollView(
               child: Material(
@@ -111,8 +92,7 @@ class _WidthScreenState extends State<WidthScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "Seç",
+                                  Text( AppData.language ==1 ? "Seç": "Select",
                                     style: GoogleFonts.alata(
                                       color: Colors.grey.shade700,
                                       fontWeight: FontWeight.bold,
@@ -122,7 +102,7 @@ class _WidthScreenState extends State<WidthScreen> {
                                   SizedBox(
                                     height: 15.0,
                                   ),
-                                  Text(   AppData.language ==1 ?  "OLUŞTURACAĞINIZ ÜRÜNÜNÜN\nGENİŞLİĞİNİ SEÇİN" : "PLEASE SELECT\nYOUR PRODUCT WİDTH",
+                                  Text(   AppData.language ==1 ?  "OLUŞTURACAĞINIZ ÜRÜNÜNÜN\nGENİŞLİĞİNİ SEÇİN" : "PLEASE SELECT\nYOUR PRODUCT WIDTH",
                                     style: GoogleFonts.alata(
                                       color: Colors.green,
                                       fontWeight: FontWeight.bold,

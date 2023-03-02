@@ -1,6 +1,7 @@
 import 'dart:js';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kodlaseoshop/AppData.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Model/PostModulList.dart';
@@ -21,7 +22,11 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
   @override
   void initState()  {
 
-
+    loaddata();
+    GetTotalUrunMaxYukseklik();
+    GetTotalaWeigt();
+    GetTotalfiyat();
+    GetTotalDesi();
     super.initState();
     setState(() {
       loaddata();
@@ -38,6 +43,34 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
     return Center(
         child: Column(
       children: [
+        Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+          children :[
+            Text( AppData.language ==1 ? "Ekle": "Insert",
+              style: GoogleFonts.alata(
+                color: Colors.grey.shade700,
+                fontWeight: FontWeight.bold,
+                fontSize: 40.0,
+              ),
+            ),
+            SizedBox(
+              height: 15.0,
+            ),
+            Text(   AppData.language ==1 ?  "Lütfen ürününüzü oluşturmak için\nGsağ taraftaki modüllerden seçerek ortadaki karenin içine sürükleyiniz." : "Please select modules from\nright side and drag them into middle square for create your product.",
+              style: GoogleFonts.alata(
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
+                height: 1.4,
+              ),
+            ),
+            SizedBox(
+              height: 15.0,
+            ),
+        ]
+        ),
+
         Card(
           child: Padding(
               padding: const EdgeInsets.all(0.0),
@@ -82,7 +115,7 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   fit: BoxFit.cover,
                 ),
                 title: Text(  AppData.language ==1 ? "Yükseklik : " + AppData.yuksekliktotal.toString()+ "cm": "Height : " + AppData.yuksekliktotal.toString()+ "cm"),
-                subtitle: Text(   AppData.language ==1 ? AppData.yuksekliktotal > AppData.maxyukseklik ? " Ürün Yüksekliği Bu miktardan Fazla olamaz" : " " :AppData.yuksekliktotal > AppData.maxyukseklik ? " Product Height cannot be more than this amount" : " "  ,
+                subtitle: Text(   AppData.language ==1 ? AppData.yuksekliktotal >   AppData.maxyukseklik ? " Ürün Yüksekliği Bu miktardan Fazla olamaz" : " " :AppData.yuksekliktotal >   AppData.maxyukseklik ? " Product Height cannot be more than this amount" : " "  ,
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.red.shade900),
                 ),
@@ -99,7 +132,7 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   height: 50,
                   fit: BoxFit.cover,
                 ),
-                title: Text(   AppData.language ==1 ? "Koli Ebatı : " + AppData.desitotal.toStringAsFixed(2) + " Desi" :"Box Size : " + AppData.desitotal.toStringAsFixed(2) + " Desi"),
+                title: Text(   AppData.language ==1 ? "Koli Ebatı : " + AppData.desitotal.toStringAsFixed(2) + " Desi" :"CBM : " + AppData.desitotal.toStringAsFixed(2) ),
                 //  subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
@@ -114,7 +147,7 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   height: 50,
                   fit: BoxFit.cover,
                 ),
-                title: Text(AppData.language ==1 ?"Koli Ağırlığı : " + AppData.agrlkiktotal.toString() + " Gram=" + (AppData.agrlkiktotal / 1000).toString() + " Kg":"Weight Of Box : " + AppData.agrlkiktotal.toString() + " Gram=" + (AppData.agrlkiktotal / 1000).toString() + " Kg"),
+                title: Text(AppData.language ==1 ?"Koli Ağırlığı : " + AppData.agrlkiktotal.toString() + " Gram= "  : " Gram= " + (AppData.agrlkiktotal / 1000).toString() ),
                 //subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
@@ -129,7 +162,7 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
                   height: 50,
                   fit: BoxFit.cover,
                 ),
-                title: Text(   AppData.language ==1? "Fiyat : " + AppData.fiyattotal.toStringAsFixed(2).toString() + " TL" :"Price  : " + AppData.fiyattotal.toStringAsFixed(2).toString() + " USD"),
+                title: Text(   AppData.language ==1? "Fiyat : " + AppData.fiyattotal.toStringAsFixed(2).toString() + " TL"  :"Price  : " + AppData.fiyattotalusd.toStringAsFixed(2).toString() + " USD"),
                 // subtitle: Text("Derinlik : "),
                 tileColor: Colors.grey.shade200,
               )),
@@ -184,13 +217,18 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
     double sum = AppData.TotalUrunfiyat.fold(
         0, (previousValue, element) => previousValue + element);
     AppData.fiyattotal = sum + AppData.fiyatZorunluTrue;
+
+    AppData.TotalUrunfiyatusd.forEach((element) {});
+    double sumusd = AppData.TotalUrunfiyatusd.fold(
+        0, (previousValue, element) => previousValue + element);
+    AppData.fiyattotalusd = sum + AppData.fiyatZorunluTrueusd;
   }
 
   void GetTotalDesi() {
     AppData.TotalUrunDesi.forEach((element) {});
     double sum = AppData.TotalUrunDesi.fold(
         0, (previousValue, element) => previousValue + element);
-    AppData.desitotal = sum + AppData.fiyatZorunluTrue;
+    AppData.desitotal = sum + AppData.desiZorunluTrue;
   }
 
   void loaddata() async{

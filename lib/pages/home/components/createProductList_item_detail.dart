@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../AppData.dart';
 import '../../../Model/ModulList.dart';
 import '../../../data/api/Depth.dart';
-import '../../../screens/WidthScreen.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/screen_helper.dart';
 import 'createModul_info_detail.dart';
@@ -38,18 +37,22 @@ class _CreateProductListItemDetailState
       AppData.Dragimageyukseklik = 0;
       AppData.agrlkiktotal = 0;
       AppData.fiyattotal = 0;
+      AppData.fiyattotalusd = 0;
       AppData.desitotal = 0;
       AppData.modulId = 0;
       AppData.Dragimageyukseklik = product.formattedTotalItemheih;
       AppData.Dragimageprovider = product.ModulImage.toString();
       AppData.agrlkiktotal = product.formattedTotalItemweight;
       AppData.fiyattotal = product.formattedTotalItemPrice;
+
+      AppData.fiyattotalusd = product.formattedTotalItemPriceUSD;
       AppData.desitotal = product.formattedTotalItemDesi;
       AppData.modulId = product.ModulIdList;
       AppData.namProductImagees.insert(0, AppData.Dragimageprovider);
       AppData.TotalUrunMaxYukseklik.insert(0, AppData.Dragimageyukseklik);
       AppData.TotalUrunagrlik.insert(0, AppData.agrlkiktotal);
       AppData.TotalUrunfiyat.insert(0, AppData.fiyattotal);
+      AppData.TotalUrunfiyatusd.insert(0, AppData.fiyattotalusd);
       AppData.TotalUrunDesi.insert(0, AppData.desitotal);
       AppData.ModulListId.insert(0, AppData.modulId);
 
@@ -57,6 +60,7 @@ class _CreateProductListItemDetailState
       GetTotalUrunMaxYukseklik();
       GetTotalaWeigt();
       GetTotalfiyat();
+      GetTotalDesi();
     });
   }
 
@@ -72,7 +76,10 @@ class _CreateProductListItemDetailState
     GetTotalaWeigt();
     GetTotalfiyat();
     GetTotalDesi();
-    GetResimZurunli();
+    //getResimzorunlutrue();
+
+
+
 
   }
 
@@ -97,9 +104,7 @@ class _CreateProductListItemDetailState
         List data = jsonDecode(response.body);
         data.forEach((element) {
           Map obj = element;
-          // bool success = obj['success'];
           List value = obj['value'];
-
           List value1 = value;
           this.modulLists = value1.map((e) => ModulList.fromJSON(e)).toList();
         });
@@ -108,18 +113,22 @@ class _CreateProductListItemDetailState
     });
   }
 
-  void gettest() async {
-    setState(() {});
-  }
 
-  void GetTotalDesi() {
+
+  void GetTotalDesi() async{
     AppData.TotalUrunDesi.forEach((element) {
-
-
     });
     double sum = AppData.TotalUrunDesi.fold(
         0, (previousValue, element) => previousValue + element);
-    AppData.desitotal = sum + AppData.fiyatZorunluTrue;
+    AppData.desitotal = sum + AppData.desiZorunluTrue;
+    print("AppData.desitotal");
+
+    print(AppData.desiZorunluTrue);
+    print(AppData.desitotal);
+    print(sum);
+
+
+
   }
 
   void GetTotalfiyat() {
@@ -130,6 +139,10 @@ class _CreateProductListItemDetailState
     double sum = AppData.TotalUrunfiyat.fold(
         0, (previousValue, element) => previousValue + element);
     AppData.fiyattotal = sum + AppData.fiyatZorunluTrue;
+
+    double sumusd = AppData.TotalUrunfiyatusd.fold(
+        0, (previousValue, element) => previousValue + element);
+    AppData.fiyattotalusd = sumusd + AppData.fiyatZorunluTrueusd;
   }
 
   void GetTotalaWeigt() {
@@ -158,7 +171,7 @@ class _CreateProductListItemDetailState
     }
   }
 
-  void GetResimZurunli() {}
+
 
   @override
   Widget build(BuildContext context) {
@@ -183,10 +196,10 @@ class _CreateProductListItemDetailState
   Widget _buildUi(double width) {
     return Scaffold(
       appBar: AppBar(
+
           title: Padding(
             padding: const EdgeInsets.only(top: 10, left: 0),
-            child: Image.asset(
-              "images/logo.png",
+            child: Image.asset(   AppData.language ==1 ? "images/logo.png" :"images/seofree-en.png" ,
               width: 150,
             ),
           ),
@@ -271,6 +284,7 @@ class _CreateProductListItemDetailState
                                       AppData.TotalUrunMaxYukseklik = [];
                                       AppData.TotalUrunagrlik = [];
                                       AppData.TotalUrunfiyat = [];
+                                      AppData.TotalUrunfiyatusd = [];
                                       AppData.TotalUrunDesi = [];
                                       AppData.ModulListId = [];
 
@@ -282,9 +296,10 @@ class _CreateProductListItemDetailState
                                       GetTotalaWeigt();
                                       GetTotalfiyat();
                                       GetTotalDesi();
+
                                       initState();
                                     },
-                                    child: Text(  AppData.language ==1 ?"LİSTEYİ BOŞALT VE YENİDEN TASARLA":"EMPTY AND REDESIGN LIST" ,
+                                    child: Text(  AppData.language ==1 ?"LİSTEYİ BOŞALT VE YENİDEN TASARLA":"EMPTY THE LIST AND REDESIGN " ,
                                         style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                             fontSize: 16.0))),
@@ -307,6 +322,7 @@ class _CreateProductListItemDetailState
   Widget _buildModulList() {
     var Zorumualanfalse = modulLists.where((item) => item.zorunlu == false);
     AppData.Zorumualanfalse = Zorumualanfalse.toList();
+
 
     return AbsorbPointer(
       absorbing: AppData.enablewidget,
@@ -345,13 +361,15 @@ class _CreateProductListItemDetailState
             agrlik: item.agirlik,
             kutudesi: item.kutudesi,
             modulaciklama: item.modulaciklama,
-            fiyat: item.fiyat),
+            fiyat: item.fiyat,
+            fiyatusd: item.fiyatusd),
         child: ModulListItem(
           name: item.modulaciklama,
           modulaciklama: item.moduladi,
           yukseklik: item.yukseklik,
           agrlik: item.agirlik,
           fiyat: item.fiyat,
+          fiyatusd: item.fiyatusd,
           kutudesi: item.kutudesi,
           photoProvider: item.resim.toString(),
         ));
@@ -407,10 +425,13 @@ class _CreateProductListItemDetailState
     ));
   }
 
-  Widget _buildZorunluImage() {
+Widget _buildZorunluImage()  {
     var Zorumualantrue =
-    AppData.modulLists.where((item) => item.zorunlu == true);
+       AppData.modulLists.where((item) => item.zorunlu == true);
     AppData.Zorumualantrue = Zorumualantrue.toList();
+
+
+
     return Container(
       child: Column(
         children: List.generate(AppData.Zorumualantrue.length, (index) {
@@ -418,7 +439,8 @@ class _CreateProductListItemDetailState
               AppData.Zorumualantrue[index].yukseklik;
           AppData.AgrlikZorunluTrue = AppData.Zorumualantrue[index].agirlik;
           AppData.fiyatZorunluTrue = AppData.Zorumualantrue[index].fiyat;
-          AppData.desiZorunluTrue = AppData.Zorumualantrue[index].fiyat;
+          AppData.desiZorunluTrue = AppData.Zorumualantrue[index].kutudesi;
+          AppData.fiyatZorunluTrueusd = AppData.Zorumualantrue[index].fiyatusd;
           AppData.IdZorunluTrue = AppData.Zorumualantrue[index].id;
           AppData.modulaciklama = AppData.Zorumualantrue[index].modulaciklama;
           AppData.Zurunluresim = AppData.Zorumualantrue[index].resim;
@@ -433,14 +455,26 @@ class _CreateProductListItemDetailState
                   AppData.Zorumualantrue[index].resim.toString(),
                   scale: 1,
                 ),
-                subtitle:
-                Text(AppData.Zorumualantrue[index].agirlik.toString()),
+
               ),
             ),
           );
         }),
       ),
     );
+  }
+
+  Future <void> getResimzorunlutrue() async{
+    var Zorumualantrue =
+    await   AppData.modulLists.where((item) => item.zorunlu == true);
+    AppData.Zorumualantrue = Zorumualantrue.toList();
+    List data =  AppData.Zorumualantrue;
+    print( "AppData.Zorumualantrue");
+    print( AppData.Zorumualantrue);
+    print( Zorumualantrue);
+    print( data[0]);
+
+
   }
 }
 
@@ -521,32 +555,20 @@ class _ModulCartState extends State<ModulCart> {
                                                   .removeAt(index);
                                               AppData.TotalUrunagrlik.removeAt(
                                                   index);
-                                              AppData.TotalUrunfiyat.removeAt(
-                                                  index);
-                                              AppData.TotalUrunDesi.removeAt(
-                                                  index);
-                                              AppData.ModulListId.removeAt(
-                                                  index);
+                                              AppData.TotalUrunfiyat.removeAt(index);
+                                              AppData.TotalUrunfiyatusd.removeAt(index);
+                                              AppData.TotalUrunDesi.removeAt(index);
+                                              AppData.ModulListId.removeAt(index);
 
-                                              double sumdesi =
-                                              AppData.TotalUrunDesi.fold(
-                                                  0,
-                                                      (previousValue,
-                                                      element) =>
-                                                  previousValue +
-                                                      element);
-                                              AppData.desitotal = sumdesi +
-                                                  AppData.desiZorunluTrue;
+                                              double sumdesi = AppData.TotalUrunDesi.fold(0, (previousValue, element) => previousValue + element);
+                                              AppData.desitotal = sumdesi + AppData.desiZorunluTrue;
 
-                                              double sumfiyat =
-                                              AppData.TotalUrunfiyat.fold(
-                                                  0,
-                                                      (previousValue,
-                                                      element) =>
-                                                  previousValue +
-                                                      element);
-                                              AppData.fiyattotal = sumfiyat +
-                                                  AppData.fiyatZorunluTrue;
+
+                                              double sumfiyat = AppData.TotalUrunfiyat.fold(0, (previousValue, element) => previousValue + element);
+                                              AppData.fiyattotal = sumfiyat + AppData.fiyatZorunluTrue;
+
+                                              double sumfiyatusd = AppData.TotalUrunfiyatusd.fold(0, (previousValue, element) => previousValue + element);
+                                              AppData.fiyattotalusd = sumfiyatusd + AppData.fiyatZorunluTrueusd;
 
                                               int sumagrlik =
                                               AppData.TotalUrunagrlik.fold(
@@ -614,7 +636,7 @@ class _ModulCartState extends State<ModulCart> {
                     child: ListTile(
                       title: Image.network(
                         AppData.Zurunluresim.toString() == ""
-                            ? "http://sistemonline.com.tr/seowood/28-68-1.png"
+                            ? "https://seofree.com.tr/imgapi/genislik40.png"
                             : AppData.Zurunluresim.toString(),
                         scale: 2,
                       ),
@@ -639,6 +661,7 @@ class ModulListItem extends StatelessWidget {
     required this.yukseklik,
     required this.agrlik,
     required this.fiyat,
+    required this.fiyatusd,
     required this.kutudesi,
     this.isDepressed = false,
   });
@@ -649,6 +672,7 @@ class ModulListItem extends StatelessWidget {
   final int yukseklik;
   final int agrlik;
   final double fiyat;
+  final double fiyatusd;
   final double kutudesi;
   final bool isDepressed;
 
@@ -730,6 +754,7 @@ class DraggingListItem extends StatelessWidget {
     required this.yukseklik,
     required this.agrlik,
     required this.fiyat,
+    required this.fiyatusd,
     required this.kutudesi,
   });
 
@@ -739,6 +764,7 @@ class DraggingListItem extends StatelessWidget {
   final int yukseklik;
   final int agrlik;
   final double fiyat;
+  final double fiyatusd;
   final double kutudesi;
 
   ///// aksi ke drag mishavad ra namayesh midahad
@@ -804,6 +830,11 @@ class Product {
     final TotalItemPrice = items.fold<double>(0, (prev, item) => item.fiyat);
     return TotalItemPrice;
   }
+  double get formattedTotalItemPriceUSD {
+    final TotalItemPriceUSD = items.fold<double>(0, (prev, item) => item.fiyatusd);
+    return TotalItemPriceUSD;
+  }
+
 
   double get formattedTotalItemDesi {
     final TotalItemDesi = items.fold<double>(0, (prev, item) => item.kutudesi);

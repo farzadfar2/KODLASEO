@@ -15,14 +15,14 @@ final List<FlagItem> flagItems = [
     title: "Türkçe",
     page: "/WidthScreen",
     id: 1,
-    doviz: 'Tr',
+    doviz: 'TRY',
   ),
   FlagItem(
     url: "images/uk.png",
     title: "İngilizce",
     page: "/WidthScreen",
     id: 2,
-    doviz: 'En',
+    doviz: 'USD',
   ),
 
 ];

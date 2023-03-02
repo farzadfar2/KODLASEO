@@ -10,7 +10,7 @@ import '../../../../AppData.dart';
 Future<Uint8List> makePdfEN( List siparismodullistesipassdata, String  siparisresim,  siparisgenislik, siparisyukseklik,  siparisderinlik,  siparisfiyat ,siparistarih) async {
 
   final pdf = Document();
-  final imageLogo = MemoryImage((await rootBundle.load('images/logo.png')).buffer.asUint8List());
+  final imageLogo = MemoryImage((await rootBundle.load('images/seofree-en.png')).buffer.asUint8List());
   final netImage = await  networkImage(siparisresim);
 
 
@@ -61,7 +61,7 @@ Future<Uint8List> makePdfEN( List siparismodullistesipassdata, String  siparisre
                       flex: 2,
                     ),
                     Expanded(
-                      child: PaddedText("${e.miktar} Quantity "),
+                      child: PaddedText("${e.miktar} Piece "),
                       flex: 1,
                     )
                   ],
@@ -102,7 +102,7 @@ Future<Uint8List> makePdfEN( List siparismodullistesipassdata, String  siparisre
               TableRow(
                 children: [
                   PaddedText(
-                    'Sub Total ',
+                    'Price ',
                   ),
                   PaddedText(siparisfiyat.toString() + "USD")
                 ],
@@ -124,7 +124,7 @@ Future<Uint8List> makePdfEN( List siparismodullistesipassdata, String  siparisre
           Container(height: 2),
           Padding(
             child: Text(
-              "THANK YOU FOR YOUR CUSTOM!",
+              "PLEASE CONTACT WITH OUR SALES EXECUTIVE FOR OUR WHOSALE PRICE",
               style: Theme.of(context).header5,
             ),
             padding: EdgeInsets.all(1),

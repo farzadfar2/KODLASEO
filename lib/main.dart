@@ -37,8 +37,9 @@ class MyApp extends StatelessWidget {
         canvasColor: kBackgroundColor,
         textTheme: GoogleFonts.latoTextTheme(),
       ),
-      routes: {
+     routes: {
         '/LanguegeScreen': (context) => LanguegeScreen(),
+        '/welcome': (context) => LanguegeScreen(),
         '/Carousel': (context) => Carousel(),
         '/WidthScreen': (context) => WidthScreen(),
         '/DepthScreen': (context) => DepthScreen(),
