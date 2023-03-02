@@ -57,7 +57,7 @@ class _CreateModulInfoDetailState extends State<CreateModulInfoDetail> {
             SizedBox(
               height: 15.0,
             ),
-            Text(   AppData.language ==1 ?  "Lütfen ürününüzü oluşturmak için\nGsağ taraftaki modüllerden seçerek ortadaki karenin içine sürükleyiniz." : "Please select modules from\nright side and drag them into middle square for create your product.",
+            Text(   AppData.language ==1 ?  "Lütfen ürününüzü oluşturmak için\nsağ taraftaki modüllerden seçerek ortadaki karenin içine sürükleyiniz." : "Please select modules from\nright side and drag them into middle square for create your product.",
               style: GoogleFonts.alata(
                 color: Colors.green,
                 fontWeight: FontWeight.bold,
