@@ -76,7 +76,7 @@ class _CreateProductListItemDetailState
     GetTotalaWeigt();
     GetTotalfiyat();
     GetTotalDesi();
-    //getResimzorunlutrue();
+    getResimzorunlutrue();
 
 
 
@@ -464,6 +464,17 @@ Widget _buildZorunluImage()  {
     );
   }
 
+  List<dynamic> jsonToList() {
+
+    var Zorumualantrue = AppData.modulLists.where((item) => item.zorunlu == true);
+    AppData.Zorumualantrue = Zorumualantrue.toList();
+
+    Map<dynamic, dynamic> jsonMap = json.decode( AppData.Zorumualantrue.toString());
+    List<dynamic> list = jsonMap.values.toList();
+    print (list);
+    return list;
+  }
+
   Future <void> getResimzorunlutrue() async{
     var Zorumualantrue =
     await   AppData.modulLists.where((item) => item.zorunlu == true);
@@ -472,7 +483,8 @@ Widget _buildZorunluImage()  {
     print( "AppData.Zorumualantrue");
     print( AppData.Zorumualantrue);
     print( Zorumualantrue);
-    print( data[0]);
+    jsonToList();
+
 
 
   }

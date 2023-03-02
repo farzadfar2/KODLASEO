@@ -110,7 +110,7 @@ Widget _buildUi(double width, BuildContext context) {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 25),
-                              child: Row(
+                              child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(

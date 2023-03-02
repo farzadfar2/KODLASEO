@@ -4,6 +4,7 @@ import 'package:responsive_framework/responsive_wrapper.dart';
 import '../AppData.dart';
 import '../pages/home/components/carousel.dart';
 import '../pages/home/components/widthList_item_detail.dart';
+import '../pages/home/home.dart';
 import '../utils/constants.dart';
 import '../utils/screen_helper.dart';
 import 'LanguageScreen.dart';
@@ -47,7 +48,7 @@ class _WidthScreenState extends State<WidthScreen> {
                     onTap: () {
                     //   Navigator.pop(context);
                      // Navigator.pushNamed(context, "/Carousel");
-                      Navigator.push(context, MaterialPageRoute(builder: (context) =>  Carousel()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) =>  Home()));
                     },
                     child: Tooltip(
                       key: tooltipkey,
